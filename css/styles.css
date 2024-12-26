@@ -4,24 +4,62 @@
     box-sizing: border-box;
 }
 
-body{
-    background-color: #f4f4f2;
-    font-weight: 800;
-    font-size: 1.5rem;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+:root{
+  /* Fondo principal */
+  --bg-main-light: #f8f1e8;
+  /* Cards */
+  --cards-light: #cac1c1;
+  /* Texto principal */
+  --text-main-light: #262626;
+  /* Fondo interactivo */
+  --bg-interactive-light: #3af5d1;
+  /* hover */
+  --hover-light: #eba716;
+  /* active */
+  --active-light: #b44e26;
+  /* Tema oscuro */
+
+  /* Fondo Principal */
+  --bg-main-dark: #1f1f1f;
+  /* Cards */
+  --cards-dark: #26242e;
+  /* Texto Principal */
+  --text-main-dark: #eaeaea;
+  /* Fondo interactivo */
+  --bg-interactive-dark: #8983f7;
+  /* hover */
+  --hover-dark: #a86109;
+  /* active */
+  --active-dark: #863117;
 }
 
+body{
+    background-color: var(--bg-main-light);
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--text-main-light);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+/* Transiciones de estado */
+transition: background-color 0.5s ease, color 0.5s ease;
+
+[data-theme="dark"]{
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+}
+button{
+  border: none;
+  font: inherit;
+}
 /* Estilos Estructurales */
 .container{
     display: grid;
     grid-template-columns: repeat(4,1fr);
-    grid-template-rows: 150px repeat(3,1fr) 150px;
+  grid-template-rows: minmax(150px,auto) repeat(3,1fr) minmax(100px,auto);
     height: calc(100dvh - 1.6rem);
     width: calc(100dvw - 1.6rem);
     margin: .5rem;
     padding: .3rem;
-    background-color: #d4d4d2;
     border-radius: 10px;
     gap: 10px;
 }
@@ -63,8 +101,8 @@ aside{
     border-radius: 10px;
 }
 footer{
-    grid-column: 5/1;
-    background-color: #3af5d1;
+    grid-column: 1/5;
+    grid-row: 5/6;
     border-radius: 10px;
 }
 
@@ -78,19 +116,34 @@ footer{
   transition: all .3s;
   cursor: pointer;
   transition: transform 400ms, box-shadow 400ms;
-  background-color: #333; /* Fondo por defecto */
+  background-color: var(--cards-light); /* Fondo por defecto */
 }
 
 .switch-mode:hover {
-  box-shadow: 0 15px 25px rgba(216, 178, 53, 0.4);
+  box-shadow: 0 10px 20px rgba(216, 178, 53, 0.4);
   animation:vibrate 1.5s linear both;
 }
 .card:hover{
+  background-color: var(--hover-light);
   box-shadow: 0 10px 20px rgba(68, 68, 68, 0.4);
   animation:vibrate 1.5s linear both;
 }
+.card:active{
+  background-color: var(--active-light);
+  box-shadow: 0 10px 20px rgba(68, 68, 68, 0.4);
+}
 
-
+/* Dark mode */
+.dark-card{
+  background-color: var(--cards-dark);
+  color: var(--text-main-dark);
+}
+.dark-card:hover{
+  background-color: var(--hover-dark);
+}
+.dark-card:active{
+  background-color: var(--active-dark);
+}
 
 /* Estilos de los componentes del bento */
 
@@ -102,7 +155,6 @@ footer{
     flex-direction: column;
     box-shadow: 0 4px 35px rgba(0, 0, 0, 0.1);
     position: relative;
-    z-index: 1;
     width: 100%;
     height: 100%;
     background-color: var(--light-col);
@@ -156,7 +208,6 @@ footer{
     right: 0;
     width: 8rem;
     height: 8rem;
-    z-index: 1;
     background: var(--bg);
     transform: scale(0);
     transform-origin: top right;
@@ -184,7 +235,6 @@ footer{
     inset: 0;
     border-radius: inherit;
     display: block;
-    z-index: -1;
     background-color: #ffffff;
     box-shadow: 0 2px 15px rgba(228, 225, 225, 0.15);
     -webkit-transition: -webkit-transform 0.3s
@@ -234,6 +284,7 @@ footer{
   }
 
 /* Insert Consult Generate*/
+
 .insert,.consult,.generate{
   height: 100%;
   width: 100%;
@@ -242,6 +293,9 @@ footer{
   align-items: center;
   flex-direction: row;
   gap: .8rem;
+}
+.insert ,.consult,.generate{
+  padding: 1rem;
 }
 .aside-content{
   flex-direction: row;
@@ -254,7 +308,6 @@ footer{
   width: 3rem;
   height: 3rem;
 }
-
 
 /* Animaciones */
 
@@ -274,11 +327,13 @@ footer{
   30%,50%,70%{transform:rotate(10deg)}
   80%{transform:rotate(-8deg)}
   90%{transform:rotate(8deg)}}
+
 /* Media query */
+
 @media (max-width: 600px) {
   .container {
       grid-template-columns: 1fr; 
-      grid-template-rows: 100px repeat(2,1fr) 100px;
+      grid-template-rows: 100px repeat(4,1fr) 100px;
       height: calc(100dvh - 2rem);
       width: calc(100dvw - 1rem);
   }
@@ -294,9 +349,11 @@ footer{
       grid-template-rows: repeat(3,1fr);
       gap: 8px; 
   }
-  aside{
+  .aside-content{
       grid-column: 1;
-      grid-row: 3;
+      grid-row: 4/5;
+      height: auto;
+
   }
   footer{
       grid-column: 1;
