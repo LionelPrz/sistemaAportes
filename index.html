@@ -7,29 +7,42 @@
     <title>Aportes Municipales</title>
 </head>
 <body>
-
-    <div class="container">
-        <div class="grid">
-        <header>
-            <p>Salmon</p>
-        </header>
-            <section class="insert"><p>Broccoli</p></section>
-            <section class="consult"><p>Tamago</p></section>
-        <aside>
-            <p>Pork</p>
-        </aside>
-        <section class="toggle">
-            <p>Edamame</p>
+  <div class="container">
+      <header class="card">Header</header>
+      <main>
+        <section class="card insert">
+          <p class="insert-text">Ingresar Datos</p>
+          <img class="insert-img" src="./assets/browser-insert-svgrepo-com.svg" alt="">
         </section>
-        <section class="generate">
-            <p>Tomato</p>
+        <section class="card consult">
+          <p class="consult-text">Consultar Datos</p>
+          <img class="consult-img" src="./assets/search-window-svgrepo-com.svg" alt="">
         </section>
-        <footer>
-            <p>Tofu</p>
-        </footer>        
-        </div>
-      </div>
-      
+        <section class="switch-mode">
+          <input id="switch" type="checkbox" name="switch">
+          <div class="app">
+            <nav>
+              <time class="time">4:20 AM</time>
+              <div class="icons">
+                <span class="network"></span>
+                <span class="battery"></span>
+              </div>
+            </nav>
+            <div class="circle"></div>
+            <label class="toggle-label" id="dark" for="switch"></label>
+          </div>
+        </section>
+        <section class="card generate">
+          <p class="generate-text">Generar Archivos</p>
+          <img class="generate-img" src="./assets/download-window-svgrepo-com.svg" alt="">
+        </section>
+      </main>
+      <aside class="card aside-content">
+        <p class="aside-text">Datos Cargados</p>
+        <img class="aside-img" src="/assets/derrick-with-load-svgrepo-com.svg" alt="">
+      </aside>
+      <footer class="card">Footer</footer>
+    </div>
     <script src="js/app.js"></script>
 </body>
 </html>

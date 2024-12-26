@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/consulta.css">
+    <title>Consultar Datos</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Consultar datos del trabajador</h1>
+        </header>
+        <main>
+            <section class="section-1">
+                <form class="form-consult" id="form" autocomplete="off">
+                    <label for="cuil">Ingrese el cuil</label>
+                    <input type="number" name="cuil" placeholder="ingrese cuil" required>
+                    <label for="mes">Ingrese el mes</label>
+                    <select name="mes" id="mes"></select>
+                    <label for="year">Ingrese el año</label>
+                    <select name="year" id="year"></select>
+                    <button type="submit">Consultar</button>
+                </form>
+            </section>
+            <section class="section-2">
+                <table></table>
+            </section>
+        </main>
+    </div>
+    <script src="/js/consulta.js"></script>
+</body>
+</html>
