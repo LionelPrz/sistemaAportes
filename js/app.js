@@ -4,8 +4,7 @@ let cards = document.querySelectorAll('.card');
 let interruptor = document.getElementById('dark');
 
 // Variables para la redireccion
-let botones = document.querySelectorAll('button');
-    console.log(botones);
+let botones = document.querySelectorAll('.boton');
 let contenedor = document.getElementById('container');
 const rutasBotones = [
     {id:'insert-btn', route:'../html/ingresar.html'},
@@ -15,10 +14,9 @@ const rutasBotones = [
 ];
 
 botones.forEach(boton =>{
-    boton.addEventListener('click',(e)=>{
-        let idbtn = e.target.id;
-            console.log(idbtn);
-            encontrarRuta(idbtn);
+    boton.addEventListener('click',event =>{
+        let idbtn = event.currentTarget;
+            encontrarRuta(idbtn.id);
     });
 });
 
@@ -50,7 +48,10 @@ async function cargarContenido(rutas){
         return;
     }
     // Inicio de barra de carga
-    contenedor.innerHTML = `<p>Cargando desu...</p>`;
+    contenedor.innerHTML = `        
+    <div class="progress-loader">
+        <div class="progress"></div>
+    </div>`;
 
     try{
         let respuesta = await fetch(rutas);

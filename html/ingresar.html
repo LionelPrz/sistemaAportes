@@ -8,13 +8,69 @@
 </head>
 <body>
     <div class="container">
-        <header></header>
-        <main>
-            <form>
+        <header>
+            <div class="header-card">
                 hola
+            </div>
+        </header>
+        <main>
+            <form class="form" id="form">
+                <label for="cuil">Ingrese el Cuil del empleado</label>
+                    <input class="form-input" type="number" name="cuil" id="cuil" placeholder="Cuil">
+
+                <label for="nombre">Ingrese el nombre del empleado</label>
+                    <input class="form-input" type="text" name="nombre" id="nombre" placeholder="Nombre">
+
+                <label for="apellido">Ingrese el apellido del empleado</label>
+                    <input class="form-input" type="text" name="apellido" id="apellido" placeholder="Apellido">
+
+                <label for="tipo_contratacion">Ingrese el tipo de contratacion</label>
+                    <input class="form-input" type="number" name="tipo_contratacion" id="contratacion" placeholder="Tipo de contratacion">
+
+                <label for="tipo_liquidacion">Ingrese el tipo de liquidacion</label>
+                    <input class="form-input" type="number" name="tipo_liquidacion" id="liquidacion" placeholder="Tipo de liquidacion">
+
+                <label for="dias_trabajados">Ingrese los dias trabajados</label>
+                    <input class="form-input" type="number" name="dias_trabajados" id="dias" placeholder="Dias trabajados">
+
+                <label for="cargo_funcion">Ingrese el cargo/funcion</label>
+                    <input class="form-input" type="text" name="cargo_funcion" id="cargo" placeholder="Cargo o funcion">
+
+                <label for="clase_nivel">Ingrese la clase/nivel</label>
+                    <input class="form-input" type="text" name="clase_nivel" id="clase" placeholder="Clase o nivel">
+
+                <label for="categoria_agrupacion">Ingrese la categoria/agrupacion</label>
+                    <input class="form-input" type="text" name="categoria_agrupacion" id="categoria" placeholder="Categoria o agrupacion">
+
+                <label for="total_remunerativo">Ingrese el total remunerativo</label>
+                    <input class="form-input" type="number" name="total_remunerativo" id="remuneracion" placeholder="Total remunerativo">
+
+                <label for="total_no_remunerativo">Ingrese el total no remunerativo</label>
+                    <input class="form-input" type="number" name="total_no_remunerativo" id="no_remunerativo" placeholder="Total no remunerativo">
+
+                <label for="tipo_aporte_adicional">Ingrese el tipo de aporte adicional</label>
+                    <input class="form-input" type="text" name="tipo_aporte_adicional" id="aporte_adicional" placeholder="Tipo de aporte adicional">
+
+                <label for="monto_aporte_adicional">Ingrese el monto del aporte adicional</label>
+                    <input class="form-input" type="text" name="monto_aporte_adicional" id="monto_aporte" placeholder="Monto del aporte adicional">
+
+                <label for="tipo_licencia">Ingrese el tipo de licencia</label>
+                    <input class="form-input" type="number" name="tipo_licencia" id="licencia" placeholder="Tipo de licencia">
+
+                <label for="dias_licencia">Ingrese los dias de licencia</label>
+                    <input class="form-input" type="number" name="dias_licencia" id="dias_licencia" placeholder="Dias de licencia">
+
+                <label for="mes">Ingrese el mes</label>
+                    <input class="form-input" type="number" name="mes" id="mes" placeholder="mes">
+
+                <label for="">Ingrese el año</label>
+                    <input class="form-input" name="year" id="year" placeholder="año">
+                    <button class="submit-btn" id="submit-btn" type="submit">Cargar datos</button>
             </form>
         </main>
-        <footer></footer>
+        <footer class="footer-card">
+            chau
+        </footer>
     </div>
 </body>
 </html>

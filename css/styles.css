@@ -50,12 +50,13 @@ transition: background-color 0.5s ease, color 0.5s ease;
 button{
   border: none;
   font: inherit;
+  cursor: pointer;
 }
 /* Estilos Estructurales */
 .container{
     display: grid;
     grid-template-columns: repeat(4,1fr);
-  grid-template-rows: minmax(150px,auto) repeat(3,1fr) minmax(100px,auto);
+    grid-template-rows: minmax(150px,auto) repeat(3,1fr) minmax(100px,auto);
     height: calc(100dvh - 1.6rem);
     width: calc(100dvw - 1.6rem);
     margin: .5rem;
@@ -105,7 +106,25 @@ footer{
     grid-row: 5/6;
     border-radius: 10px;
 }
+/* Barra de carga */
 
+.progress-loader {
+  width: 100%;
+  background: rgba(13, 46, 230, 0.308);
+  height: 10px;
+  border-radius: 10px;
+}
+
+.progress {
+  content: '';
+  height: 10px;
+  border-radius: 10px;
+  background: rgb(71, 28, 226);
+  transition: 0.5s;
+  animation: loading1274 2s ease infinite;
+}
+
+/* Botonera */
 .card {
   display: flex;
   align-items: center;
@@ -114,9 +133,12 @@ footer{
   text-align: center;
   border-radius: 10px;
   transition: all .3s;
-  cursor: pointer;
   transition: transform 400ms, box-shadow 400ms;
   background-color: var(--cards-light); /* Fondo por defecto */
+}
+.loader{
+  display:flex;
+  justify-content: flex-start;
 }
 
 .switch-mode:hover {
@@ -326,7 +348,31 @@ footer{
   20%,40%,60%{transform:rotate(-10deg)}
   30%,50%,70%{transform:rotate(10deg)}
   80%{transform:rotate(-8deg)}
-  90%{transform:rotate(8deg)}}
+  90%{transform:rotate(8deg)}
+}
+
+@keyframes loading1274 {
+  0% {
+    width: 0%;
+  }
+
+  10% {
+    width: 10%;
+  }
+
+  50% {
+    width: 40%;
+  }
+
+  60% {
+    width: 60%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
 
 /* Media query */
 
