@@ -8,19 +8,35 @@
 </head>
 <body>
     <div class="container">
-        <header>
+        <header class="header-card">
+            <p>header</p>
         </header>
         <main>
-            <form>
-                <label for="mes">Seleccione el mes a generar</label>
-                <select name="mes" id="mes"></select>
-                <label for="year">Seleccione el año a generar</label>
-                <select name="year" id="year"></select>
-                <button type="submit">Generar</button>
+            <form id="form-generate" class="form">
+                <div class="form-item">
+                    <label for="mes">Seleccione el mes a generar</label>
+                    <select class="form-select" name="mes" id="mes"></select>    
+                </div>
+                <div class="form-item">
+                    <label for="year">Seleccione el año a generar</label>
+                    <select class="form-select" name="year" id="year"></select>
+                </div>
+                <div class="btn-container">
+                    <button id="submit-btn" class="submit-btn" type="submit">Generar</button>
+                </div>
             </form>
+            
         </main>
-        <footer>
+        <section id="archive-generate" class="generate-container">
+            <div class="archive-container">
+                <h3 id="nombre-generado" class="nombre-generado">Excel Generado</h3>
+                <button type="button" class="generate-btn" id="generated-btn">archivo.xls</button>
+            </div>
+        </section>
+        <footer class="footer-card">
+            <p>footer</p>
         </footer>
     </div>
+    <script src="/js/generar.js"></script>
 </body>
 </html>
