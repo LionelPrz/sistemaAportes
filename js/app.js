@@ -4,6 +4,7 @@ let cards = document.querySelectorAll('.card');
 let interruptor = document.getElementById('dark');
 
 // Variables para la redireccion
+let barraCarga = document.getElementById('loader-bar');
 let botones = document.querySelectorAll('.boton');
 let contenedor = document.getElementById('container');
 const rutasBotones = [
@@ -48,31 +49,19 @@ async function cargarContenido(rutas){
         return;
     }
     // Inicio de barra de carga
-    contenedor.innerHTML = `        
-    <div class="progress-loader">
-        <div class="progress"></div>
-    </div>`;
-
+    contenedor.innerHTML= '';
+    barraCarga.style.display='block';
     try{
         let respuesta = await fetch(rutas);
         if(!respuesta.ok){
             console.error(`Error al cargar la siguente ruta: ${rutas} `);
         }
-        // Creacion de las variables de respuesta y el fragmento de la pagina
-        let contenido = await respuesta.text();
-        let fragmento = document.createDocumentFragment();
 
-        // Creacion de contenedor temporal para procesar el contenido
-        let tempconteiner = document.createElement('div');
-            tempconteiner.innerHTML = contenido;
-
-        while(tempconteiner.firstChild){
-            fragmento.appendChild(tempconteiner.firstChild);
-        }
-        // Limpieza y agregado de contenido 
-        contenedor.innerHTML = '';
-        contenedor.appendChild(fragmento);
-        console.log('Contenido cargado exitosamente');
+        let iframe = document.createElement('iframe');
+            iframe.src = rutas;
+            contenedor.appendChild(iframe);
+            console.log('Contenido cargado exitosamente');
+            barraCarga.style.display='none';
     }catch(error){
         console.error('Error al cargar el contenido: ',error);
         contenedor.innerHTML = '<p>Error al cargar el contenido</p>';
