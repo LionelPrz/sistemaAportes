@@ -1,0 +1,91 @@
+:root{
+    /* Fondo principal */
+    --bg-main-light: #f8f1e8;
+    /* Cards */
+    --cards-light: #cac1c1;
+    /* Texto principal */
+    --text-main-light: #262626;
+    /* Fondo interactivo */
+    --bg-interactive-light: #3af5d1;
+    /* hover */
+    --hover-light: #eba716;
+    /* active */
+    --active-light: #b44e26;
+    /* Tema oscuro */
+
+    /* Fondo Principal */
+    --bg-main-dark: #1f1f1f;
+    /* Cards */
+    --cards-dark: #26242e;
+    /* Texto Principal */
+    --text-main-dark: #eaeaea;
+    /* Fondo interactivo */
+    --bg-interactive-dark: #8983f7;
+    /* hover */
+    --hover-dark: #a86109;
+    /* active */
+    --active-dark: #863117;
+}
+body{
+    /* Transiciones de estado */
+transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+[data-theme="dark"]{
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Dark mode */
+.dark-card{
+    background-color: var(--cards-dark);
+    color: var(--text-main-dark);
+  }
+  .dark-card:hover{
+    background-color: var(--hover-dark);
+  }
+  .dark-card:active{
+    background-color: var(--active-dark);
+  }
+
+/* Animaciones */
+
+@keyframes vibrate
+{0%{transform:translate(0)}
+20%{transform:translate(-2px,2px)}
+40%{transform:translate(-2px,-2px)}
+60%{transform:translate(2px,2px)}
+80%{transform:translate(2px,-2px)}
+100%{transform:translate(0)}}
+
+@keyframes shake-left-right{
+  0%,
+  100%{transform:rotate(0deg);transform-origin:50% 50%}
+  10%{transform:rotate(8deg)}
+  20%,40%,60%{transform:rotate(-10deg)}
+  30%,50%,70%{transform:rotate(10deg)}
+  80%{transform:rotate(-8deg)}
+  90%{transform:rotate(8deg)}
+}
+
+@keyframes loading1274 {
+  0% {
+    width: 0%;
+  }
+
+  10% {
+    width: 10%;
+  }
+
+  50% {
+    width: 40%;
+  }
+
+  60% {
+    width: 60%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+

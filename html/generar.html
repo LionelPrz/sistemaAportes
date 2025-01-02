@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/generar.css">
+    <link rel="stylesheet" href="/css/colors.css">
     <title>Generar tablas</title>
 </head>
 <body>
     <div class="container">
-        <header class="header-card">
+        <header class="card">
             <p>header</p>
         </header>
         <main>
-            <form id="form-generate" class="form">
+            <form id="form-generate" class="form card">
                 <div class="form-item">
                     <label for="mes">Seleccione el mes a generar</label>
                     <select class="form-select" name="mes" id="mes"></select>    
@@ -25,15 +26,17 @@
                     <button id="submit-btn" class="submit-btn" type="submit">Generar</button>
                 </div>
             </form>
-            
         </main>
-        <section id="archive-generate" class="generate-container">
+        <section id="archive-generate" class="generate-container card">
             <div class="archive-container">
                 <h3 id="nombre-generado" class="nombre-generado">Excel Generado</h3>
                 <button type="button" class="generate-btn" id="generated-btn">archivo.xls</button>
             </div>
         </section>
-        <footer class="footer-card">
+        <aside class="card">
+            <p>aside</p>
+        </aside>
+        <footer class="card">
             <p>footer</p>
         </footer>
     </div>

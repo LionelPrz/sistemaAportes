@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/consulta.css">
+    <link rel="stylesheet" href="/css/colors.css">
     <title>Consultar Datos</title>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Consultar datos del trabajador</h1>
+        <header class="card">
+            <h1>header</h1>
         </header>
         <main>
-            <section class="section-1">
+            <section class="section-1 card">
                 <form class="form-consult" id="form" autocomplete="off">
                     <div class="form-item">
                         <label for="cuil">Ingrese el cuil</label>
@@ -29,80 +30,22 @@
                     <button id="consult-btn" class="consult-btn" type="submit">Consultar</button>
                 </form>
             </section>
-            <section class="section-2">
-                <table class="consult-table" id="consult-table">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Columna 1</th>
-                        <th>Columna 2</th>
-                        <th>Columna 3</th>
-                        <th>Columna 4</th>
-                        <th>Columna 5</th>
-                        <th>Columna 6</th>
-                        <th>Columna 7</th>
-                        <th>Columna 8</th>
-                        <th>Columna 9</th>
-                        <th>Columna 10</th>
-                        <th>Columna 11</th>
-                        <th>Columna 12</th>
-                        <th>Columna 13</th>
-                        <th>Columna 14</th>
-                        <th>Columna 15</th>
-                        <th>Columna 16</th>
-                        <th>Columna 17</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- Generación de 10 filas -->
-                      <tr>
-                        <td>1</td>
-                        <td>Dato 1</td>
-                        <td>Dato 2</td>
-                        <td>Dato 3</td>
-                        <td>Dato 4</td>
-                        <td>Dato 5</td>
-                        <td>Dato 6</td>
-                        <td>Dato 7</td>
-                        <td>Dato 8</td>
-                        <td>Dato 9</td>
-                        <td>Dato 10</td>
-                        <td>Dato 11</td>
-                        <td>Dato 12</td>
-                        <td>Dato 13</td>
-                        <td>Dato 14</td>
-                        <td>Dato 15</td>
-                        <td>Dato 16</td>
-                        <td>Dato 17</td>
-                      </tr>
-                      <!-- Copia este bloque para las otras 9 filas -->
-                      <!-- Ejemplo fila 2 -->
-                      <tr>
-                        <td>2</td>
-                        <td>Dato 1</td>
-                        <td>Dato 2</td>
-                        <td>Dato 3</td>
-                        <td>Dato 4</td>
-                        <td>Dato 5</td>
-                        <td>Dato 6</td>
-                        <td>Dato 7</td>
-                        <td>Dato 8</td>
-                        <td>Dato 9</td>
-                        <td>Dato 10</td>
-                        <td>Dato 11</td>
-                        <td>Dato 12</td>
-                        <td>Dato 13</td>
-                        <td>Dato 14</td>
-                        <td>Dato 15</td>
-                        <td>Dato 16</td>
-                        <td>Dato 17</td>
-                      </tr>
-                      <!-- Continúa con las filas restantes -->
-                    </tbody>
-                  </table>
+            <section class="section-2 card">
+                <div class="info-container" id="info-card1">
+
+                </div>
+                <div class="info-container" id="info-card2">
+
+                </div>
+                <div class="info-container" id="info-card3">
+
+                </div>
             </section>
         </main>
-        <footer>
+        <aside class="card">
+            <p>aside</p>
+        </aside>
+        <footer class="card">
             <p>footer</p>
         </footer>
     </div>
