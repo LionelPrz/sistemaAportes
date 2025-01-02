@@ -11,6 +11,21 @@
     --hover-light: #eba716;
     /* active */
     --active-light: #b44e26;
+    /* Formulario */
+    --form-background: #F9F9F4; /* Fondo del formulario */
+    --form-title-text: #F2F2F2; /* Texto del título del formulario */
+    --form-title-background: #88B04B; /* Fondo del título del formulario */
+    --form-input-background: #FFFFFF; /* Fondo de los inputs */
+    --form-input-border: #D8E3D8; /* Bordes de los inputs */
+    --form-input-focus: #6C8E5D; /* Borde al enfocar */
+    --form-input-text: #2C3E3D; /* Texto en los inputs */
+
+    /* Botones */
+    --button-background: #88B04B; /* Fondo del botón */
+    --button-text: #FFFFFF; /* Texto del botón */
+    --button-hover: #6C8E5D; /* Fondo del botón al pasar el mouse */
+    --button-disabled: #D8E3D8; /* Fondo del botón deshabilitado */
+    
     /* Tema oscuro */
 
     /* Fondo Principal */
@@ -25,6 +40,21 @@
     --hover-dark: #a86109;
     /* active */
     --active-dark: #863117;
+    /* Formulario */
+    --form-background: #1e3f2f; /* Fondo del formulario */
+    --form-title-text: #d9e8d3; /* Texto del título del formulario */
+    --form-title-background: #2e4a3c; /* Fondo del título del formulario */
+    --form-input-background: #1b2d24; /* Fondo de los inputs */
+    --form-input-border: #3a4e44; /* Bordes de los inputs */
+    --form-input-focus: #5e7f63; /* Borde al enfocar */
+    --form-input-text: #e8f0e9; /* Texto en los inputs */
+
+    /* Botones */
+    --button-background: #6C8E5D; /* Fondo del botón */
+    --button-text: #FFFFFF; /* Texto del botón */
+    --button-hover: #88B04B; /* Fondo del botón al pasar el mouse */
+    --button-disabled: #4A5D4B; /* Fondo del botón deshabilitado */
+
 }
 body{
     /* Transiciones de estado */

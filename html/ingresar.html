@@ -14,74 +14,152 @@
         </header>
         <main class="card">
             <form class="card form" id="form">
-                <div class="form-item">
-                    <label for="cuil">Ingrese el Cuil del empleado</label>
-                    <input class="form-input" type="number" name="cuil" id="cuil" placeholder="Cuil">
+                <!-- Grupo Cuil -->
+                <div class="formulario__grupo" id="grupo__cuil">
+                    <label class="formulario__label" for="cuil">Ingrese el Cuil del empleado</label>
+                    <div class="formulario__grupo-input">
+                        <input class="formulario__input" type="number" name="cuil" id="cuil" placeholder="Cuil">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Ingrese su numero de CUIL sin puntos guiones o espacios!</p>
                 </div>
-                <div class="form-item">
-                    <label for="nombre">Ingrese el nombre del empleado</label>
-                    <input class="form-input" type="text" name="nombre" id="nombre" placeholder="Nombre">
+                <!-- Grupo Nombre -->
+                <div class="formulario__grupo" id="grupo__nombre">
+                    <label class="formulario__label" for="nombre">Ingrese el nombre del empleado</label>
+                    <div class="formulario__grupo-input">
+                        <input class="formulario__input" type="text" name="nombre" id="nombre" placeholder="Nombre">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">El nombre solo puede contenener letras, acentos y espacios !</p>
                 </div>
-                <div class="form-item">
-                    <label for="apellido">Ingrese el apellido del empleado</label>
-                    <input class="form-input" type="text" name="apellido" id="apellido" placeholder="Apellido">
+                <!-- Grupo Apellido -->
+                <div class="formulario__grupo" id="grupo__apellido">
+                    <label class="formulario__label" for="apellido">Ingrese el apellido del empleado</label>
+                    <div class="formulario__grupo-input">
+                        <input class="formulario__input" type="text" name="apellido" id="apellido" placeholder="Apellido">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">El apellido solo puede contenener letras, acentos y espacios !</p>
                 </div>
-                <div class="form-item">
-                    <label for="tipo_contratacion">Ingrese el tipo de contratacion</label>
-                    <input class="form-input" type="number" name="tipo_contratacion" id="contratacion" placeholder="Tipo de contratacion">
+                <!-- Grupo Tipo contratacion -->
+                <div class="formulario__grupo" id="grupo__contratacion">
+                    <label class="formulario__label" for="tipo_contratacion">Seleccione el tipo de contratacion</label>
+                    <div class="formulario__grupo-input">
+                        <select class="formulario__input" name="tipo_contratacion" id="contratacion"></select>
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Seleccione un tipo de contratacion!</p>
                 </div>
-                <div class="form-item">
-                    <label for="tipo_liquidacion">Ingrese el tipo de liquidacion</label>
-                    <input class="form-input" type="number" name="tipo_liquidacion" id="liquidacion" placeholder="Tipo de liquidacion">
+                <!-- Grupo Liquidacion -->
+                <div class="formulario__grupo" id="grupo__liquidacion">
+                    <label class="formulario__label" for="tipo_liquidacion">Seleccione el tipo de liquidacion</label>
+                    <div class="formulario__grupo-input">
+                        <select class="formulario__input" name="tipo_liquidacion" id="liquidacion"></select>
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Seleccione un tipo de liquidacion!</p>
                 </div>
-                <div class="form-item">
-                    <label for="dias_trabajados">Ingrese los dias trabajados</label>
-                    <input class="form-input" type="number" name="dias_trabajados" id="dias" placeholder="Dias trabajados">
+                <!-- Grupo Dias Trabajados -->
+                <div class="formulario__grupo" id="grupo__diasTrabajo">
+                    <label class="formulario__label" for="dias_trabajados">Ingrese los dias trabajados</label>
+                    <div class="formulario__grupo-input">
+                        <input class="formulario__input" type="number" name="dias_trabajados" id="dias" placeholder="Dias trabajados">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Ingrese un numero valido de dias trabajados!</p>
                 </div>
-                <div class="form-item">
-                    <label for="cargo_funcion">Ingrese el cargo/funcion</label>
-                    <input class="form-input" type="text" name="cargo_funcion" id="cargo" placeholder="Cargo o funcion">
+                <!-- Grupo Cargo -->
+                <div class="formulario__grupo" id="grupo__cargo">
+                    <label class="formulario__label" for="cargo_funcion">Seleccione un cargo</label>
+                    <div class="formulario__grupo-input">
+                        <select class="formulario__input" name="cargo_funcion" id="cargo"></select>
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Seleccione un cargo o funcion!</p>
                 </div>
-                <div class="form-item">
-                    <label for="clase_nivel">Ingrese la clase/nivel</label>
-                    <input class="form-input" type="text" name="clase_nivel" id="clase" placeholder="Clase o nivel">
+                <!-- Grupo Clase -->
+                <div class="formulario__grupo" id="grupo__clase">
+                    <label class="formulario__label" for="clase_nivel">Seleccione una clase</label>
+                    <div class="formulario__grupo-input">
+                        <select class="formulario__input" name="clase_nivel" id="clase"></select>
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Seleccione una clase!</p>
                 </div>
-                <div class="form-item">
-                    <label for="categoria_agrupacion">Ingrese la categoria/agrupacion</label>
-                    <input class="form-input" type="text" name="categoria_agrupacion" id="categoria" placeholder="Categoria o agrupacion">
+                <!-- Grupo Categoria -->
+                <div class="formulario__grupo" id="grupo__categoria">
+                    <label class="formulario__label" for="categoria_agrupacion">Seleccione una categoria</label>
+                    <div class="formulario__grupo-input">
+                        <select class="formulario__input" name="categoria_agrupacion" id="categoria"></select>
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Seleccione una categoria!</p>
                 </div>
-                <div class="form-item">
-                    <label for="total_remunerativo">Ingrese el total remunerativo</label>
-                    <input class="form-input" type="number" name="total_remunerativo" id="remuneracion" placeholder="Total remunerativo">
+                <!-- Grupo total remunerativo -->
+                <div class="formulario__grupo" id="grupo__remunerativo">
+                    <label class="formulario__label" for="total_remunerativo">Ingrese el total remunerativo</label>
+                    <div class="formulario__grupo-input">
+                        <input class="formulario__input" type="number" name="total_remunerativo" id="remuneracion" placeholder="Total remunerativo">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Ingrese un total remunerativo valido!</p>
                 </div>
-                <div class="form-item">
-                    <label for="total_no_remunerativo">Ingrese el total no remunerativo</label>
-                    <input class="form-input" type="number" name="total_no_remunerativo" id="no_remunerativo" placeholder="Total no remunerativo">
+                <div class="formulario__grupo" id="grupo__noRemunerativo">
+                    <label class="formulario__label" for="total_no_remunerativo">Ingrese el total no remunerativo</label>
+                    <div class="formulario__grupo-input">
+                        <input class="formulario__input" type="number" name="total_no_remunerativo" id="no_remunerativo" placeholder="Total no remunerativo">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Ingrese un total no remunerativo valido!</p>
                 </div>
-                <div class="form-item">
-                    <label for="tipo_aporte_adicional">Ingrese el tipo de aporte adicional</label>
-                    <input class="form-input" type="text" name="tipo_aporte_adicional" id="aporte_adicional" placeholder="Tipo de aporte adicional">
+                <div class="formulario__grupo" id="grupo__aporteadd">
+                    <label class="formulario__label" for="tipo_aporte_adicional">Seleccione el tipo de aporte adicional</label>
+                    <div class="formulario__grupo-input">
+                        <select class="formulario__input" name="tipo_aporte_adicional" id="aporte_adicional"></select>
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">El tipo de aporte adicional solo debe de contener '$-' como contenido!</p>
                 </div>
-                <div class="form-item">
-                    <label for="monto_aporte_adicional">Ingrese el monto del aporte adicional</label>
-                    <input class="form-input" type="text" name="monto_aporte_adicional" id="monto_aporte" placeholder="Monto del aporte adicional">
+                <div class="formulario__grupo" id="grupo__montoaporte">
+                    <label class="formulario__label" for="monto_aporte_adicional">Seleccione el monto del aporte adicional</label>
+                    <div class="formulario__grupo-input">
+                        <select  class="formulario__input" name="monto_aporte_adicional" id="monto_aporte"></select>
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">El monto de aporte adicional solo debe de contener '$-' como contenido!</p>
                 </div>
-                <div class="form-item">
-                    <label for="tipo_licencia">Ingrese el tipo de licencia</label>
-                    <input class="form-input" type="number" name="tipo_licencia" id="licencia" placeholder="Tipo de licencia">
+                <div class="formulario__grupo" id="grupo__tipoLicencia">
+                    <label class="formulario__label" for="tipo_licencia">Seleccione un tipo de licencia</label>
+                    <div class="formulario__grupo-input">
+                        <select class="formulario__input" name="tipo_licencia" id="licencia"></select>
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Seleccione un tipo de licencia valida !</p>
                 </div>
-                <div class="form-item">
-                    <label for="dias_licencia">Ingrese los dias de licencia</label>
-                    <input class="form-input" type="number" name="dias_licencia" id="dias_licencia" placeholder="Dias de licencia">
+                <div class="formulario__grupo" id="grupo__diasLicencia">
+                    <label class="formulario__label" for="dias_licencia">Ingrese los dias de licencia</label>
+                    <div class="formulario__grupo-input">
+                        <input class="formulario__input" type="number" name="dias_licencia" id="dias_licencia" placeholder="Dias de licencia">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Ingrese un valor de dias de licencia valido!</p>
                 </div>
                 <div class="last-row-container">
-                    <div class="form-item mes">
-                        <label for="mes">Ingrese el mes</label>
-                        <input class="form-input" type="number" name="mes" id="mes" placeholder="mes">
+                    <div class="formulario_grupo" id="grupo__mes">
+                        <label class="formulario__label" for="mes">Seleccione el mes</label>
+                        <div class="formulario__grupo-input">
+                            <select class="formulario__input" name="mes" id="mes"></select>
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Seleccione un mes!</p>
                     </div>
-                    <div class="form-item year">
-                        <label for="">Ingrese el año</label>
-                        <input class="form-input" name="year" id="year" placeholder="año">
+                    <div class="formulario__grupo" id="grupo__year">
+                        <label class="formulario__label" for="">Ingrese el año</label>
+                        <div class="formulario__grupo-input">
+                            <input class="formulario__input" name="year" id="year" placeholder="año">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Ingrese el año en un formato valido!</p>
                     </div>
                 </div>
                     <button class="submit-btn" id="submit-btn" type="submit">Cargar datos</button>
@@ -93,5 +171,6 @@
         <footer class="footer-card card">chau</footer>
     </div>
     <script src="/js/ingresar.js"></script>
+    <script src="https://kit.fontawesome.com/2fe13f77ea.js" crossorigin="anonymous"></script></body>
 </body>
-</html>`
+</html>
