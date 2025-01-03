@@ -14,31 +14,31 @@
         </header>
         <main>
             <section class="section-1 card">
-                <form class="form-consult" id="form" autocomplete="off">
+                <form class="form-consult" id="form">
                     <div class="form-item">
-                        <label for="cuil">Ingrese el cuil</label>
-                        <input type="number" name="cuil" placeholder="ingrese cuil" required>
+                        <p class="form-text">Ingrese el CUIL</p>
+                        <input type="tel" name="cuil" placeholder="ingrese cuil" required>
                     </div>
                     <div class="form-item">
-                        <label for="mes">Ingrese el mes</label>
-                        <select name="mes" id="mes"></select>
+                        <p class="form-text">Seleccione el año</p>
+                        <button type="button" id="year-btn" class="form-btn">Generar año</button>
                     </div>
                     <div class="form-item">
-                        <label for="year">Ingrese el año</label>
-                        <select name="year" id="year"></select>
+                        <p class="form-text">Ingrese el mes</p>
+                        <button type="button" id="mes-btn" class="form-btn">Generar mes</button>
                     </div>
                     <button id="consult-btn" class="consult-btn" type="submit">Consultar</button>
                 </form>
             </section>
             <section class="section-2 card">
                 <div class="info-container" id="info-card1">
-
+                    <p>lo usamos para el tema year y mes</p>
                 </div>
                 <div class="info-container" id="info-card2">
-
+                    este para info de usuario
                 </div>
                 <div class="info-container" id="info-card3">
-
+                    este para info de usuario
                 </div>
             </section>
         </main>

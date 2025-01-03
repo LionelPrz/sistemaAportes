@@ -10,32 +10,46 @@ let Stlicencia = document.getElementById('licencia');
 let Smes = document.getElementById('mes');
 let inputs = document.querySelectorAll('#form input,select');
 
+
 const expresiones = {
+    cuil: /^\d{11}$/,
     nombre: /^[a-zA-ZÀ-ÿ\s]{1,20}$/,
     apellido: /^[a-zA-ZÀ-ÿ\s]{1,20}$/,
-    cuil: /^\d{11}$/,
-    cargo:/^(Intendente|Viceintendente|Administrativo)$/,
-    categoria: /^(Intendente|Viceintendente|Administrativo)$/,
-    clase: /^(Intendente|Viceintendente|Administrativo)$/,
-    aporte_adicional:/^($-)$/,
-    monto_aporte:/^($-)$/,
-    tipo_licencia:/^(1|2|3)$/,
+    tipo_contratacion: /^(Planta permanente|Planta politica|Contratados|Ad honorem|Jornalizado)$/,
     tipo_liquidacion: /^(1|2|3)$/,
-    mes:/^(1|2|3|4|5|6|7|8|9|10|11|12)$/
+    dias_trabajados:/^([0-9]|[1-2][0-9]|3[0])$/,
+    cargo:/^(Intendente|Viceintendente|Administrativo)$/,
+    clase: /^(Intendente|Viceintendente|Administrativo)$/,
+    categoria: /^(Intendente|Viceintendente|Administrativo)$/,
+    total_remunerativo: /^\d{1,8}(,\d{1,2})?$/,
+    total_no_remunerativo: /^\d{1,8}(,\d{1,2})?$/,
+    aporte_adicional:/^\$\-.+$/,
+    monto_aporte:/^\$\-.+$/,
+    tipo_licencia:/^(1|2|3)$/,
+    dias_licencia:/^([0-9]|[1-2][0-9]|3[0-1])$/,
+    mes:/^(1|2|3|4|5|6|7|8|9|10|11|12)$/,
+    year: /^(199[0-9]|20[0-9][0-9]) $/,
 };
 
 const campos = {
+    cuil: false,
     nombre: false,
     apellido: false,
-    cuil: false,
+    tipo_contratacion: false,
+    tipo_liquidacion: false,
+    dias_trabajados: false,
     cargo: false,
-    categoria: false,
     clase: false,
+    categoria: false,
+    total_remunerativo:false,
+    total_no_remunerativo:false,
     aporte_adicional: false,
     monto_aporte: false,
     tipo_licencia: false,
+    dias_licencia:false,
     tipo_liquidacion: false,
     mes: false,
+    year: false,
 };
 
 inputs.forEach((input)=>{
@@ -45,6 +59,106 @@ inputs.forEach((input)=>{
 });
 
 form.addEventListener('click',()=>{
+    rellenarSelects();
+});
+
+
+function validarFormulario(e){
+    switch(e.target.name){
+        // Validacion cuil
+        case "cuil":
+            validarCampo(expresiones.cuil,e.target,'cuil');
+        break;
+        // Validacion Nombre
+        case "nombre":
+            validarCampo(expresiones.nombre,e.target,'nombre');
+        break;
+        // Validacion Apellido
+        case "apellido":
+            validarCampo(expresiones.apellido,e.target,'apellido');
+        break;
+        // Validacion Tipo contratacion
+        case "contratacion":
+            validarCampo(expresiones.tipo_contratacion,e.target,'contratacion');
+        break;
+        // Validacion Tipo liquidacion
+        case "liquidacion":
+            validarCampo(expresiones.tipo_liquidacion,e.target,'liquidacion');
+        break;
+        // Validacion Dias trabajados
+        case "dias_t":
+            validarCampo(expresiones.dias_trabajados,e.target,'diasTrabajo');
+        break;
+        // Validacion Cargo
+        case "cargo":
+            validarCampo(expresiones.cargo,e.target,'cargo');
+        break;
+        // Validacion Clase
+        case "clase":
+            validarCampo(expresiones.clase,e.target,'clase');
+        break;
+        // Validacion categoria
+        case "categoria":
+            validarCampo(expresiones.categoria,e.target,'categoria');
+        break;
+        // Validacion Total remunerativo
+        case "total_remunerativo":
+            validarCampo(expresiones.total_remunerativo,e.target,'remunerativo');
+        break;
+        // Validacion Total no remunerativo
+        case "total_no_remunerativo":
+            validarCampo(expresiones.total_no_remunerativo,e.target,'noRemunerativo')
+        break;
+        // Validacion Aporte adicional
+        case "tipo_aporte_adicional":
+            validarCampo(expresiones.aporte_adicional,e.target,'aporteadd');
+        break;
+        // Validacion Monto del aporte
+        case "monto_aporte_adicional":
+            validarCampo(expresiones.monto_aporte,e.target,'montoaporte');
+        break;
+        // Validacion Tipo licencia
+        case "tipo_licencia":
+            validarCampo(expresiones.tipo_licencia,e.target,'tipoLicencia');
+        break;
+        // Validacion Dias licencia
+        case "dias_licencia":
+            validarCampo(expresiones.dias_licencia,e.target,'diasLicencia');
+        break;
+        // Validacion Año
+        case "year":
+            validarCampo(expresiones.year,e.target,'year');
+        break;
+        // Validacion Mes
+        case "mes":
+            validarCampo(expresiones.mes,e.target,'mes');
+        break;
+    }
+    // Ocultar mensaje de advertencia si todos los campos son válidos
+    if (Object.values(campos).every((campo) => campo)) {
+        document.getElementById('formulario__mensaje').classList.remove('formulario__mensaje-activo');
+    }
+}
+
+function validarCampo(expresion,input,campo){
+    if(expresion.test(input.value)){
+        document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
+		document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
+		document.querySelector(`#grupo__${campo} i`).classList.add('fa-check-circle');
+		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-times-circle');
+		document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.remove('formulario__input-error-activo');
+		campos[campo] = true;
+    }
+    else{
+        document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-incorrecto');
+		document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-correcto');
+		document.querySelector(`#grupo__${campo} i`).classList.add('fa-times-circle');
+		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-check-circle');
+		document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.add('formulario__input-error-activo');
+		campos[campo] = false;
+    }
+}
+function rellenarSelects(){
     if(!campos.ejecucion){
         // limmpieza de las opciones anteriores
         SaporteAdd.innerHTML = '';
@@ -120,64 +234,5 @@ form.addEventListener('click',()=>{
             <option value="5">Jornalizado</option>
     `);
         campos.ejecucion = true;
-    }
-});
-
-
-function validarFormulario(e){
-    switch(e.target.name){
-        case "nombre":
-            validarCampo(expresiones.nombre,e.target,'nombre');
-        break;
-        case "apellido":
-            validarCampo(expresiones.apellido,e.target,'apellido');
-        break;
-        case "cuil":
-            validarCampo(expresiones.cuil,e.target,'cuil');
-        break;
-        case "cargo_funcion":
-            validarCampo(expresiones.cargo,e.target,'cargo_funcion');
-        break;
-        case "clase_nivel":
-            validarCampo(expresiones.clase,e.target,'clase_nivel');
-        break;
-        case "categoria_agrupacion":
-            validarCampo(expresiones.categoria,e.target,'categoria_agrupacion');
-        break;
-        case "monto_aporte_adicional":
-            validarCampo(expresiones.monto_aporte,e.target,'monto_aporte_adicional');
-        break;
-        case "tipo_aporte_adicional":
-            validarCampo(expresiones.aporte_adicional,e.target,'tipo_aporte_adicional');
-        break;
-        case "tipo_licencia":
-            validarCampo(expresiones.tipo_licencia,e.target,'tipo_licencia');
-        break;
-        case "mes":
-            validarCampo(expresiones.mes,e.target,'mes');
-        break;
-    }
-    // Ocultar mensaje de advertencia si todos los campos son válidos
-    if (Object.values(campos).every((campo) => campo)) {
-        document.getElementById('formulario__mensaje').classList.remove('formulario__mensaje-activo');
-    }
-}
-
-function validarCampo(expresion,input,campo){
-    if(expresion.test(input.value)){
-        document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
-		document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
-		document.querySelector(`#grupo__${campo} i`).classList.add('fa-check-circle');
-		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-times-circle');
-		document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.remove('formulario__input-error-activo');
-		campos[campo] = true;
-    }
-    else{
-        document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-incorrecto');
-		document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-correcto');
-		document.querySelector(`#grupo__${campo} i`).classList.add('fa-times-circle');
-		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-check-circle');
-		document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.add('formulario__input-error-activo');
-		campos[campo] = false;
     }
 }
