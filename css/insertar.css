@@ -55,10 +55,25 @@ footer{
 .form{
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    gap: 1.2rem;
+    gap: 1rem;
     padding: .8rem;
     margin: .8rem;
     box-shadow: 0 10px 20px rgba(68, 68, 68, 0.4);
+}
+.last-row-container{
+	grid-column: 1/4;
+	display: grid;
+	grid-template-columns: repeat(2,400px);
+	justify-content: space-evenly;
+	align-items: stretch;
+	gap: 15px;
+}
+.submit-btn{
+	grid-column: 2/3;
+	height: 55px;
+	font-size: 1.2rem;
+	border-radius: 10px;
+	border: none;
 }
 .form-item{
     display: flex;

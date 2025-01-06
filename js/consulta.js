@@ -36,7 +36,15 @@ function encontrarCuil(datosComparados){
 
     cuilEncontrado = datos.filter(item=> item.cuil === datosComparados);
     if(cuilEncontrado.length >0){
-        yearDisponibles = [...new Set(cuilEncontrado.map(item=>item.year))];
+        encontrarYear(cuilEncontrado);
+    }
+    else{
+        console.error('no hay coincidencias para el cuil numero: '+ cuilEncontrado);
+
+    }
+
+function encontrarYear(cuil){
+    yearDisponibles = [...new Set(cuil.map(item=>item.year))];
         contenedorYear.innerHTML= '';
         // Generacion de los items tipo botones
         yearDisponibles.forEach(year=>{
@@ -45,7 +53,7 @@ function encontrarCuil(datosComparados){
                     Año: ${year}
                 </button>
             `);
-        });
+    });
         // Recuperamos los botones recien creados por el filtro
         let contenidoBotones = document.querySelectorAll('#info-card1 button');
         // Ahora lo recorremos con foreach y le damos eventos click
@@ -55,10 +63,6 @@ function encontrarCuil(datosComparados){
                 encontrarMeses(cuilEncontrado,yearSelect);
             });
         });
-    }
-    else{
-        console.error('no hay coincidencias para el cuil numero: '+ cuilEncontrado);
-
     }
 
     function encontrarMeses(datosEncontrados,yearSeleccionado){
@@ -134,6 +138,7 @@ function reiniciarEstado(){
     contenedorYear.innerHTML = '';
     formulario.reset();
     botonGenerar.style.display = "block";
+    botonGenerar.disabled = true;
     botonReseteo.style.display = "none";
     botonConsultar.disabled = false;
 }

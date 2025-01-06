@@ -15,20 +15,20 @@ const expresiones = {
     cuil: /^\d{11}$/,
     nombre: /^[a-zA-ZÀ-ÿ\s]{1,20}$/,
     apellido: /^[a-zA-ZÀ-ÿ\s]{1,20}$/,
-    tipo_contratacion: /^(Planta permanente|Planta politica|Contratados|Ad honorem|Jornalizado)$/,
+    tipo_contratacion: /^(1|2|3|4|5)$/,
     tipo_liquidacion: /^(1|2|3)$/,
     dias_trabajados:/^([0-9]|[1-2][0-9]|3[0])$/,
     cargo:/^(Intendente|Viceintendente|Administrativo)$/,
     clase: /^(Intendente|Viceintendente|Administrativo)$/,
     categoria: /^(Intendente|Viceintendente|Administrativo)$/,
-    total_remunerativo: /^\d{1,8}(,\d{1,2})?$/,
-    total_no_remunerativo: /^\d{1,8}(,\d{1,2})?$/,
+    total_remunerativo: /^\d{1,3}(\.\d{3})*(,\d{1,2})?$/,
+    total_no_remunerativo: /^\d{1,3}(\.\d{3})*(,\d{1,2})?$/,
     aporte_adicional:/^\$\-.+$/,
     monto_aporte:/^\$\-.+$/,
     tipo_licencia:/^(1|2|3)$/,
     dias_licencia:/^([0-9]|[1-2][0-9]|3[0-1])$/,
     mes:/^(1|2|3|4|5|6|7|8|9|10|11|12)$/,
-    year: /^(199[0-9]|20[0-9][0-9]) $/,
+    year: /^(19[0-9]{2}|20[0-9]{2})$/
 };
 
 const campos = {
@@ -227,8 +227,8 @@ function rellenarSelects(){
     `);
         Scontratacion.insertAdjacentHTML('beforeend',`
             <option disabled selected>Tipo de contratacion</option>
-            <option value="1">Planta Permanente</option>
-            <option value="2">Planta Politica</option>
+            <option value="1">Planta permanente</option>
+            <option value="2">Planta politica</option>
             <option value="3">Contratados</option>
             <option value="4">Ad honorem</option>
             <option value="5">Jornalizado</option>

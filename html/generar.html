@@ -13,26 +13,27 @@
             <p>header</p>
         </header>
         <main>
-            <form id="form-generate" class="form card">
-                <div class="form-item">
-                    <p class="form-text">Seleccione el año</p>
-                    <button type="button" class="form-btn">generar</button>
-                </div>
-                <div class="form-item">
-                    <p class="form-text">Seleccione el mes a generar</p>
-                    <button type="button" class="form-btn">generar</button>    
-                </div>
-                <div class="btn-container">
-                    <button id="submit-btn" class="submit-btn" type="submit">Generar</button>
-                </div>
-            </form>
+            <section class="section-1 card">
+                <form id="form-generate" class="form card">
+                    <div class="form-item">
+                        <p class="form-text">Seleccione el año</p>
+                        <button type="button" class="form-btn" id="mes-btn">Seleccionar</button>
+                    </div>
+                    <div class="form-item">
+                        <p class="form-text">Seleccione el mes</p>
+                        <button type="button" class="form-btn" id="year-btn">Seleccionar</button>    
+                    </div>
+                </form>
+            </section>
+            <section class="section-2 card">
+                    <div class="info-container" id="info-card1"></div>
+                    <div class="info-container" id="info-card2"></div>
+            </section>
+                <section class="card section-3" id="info-card3">
+                    <button type="button" class="generate-consult-btn" id="generate-consult-btn" disabled>Generar consulta</button>
+                    <button type="button" class="reset-consult-btn" id="reset-consult-btn">Aceptar</button>
+            </section>
         </main>
-        <section id="archive-generate" class="generate-container card">
-            <div class="archive-container">
-                <h3 id="nombre-generado" class="nombre-generado">Excel Generado</h3>
-                <button type="button" class="generate-btn" id="generated-btn">archivo.xls</button>
-            </div>
-        </section>
         <aside class="card">
             <p>aside</p>
         </aside>
