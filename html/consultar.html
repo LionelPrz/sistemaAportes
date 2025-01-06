@@ -8,6 +8,9 @@
     <title>Consultar Datos</title>
 </head>
 <body>
+    <div id="loader-bar" class="progress-loader">
+        <div class="progress"></div>
+      </div>
     <div class="container">
         <header class="card">
             <h1>header</h1>
@@ -17,29 +20,20 @@
                 <form class="form-consult" id="form">
                     <div class="form-item">
                         <p class="form-text">Ingrese el CUIL</p>
-                        <input type="tel" name="cuil" placeholder="ingrese cuil" required>
-                    </div>
-                    <div class="form-item">
-                        <p class="form-text">Seleccione el año</p>
-                        <button type="button" id="year-btn" class="form-btn">Generar año</button>
-                    </div>
-                    <div class="form-item">
-                        <p class="form-text">Ingrese el mes</p>
-                        <button type="button" id="mes-btn" class="form-btn">Generar mes</button>
+                        <input type="tel" name="cuil" id="cuil" placeholder="ingrese cuil" required>
                     </div>
                     <button id="consult-btn" class="consult-btn" type="submit">Consultar</button>
                 </form>
             </section>
             <section class="section-2 card">
                 <div class="info-container" id="info-card1">
-                    <p>lo usamos para el tema year y mes</p>
                 </div>
                 <div class="info-container" id="info-card2">
-                    este para info de usuario
                 </div>
-                <div class="info-container" id="info-card3">
-                    este para info de usuario
-                </div>
+            </section>
+            <section class="card section-3" id="info-card3">
+                <button type="button" class="generate-consult-btn" id="generate-consult-btn" disabled>Generar consulta</button>
+                <button type="button" class="reset-consult-btn" id="reset-consult-btn">Aceptar</button>
             </section>
         </main>
         <aside class="card">
