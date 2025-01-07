@@ -9,7 +9,8 @@ let SmontoApt = document.getElementById('monto_aporte');
 let Stlicencia = document.getElementById('licencia');
 let Smes = document.getElementById('mes');
 let inputs = document.querySelectorAll('#form input,select');
-
+let botonS = document.getElementById('submit-btn');
+let valorForm;
 
 const expresiones = {
     cuil: /^\d{11}$/,
@@ -28,7 +29,8 @@ const expresiones = {
     tipo_licencia:/^(1|2|3)$/,
     dias_licencia:/^([0-9]|[1-2][0-9]|3[0-1])$/,
     mes:/^(1|2|3|4|5|6|7|8|9|10|11|12)$/,
-    year: /^(19[0-9]{2}|20[0-9]{2})$/
+    year: /^(19[0-9]{2}|20[0-9]{2})$/,
+    input: /^([1-9][0-9])$/
 };
 
 const campos = {
@@ -50,6 +52,7 @@ const campos = {
     tipo_liquidacion: false,
     mes: false,
     year: false,
+    input:false,
 };
 
 inputs.forEach((input)=>{
@@ -60,8 +63,11 @@ inputs.forEach((input)=>{
 
 form.addEventListener('click',()=>{
     rellenarSelects();
-});
 
+});
+window.addEventListener('load',(e)=>{
+    generateAlert("info");
+})
 
 function validarFormulario(e){
     switch(e.target.name){
@@ -235,4 +241,85 @@ function rellenarSelects(){
     `);
         campos.ejecucion = true;
     }
+}
+function generateAlert(resultado, mensaje = null){
+
+    // Validacion precencia para evitar duplicados
+    if(document.getElementById("customAlert")) return;
+
+    // declaracion de variables
+    let texto;
+    let imagen;
+    let claseCont = "custom-alert";
+    let claseText = "alert-text";
+    let clasePbar = "alert-progress-bar"
+    let claseBar = "bar-content";
+    let inputBar = "alert-input";
+    let botonInput = "boton-input";
+
+    // Comprobacion de resultado
+
+    switch(resultado){
+
+        case "error":
+            // Generacion del alert de error
+            imagen ="./svg-assets/ayuyu-angry-png.png";
+            texto = mensaje || "Se produjo un error al enviar el formulario !";
+            claseText = "alert-text-error";
+            clasePbar = "alert-progress-bar  red1";
+            claseBar = "bar-content red";
+            claseCont += " custom-alert-error";
+            break;
+        
+        case "success":
+            // Generacion del alert de exito
+            imagen ="./svg-assets/boochi-nato-png.png";
+            texto = mensaje || "Formulario enviado Correctamente";
+            claseCont += " custom-alert-success";
+            clasePbar = "alert-progress-bar green1"
+            claseBar = "bar-content green";
+            break;
+        
+        case "info":
+            // Generacion del alert de informacion
+            imagen ="../assets/info-warning-alert.jpg";
+            claseText = "alert-text-info";
+            texto = mensaje || "Ingrese las filas a cargar!";
+            claseCont += " custom-alert-info";
+            clasePbar = "alert-progress-bar blue1"
+            claseBar = "bar-content blue";
+            break;
+    }
+
+            // Generar el elemento de manera dinamica y insertarlo despues del boton
+            botonS.insertAdjacentHTML('afterend',`
+                <div id="customAlert" class="alert-overlay">
+                    <div class="${claseCont}">
+                    <div class="${clasePbar}">
+                    <span class="${claseBar}"></span>
+                </div>
+                    <img src="${imagen}" class="alert-img" alt="imagen mamalona">
+                    <div class="text-input-container">
+                        <p class="${claseText}">${texto}</p>
+                        <input class="${inputBar}" type="tel" id="alert-input" required>
+                        <button class="${botonInput}" type="button" id="boton-input">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+            `);
+
+        const idCont = document.getElementById("customAlert");
+        const idbtnaccept = document.getElementById("boton-input");
+                idCont.addEventListener('click',(e)=>{
+                e.stopPropagation();
+            });
+                idbtnaccept.addEventListener('click',()=>{
+                    valorForm = document.getElementById('alert-input').value;
+                    console.log(valorForm);
+                    iterarFormulario(valorForm);
+                    idCont.remove();
+            });
+}
+function iterarFormulario(iteraciones){
+    
 }

@@ -119,3 +119,12 @@ transition: background-color 0.5s ease, color 0.5s ease;
   }
 }
 
+@keyframes progress-animation{
+	from{
+		width: 100%;
+	}
+	to{
+		width: 0%;
+	}
+}
+
