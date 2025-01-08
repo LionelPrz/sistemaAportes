@@ -18,7 +18,7 @@
                 <div class="formulario__grupo" id="grupo__cuil">
                     <label class="formulario__label" for="cuil">Ingrese el Cuil del empleado</label>
                     <div class="formulario__grupo-input">
-                        <input class="formulario__input" type="number" name="cuil" id="cuil" placeholder="Cuil">
+                        <input class="formulario__input" type="tel" name="cuil" id="cuil" placeholder="Cuil">
                         <i class="formulario__validacion-estado fas fa-times-circle"></i>
                     </div>
                     <p class="formulario__input-error">Ingrese su numero de CUIL sin puntos guiones o espacios!</p>
@@ -42,28 +42,28 @@
                     <p class="formulario__input-error">El apellido solo puede contenener letras, acentos y espacios !</p>
                 </div>
                 <!-- Grupo Tipo contratacion -->
-                <div class="formulario__grupo" id="grupo__contratacion">
-                    <label class="formulario__label" for="contratacion">Tipo de contratacion</label>
+                <div class="formulario__grupo" id="grupo__tipo_contratacion">
+                    <label class="formulario__label" for="tipo_contratacion">Tipo de contratacion</label>
                     <div class="formulario__grupo-input">
-                        <select class="formulario__input" name="contratacion" id="contratacion"></select>
+                        <select class="formulario__input" name="tipo_contratacion" id="contratacion"></select>
                         <i class="formulario__validacion-estado fas fa-times-circle"></i>
                     </div>
                     <p class="formulario__input-error">Seleccione un tipo de contratacion!</p>
                 </div>
                 <!-- Grupo Liquidacion -->
-                <div class="formulario__grupo" id="grupo__liquidacion">
+                <div class="formulario__grupo" id="grupo__tipo_liquidacion">
                     <label class="formulario__label" for="tipo_liquidacion">Tipo de liquidacion</label>
                     <div class="formulario__grupo-input">
-                        <select class="formulario__input" name="liquidacion" id="liquidacion"></select>
+                        <select class="formulario__input" name="tipo_liquidacion" id="liquidacion"></select>
                         <i class="formulario__validacion-estado fas fa-times-circle"></i>
                     </div>
                     <p class="formulario__input-error">Seleccione un tipo de liquidacion!</p>
                 </div>
                 <!-- Grupo Dias Trabajados -->
-                <div class="formulario__grupo" id="grupo__diasTrabajo">
+                <div class="formulario__grupo" id="grupo__dias_trabajados">
                     <label class="formulario__label" for="dias_trabajados">Dias trabajados</label>
                     <div class="formulario__grupo-input">
-                        <input class="formulario__input" type="tel" name="dias_t" id="dias" placeholder="Dias trabajados">
+                        <input class="formulario__input" type="tel" name="dias_trabajados" id="dias" placeholder="Dias trabajados">
                         <i class="formulario__validacion-estado fas fa-times-circle"></i>
                     </div>
                     <p class="formulario__input-error">Ingrese un numero valido de dias trabajados!</p>
@@ -96,7 +96,7 @@
                     <p class="formulario__input-error">Seleccione una categoria!</p>
                 </div>
                 <!-- Grupo total remunerativo -->
-                <div class="formulario__grupo" id="grupo__remunerativo">
+                <div class="formulario__grupo" id="grupo__total_remunerativo">
                     <label class="formulario__label" for="total_remunerativo">Total remunerativo</label>
                     <div class="formulario__grupo-input">
                         <input class="formulario__input" type="tel" name="total_remunerativo" id="remuneracion" placeholder="Total remunerativo">
@@ -105,7 +105,7 @@
                     <p class="formulario__input-error">Ingrese un total remunerativo valido!</p>
                 </div>
                 <!-- Grupo Total no Remunerativo -->
-                <div class="formulario__grupo" id="grupo__noRemunerativo">
+                <div class="formulario__grupo" id="grupo__total_no_remunerativo">
                     <label class="formulario__label" for="total_no_remunerativo">Total no remunerativo</label>
                     <div class="formulario__grupo-input">
                         <input class="formulario__input" type="tel" name="total_no_remunerativo" id="no_remunerativo" placeholder="Total no remunerativo">
@@ -113,7 +113,7 @@
                     </div>
                     <p class="formulario__input-error">Ingrese un total no remunerativo valido!</p>
                 </div>
-                <div class="formulario__grupo" id="grupo__aporteadd">
+                <div class="formulario__grupo" id="grupo__tipo_aporte_adicional">
                     <label class="formulario__label" for="tipo_aporte_adicional">Tipo de aporte adicional</label>
                     <div class="formulario__grupo-input">
                         <select class="formulario__input" name="tipo_aporte_adicional" id="aporte_adicional"></select>
@@ -121,7 +121,7 @@
                     </div>
                     <p class="formulario__input-error">El tipo de aporte adicional solo debe de contener '$-'</p>
                 </div>
-                <div class="formulario__grupo" id="grupo__montoaporte">
+                <div class="formulario__grupo" id="grupo__monto_aporte_adicional">
                     <label class="formulario__label" for="monto_aporte_adicional">Monto del aporte adicional</label>
                     <div class="formulario__grupo-input">
                         <select  class="formulario__input" name="monto_aporte_adicional" id="monto_aporte"></select>
@@ -129,7 +129,7 @@
                     </div>
                     <p class="formulario__input-error">El monto de aporte adicional solo debe de contener '$-'</p>
                 </div>
-                <div class="formulario__grupo" id="grupo__tipoLicencia">
+                <div class="formulario__grupo" id="grupo__tipo_licencia">
                     <label class="formulario__label" for="tipo_licencia">Tipo de licencia</label>
                     <div class="formulario__grupo-input">
                         <select class="formulario__input" name="tipo_licencia" id="licencia"></select>
@@ -137,7 +137,7 @@
                     </div>
                     <p class="formulario__input-error">Seleccione un tipo de licencia valida !</p>
                 </div>
-                <div class="formulario__grupo" id="grupo__diasLicencia">
+                <div class="formulario__grupo" id="grupo__dias_licencia">
                     <label class="formulario__label" for="dias_licencia">Dias de licencia</label>
                     <div class="formulario__grupo-input">
                         <input class="formulario__input" type="tel" name="dias_licencia" id="dias_licencia" placeholder="Dias de licencia">

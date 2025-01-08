@@ -26,7 +26,7 @@ const expresiones = {
     total_remunerativo: /^\d{1,3}(\.\d{3})*(,\d{1,2})?$/,
     total_no_remunerativo: /^\d{1,3}(\.\d{3})*(,\d{1,2})?$/,
     aporte_adicional:/^\$-$/,
-    monto_aporte:/^\$-$/,
+    monto_aporte_adicional:/^\$-$/,
     tipo_licencia:/^(1|2|3)$/,
     dias_licencia:/^([0-9]|[1-2][0-9]|3[0-1])$/,
     mes:/^(1|2|3|4|5|6|7|8|9|10|11|12)$/,
@@ -47,7 +47,7 @@ const campos = {
     total_remunerativo:false,
     total_no_remunerativo:false,
     aporte_adicional: false,
-    monto_aporte: false,
+    monto_aporte_adicional: false,
     tipo_licencia: false,
     dias_licencia:false,
     tipo_liquidacion: false,
@@ -90,16 +90,16 @@ function validarFormulario(e){
             validarCampo(expresiones.apellido,e.target,'apellido');
         break;
         // Validacion Tipo contratacion
-        case "contratacion":
-            validarCampo(expresiones.tipo_contratacion,e.target,'contratacion');
+        case "tipo_contratacion":
+            validarCampo(expresiones.tipo_contratacion,e.target,'tipo_contratacion');
         break;
         // Validacion Tipo liquidacion
-        case "liquidacion":
-            validarCampo(expresiones.tipo_liquidacion,e.target,'liquidacion');
+        case "tipo_liquidacion":
+            validarCampo(expresiones.tipo_liquidacion,e.target,'tipo_liquidacion');
         break;
         // Validacion Dias trabajados
-        case "dias_t":
-            validarCampo(expresiones.dias_trabajados,e.target,'diasTrabajo');
+        case "dias_trabajados":
+            validarCampo(expresiones.dias_trabajados,e.target,'dias_trabajados');
         break;
         // Validacion Cargo
         case "cargo":
@@ -115,27 +115,27 @@ function validarFormulario(e){
         break;
         // Validacion Total remunerativo
         case "total_remunerativo":
-            validarCampo(expresiones.total_remunerativo,e.target,'remunerativo');
+            validarCampo(expresiones.total_remunerativo,e.target,'total_remunerativo');
         break;
         // Validacion Total no remunerativo
         case "total_no_remunerativo":
-            validarCampo(expresiones.total_no_remunerativo,e.target,'noRemunerativo')
+            validarCampo(expresiones.total_no_remunerativo,e.target,'total_no_remunerativo')
         break;
         // Validacion Aporte adicional
         case "tipo_aporte_adicional":
-            validarCampo(expresiones.aporte_adicional,e.target,'aporteadd');
+            validarCampo(expresiones.aporte_adicional,e.target,'tipo_aporte_adicional');
         break;
         // Validacion Monto del aporte
         case "monto_aporte_adicional":
-            validarCampo(expresiones.monto_aporte,e.target,'montoaporte');
+            validarCampo(expresiones.monto_aporte_adicional,e.target,'monto_aporte_adicional');
         break;
         // Validacion Tipo licencia
         case "tipo_licencia":
-            validarCampo(expresiones.tipo_licencia,e.target,'tipoLicencia');
+            validarCampo(expresiones.tipo_licencia,e.target,'tipo_licencia');
         break;
         // Validacion Dias licencia
         case "dias_licencia":
-            validarCampo(expresiones.dias_licencia,e.target,'diasLicencia');
+            validarCampo(expresiones.dias_licencia,e.target,'dias_licencia');
         break;
         // Validacion Año
         case "year":
@@ -160,6 +160,7 @@ function validarCampo(expresion,input,campo){
 		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-times-circle');
 		document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.remove('formulario__input-error-activo');
 		campos[campo] = true;
+        console.log(campo.value);
     }
     else{
         document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-incorrecto');
@@ -168,6 +169,7 @@ function validarCampo(expresion,input,campo){
 		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-check-circle');
 		document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.add('formulario__input-error-activo');
 		campos[campo] = false;
+        console.log(campo);
     }
 }
 function rellenarSelects(){
