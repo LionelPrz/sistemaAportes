@@ -9,7 +9,8 @@ let SmontoApt = document.getElementById('monto_aporte');
 let Stlicencia = document.getElementById('licencia');
 let Smes = document.getElementById('mes');
 let inputs = document.querySelectorAll('#form input,select');
-let botonS = document.getElementById('submit-btn');
+let botonNext = document.getElementById('next-btn');
+let contenedorDatos = [];
 let valorForm;
 
 const expresiones = {
@@ -24,8 +25,8 @@ const expresiones = {
     categoria: /^(Intendente|Viceintendente|Administrativo)$/,
     total_remunerativo: /^\d{1,3}(\.\d{3})*(,\d{1,2})?$/,
     total_no_remunerativo: /^\d{1,3}(\.\d{3})*(,\d{1,2})?$/,
-    aporte_adicional:/^\$\-.+$/,
-    monto_aporte:/^\$\-.+$/,
+    aporte_adicional:/^\$-$/,
+    monto_aporte:/^\$-$/,
     tipo_licencia:/^(1|2|3)$/,
     dias_licencia:/^([0-9]|[1-2][0-9]|3[0-1])$/,
     mes:/^(1|2|3|4|5|6|7|8|9|10|11|12)$/,
@@ -60,13 +61,18 @@ inputs.forEach((input)=>{
     input.addEventListener('blur',validarFormulario);
     input.addEventListener('change',validarFormulario);
 });
-
 form.addEventListener('click',()=>{
     rellenarSelects();
-
 });
 window.addEventListener('load',(e)=>{
     generateAlert("info");
+});
+form.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    if(Object.values(campos).every((campo)=>campo)){
+        console.log("hola")
+        iterarFormulario();
+    }
 })
 
 function validarFormulario(e){
@@ -292,7 +298,7 @@ function generateAlert(resultado, mensaje = null){
     }
 
             // Generar el elemento de manera dinamica y insertarlo despues del boton
-            botonS.insertAdjacentHTML('afterend',`
+            botonNext.insertAdjacentHTML('afterend',`
                 <div id="customAlert" class="alert-overlay">
                     <div class="${claseCont}">
                     <div class="${clasePbar}">
@@ -315,11 +321,39 @@ function generateAlert(resultado, mensaje = null){
             });
                 idbtnaccept.addEventListener('click',()=>{
                     valorForm = document.getElementById('alert-input').value;
-                    console.log(valorForm);
-                    iterarFormulario(valorForm);
+                    // console.log(valorForm);
                     idCont.remove();
             });
 }
-function iterarFormulario(iteraciones){
-    
+function iterarFormulario(){
+    console.log("si soy")
+            let datosFormulario = new FormData(form);
+            let objetosCargados = {};
+                datosFormulario.forEach((item,columna)=>{
+                    objetosCargados[columna] = item;
+                });
+                contenedorDatos.push(objetosCargados);
+                cargarDatos();
+}
+function cargarDatos(){
+    console.log(contenedorDatos);
+}
+
+function reseteoFormulario(){
+    // Reiniciar el formulario
+    form.reset();
+
+    // Reinicio los estados de los campos y sus estilos
+    document.querySelectorAll('.formulario__grupo-correcto').forEach((icono) => {
+        icono.classList.remove('formulario__grupo-correcto');
+        icono.classList.remove('formulario__grupo-incorrecto');
+        });
+
+    // Ocultar el mensaje de error si es que estubiera activo
+    document.getElementById('formulario__mensaje').classList.remove('formulario__mensaje-activo');
+
+    // Reinicio de los estados de validacion
+    for(let campo in campos){
+        campos[campo] = false;
+    } 
 }

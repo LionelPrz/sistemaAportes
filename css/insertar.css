@@ -68,12 +68,13 @@ footer{
 	align-items: stretch;
 	gap: 15px;
 }
-.submit-btn{
+.next-btn{
 	grid-column: 2/3;
 	height: 55px;
 	font-size: 1.2rem;
 	border-radius: 10px;
 	border: none;
+	cursor: pointer;
 }
 .form-item{
     display: flex;
@@ -377,4 +378,5 @@ footer{
 	font-size: 1.2rem;
 	font-weight: 700;
 	border: none;
+	cursor: pointer;
 }

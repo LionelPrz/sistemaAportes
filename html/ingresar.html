@@ -140,7 +140,7 @@
                 <div class="formulario__grupo" id="grupo__diasLicencia">
                     <label class="formulario__label" for="dias_licencia">Dias de licencia</label>
                     <div class="formulario__grupo-input">
-                        <input class="formulario__input" type="number" name="dias_licencia" id="dias_licencia" placeholder="Dias de licencia">
+                        <input class="formulario__input" type="tel" name="dias_licencia" id="dias_licencia" placeholder="Dias de licencia">
                         <i class="formulario__validacion-estado fas fa-times-circle"></i>
                     </div>
                     <p class="formulario__input-error">Ingrese un valor de dias de licencia valido!</p>
@@ -163,7 +163,15 @@
                         <p class="formulario__input-error">Ingrese el año en un formato valido!</p>
                     </div>
                 </div>
-                <button class="submit-btn" id="submit-btn" type="submit">Cargar datos</button>
+                <div class="formulario__mensaje" id="formulario__mensaje">
+                    <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
+                </div>
+                <div class="formulario__grupo formulario__grupo-btn-enviar">
+                    <button class="next-btn" id="next-btn" type="submit">Siguente</button>
+                    <button id="btn-submit" type="submit" class="formulario__btn" disabled>Enviar</button>
+                    <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+                </div>
+                
             </form>
         </main>
         <aside class="card">
