@@ -32,7 +32,8 @@ const expresiones = {
     dias_licencia:/^([0-9]|[1-2][0-9]|3[0-1])$/,
     mes:/^(1|2|3|4|5|6|7|8|9|10|11|12)$/,
     year: /^(19[0-9]{2}|20[0-9]{2})$/,
-    input: /^([1-9][0-9])$/
+    // input: /^([1-9][0-9])$/
+    input: /^([1-9])$/
 };
 
 const campos = {
@@ -345,12 +346,16 @@ function cargarFormulario(){
                 cargarDatos();
 }
 function iteracionDatos(){
-    for(let clicks=0;clicks< valorForm.value;clicks++){
+    let clicks;
+    for(clicks=0;clicks<valorForm.value;clicks++){
+        console.log(clicks);
+        console.log(valorForm.value);
         reseteoFormulario();
+        console.log(clicks);
+    }
     if(clicks === valorForm.value){
         botonNext.style.display = 'none';
         botonSmt.style.display = 'block';
-    }
     }
 }
 function cargarDatos(){
