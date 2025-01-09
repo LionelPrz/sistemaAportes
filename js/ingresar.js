@@ -5,11 +5,12 @@ let Scargo = document.getElementById('cargo');
 let Scategoria = document.getElementById('categoria');
 let Sclase = document.getElementById('clase');
 let SaporteAdd = document.getElementById('aporte_adicional');
-let SmontoApt = document.getElementById('monto_aporte');
+let SmontoApt = document.getElementById('monto_aporte_adicional');
 let Stlicencia = document.getElementById('licencia');
 let Smes = document.getElementById('mes');
 let inputs = document.querySelectorAll('#form input,select');
 let botonNext = document.getElementById('next-btn');
+let botonSmt = document.getElementById('btn-submit');
 let contenedorDatos = [];
 let valorForm;
 
@@ -25,7 +26,7 @@ const expresiones = {
     categoria: /^(Intendente|Viceintendente|Administrativo)$/,
     total_remunerativo: /^\d{1,3}(\.\d{3})*(,\d{1,2})?$/,
     total_no_remunerativo: /^\d{1,3}(\.\d{3})*(,\d{1,2})?$/,
-    aporte_adicional:/^\$-$/,
+    tipo_aporte_adicional:/^\$-$/,
     monto_aporte_adicional:/^\$-$/,
     tipo_licencia:/^(1|2|3)$/,
     dias_licencia:/^([0-9]|[1-2][0-9]|3[0-1])$/,
@@ -46,7 +47,7 @@ const campos = {
     categoria: false,
     total_remunerativo:false,
     total_no_remunerativo:false,
-    aporte_adicional: false,
+    tipo_aporte_adicional: false,
     monto_aporte_adicional: false,
     tipo_licencia: false,
     dias_licencia:false,
@@ -54,6 +55,7 @@ const campos = {
     mes: false,
     year: false,
     input:false,
+    ejecucion:false,
 };
 
 inputs.forEach((input)=>{
@@ -64,15 +66,17 @@ inputs.forEach((input)=>{
 form.addEventListener('click',()=>{
     rellenarSelects();
 });
-window.addEventListener('load',(e)=>{
+window.addEventListener('load',()=>{
     generateAlert("info");
 });
 form.addEventListener('submit',(e)=>{
     e.preventDefault();
     if(Object.values(campos).every((campo)=>campo)){
-        console.log("hola")
-        iterarFormulario();
-    }
+        botonNext.addEventListener('click',()=>{
+            cargarFormulario();
+            iteracionDatos();
+        })
+}
 })
 
 function validarFormulario(e){
@@ -123,7 +127,7 @@ function validarFormulario(e){
         break;
         // Validacion Aporte adicional
         case "tipo_aporte_adicional":
-            validarCampo(expresiones.aporte_adicional,e.target,'tipo_aporte_adicional');
+            validarCampo(expresiones.tipo_aporte_adicional,e.target,'tipo_aporte_adicional');
         break;
         // Validacion Monto del aporte
         case "monto_aporte_adicional":
@@ -160,7 +164,6 @@ function validarCampo(expresion,input,campo){
 		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-times-circle');
 		document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.remove('formulario__input-error-activo');
 		campos[campo] = true;
-        console.log(campo.value);
     }
     else{
         document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-incorrecto');
@@ -169,7 +172,6 @@ function validarCampo(expresion,input,campo){
 		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-check-circle');
 		document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.add('formulario__input-error-activo');
 		campos[campo] = false;
-        console.log(campo);
     }
 }
 function rellenarSelects(){
@@ -182,9 +184,7 @@ function rellenarSelects(){
         Sliquidacion.innerHTML = '';
         Smes.innerHTML = '';
         SmontoApt.innerHTML = '';
-        SmontoApt.innerHTML = '';
         Stlicencia.innerHTML = '';
-
         SaporteAdd.insertAdjacentHTML('beforeend',`
             <option disabled selected>Tipo aporte adicional</option>
             <option value="$-">$-</option>
@@ -230,7 +230,7 @@ function rellenarSelects(){
 
     `);
         SmontoApt.insertAdjacentHTML('beforeend',`
-            <option disabled selected>Monto del Aporte</option>
+            <option disabled selected>Tipo aporte adicional</option>
             <option value="$-">$-</option>
     `);
         Stlicencia.insertAdjacentHTML('beforeend',`
@@ -247,7 +247,7 @@ function rellenarSelects(){
             <option value="4">Ad honorem</option>
             <option value="5">Jornalizado</option>
     `);
-        campos.ejecucion = true;
+    campos.ejecucion = true;
     }
 }
 function generateAlert(resultado, mensaje = null){
@@ -259,7 +259,6 @@ function generateAlert(resultado, mensaje = null){
     let texto;
     let imagen;
     let claseCont = "custom-alert";
-    let claseText = "alert-text";
     let clasePbar = "alert-progress-bar"
     let claseBar = "bar-content";
     let inputBar = "alert-input";
@@ -301,6 +300,7 @@ function generateAlert(resultado, mensaje = null){
 
             // Generar el elemento de manera dinamica y insertarlo despues del boton
             botonNext.insertAdjacentHTML('afterend',`
+            <div class="formulario__grupo" id="grupo__input">
                 <div id="customAlert" class="alert-overlay">
                     <div class="${claseCont}">
                     <div class="${clasePbar}">
@@ -308,10 +308,15 @@ function generateAlert(resultado, mensaje = null){
                 </div>
                     <img src="${imagen}" class="alert-img" alt="imagen mamalona">
                     <div class="text-input-container">
-                        <p class="${claseText}">${texto}</p>
-                        <input class="${inputBar}" type="tel" id="alert-input" required>
+                            <label class="formulario__label" for="year">${texto}</label>
+                        <div class="formulario__grupo-input">
+                            <input class="${inputBar}" type="tel" id="alert-input" name="input" required>
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
                         <button class="${botonInput}" type="button" id="boton-input">Aceptar</button>
                     </div>
+                    <p class="formulario__input-error">Ingrese un numero dentro del rango 10 a 90!</p>
+                </div>
                 </div>
             </div>
             `);
@@ -322,25 +327,35 @@ function generateAlert(resultado, mensaje = null){
                 e.stopPropagation();
             });
                 idbtnaccept.addEventListener('click',()=>{
-                    valorForm = document.getElementById('alert-input').value;
-                    // console.log(valorForm);
-                    idCont.remove();
+                    valorForm = document.getElementById('alert-input');
+                    validarCampo(expresiones.input,valorForm,'input');
+                    if(campos.input===true){
+                        idCont.remove();
+                    }
+                    
             });
 }
-function iterarFormulario(){
-    console.log("si soy")
-            let datosFormulario = new FormData(form);
-            let objetosCargados = {};
+function cargarFormulario(){
+                let datosFormulario = new FormData(form);
+                let objetosCargados = {};
                 datosFormulario.forEach((item,columna)=>{
                     objetosCargados[columna] = item;
                 });
                 contenedorDatos.push(objetosCargados);
                 cargarDatos();
 }
-function cargarDatos(){
-    console.log(contenedorDatos);
+function iteracionDatos(){
+    for(let clicks=0;clicks< valorForm.value;clicks++){
+        reseteoFormulario();
+    if(clicks === valorForm.value){
+        botonNext.style.display = 'none';
+        botonSmt.style.display = 'block';
+    }
+    }
 }
-
+function cargarDatos(){
+    console.log(contenedorDatos)
+}
 function reseteoFormulario(){
     // Reiniciar el formulario
     form.reset();
