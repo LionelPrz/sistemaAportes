@@ -11,6 +11,7 @@ let Smes = document.getElementById('mes');
 let inputs = document.querySelectorAll('#form input,select');
 let botonNext = document.getElementById('next-btn');
 let botonSmt = document.getElementById('btn-submit');
+let contador = 0;
 let contenedorDatos = [];
 let valorForm;
 
@@ -70,14 +71,18 @@ form.addEventListener('click',()=>{
 window.addEventListener('load',()=>{
     generateAlert("info");
 });
-form.addEventListener('submit',(e)=>{
+
+botonNext.addEventListener('click',(e)=>{
     e.preventDefault();
     if(Object.values(campos).every((campo)=>campo)){
-        botonNext.addEventListener('click',()=>{
-            cargarFormulario();
-            iteracionDatos();
-        })
-}
+        cargarFormulario();
+        console.log(contador);
+        comprobarEstadoCarga(contador);
+        validadorFinal(contador,valorForm.value,contenedorDatos);
+    }
+});
+botonSmt.addEventListener('submit',()=>{
+
 })
 
 function validarFormulario(e){
@@ -156,7 +161,6 @@ function validarFormulario(e){
         document.getElementById('formulario__mensaje').classList.remove('formulario__mensaje-activo');
     }
 }
-
 function validarCampo(expresion,input,campo){
     if(expresion.test(input.value)){
         document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
@@ -271,8 +275,8 @@ function generateAlert(resultado, mensaje = null){
 
         case "error":
             // Generacion del alert de error
-            imagen ="./svg-assets/ayuyu-angry-png.png";
-            texto = mensaje || "Se produjo un error al enviar el formulario !";
+            imagen ="/assets/ayuyu-angry-png.png";
+            texto = mensaje || "Se produjo un error al enviar los datos !";
             claseText = "alert-text-error";
             clasePbar = "alert-progress-bar  red1";
             claseBar = "bar-content red";
@@ -281,7 +285,7 @@ function generateAlert(resultado, mensaje = null){
         
         case "success":
             // Generacion del alert de exito
-            imagen ="./svg-assets/boochi-nato-png.png";
+            imagen ="/assets/boochi-nato-png.png";
             texto = mensaje || "Formulario enviado Correctamente";
             claseCont += " custom-alert-success";
             clasePbar = "alert-progress-bar green1"
@@ -290,7 +294,7 @@ function generateAlert(resultado, mensaje = null){
         
         case "info":
             // Generacion del alert de informacion
-            imagen ="../assets/info-warning-alert.jpg";
+            imagen ="/assets/info-warning-alert.jpg";
             claseText = "alert-text-info";
             texto = mensaje || "Ingrese las filas a cargar!";
             claseCont += " custom-alert-info";
@@ -343,23 +347,40 @@ function cargarFormulario(){
                     objetosCargados[columna] = item;
                 });
                 contenedorDatos.push(objetosCargados);
-                cargarDatos();
+                contador++;
+                console.log(contador);
 }
-function iteracionDatos(){
-    let clicks;
-    for(clicks=0;clicks<valorForm.value;clicks++){
-        console.log(clicks);
-        console.log(valorForm.value);
+function comprobarEstadoCarga(estado){
+    if(estado < valorForm.value){
         reseteoFormulario();
-        console.log(clicks);
     }
-    if(clicks === valorForm.value){
-        botonNext.style.display = 'none';
-        botonSmt.style.display = 'block';
+    if(estado === valorForm.value){
+        botonNext.style.display = "none";
+        botonSmt.style.display = "block";
     }
 }
-function cargarDatos(){
-    console.log(contenedorDatos)
+function validadorFinal(estado1,estado2,contenido){
+    console.log(estado1,estado2,contenido);
+    if(estado1 === estado2){
+        fetch("/js/prueba.json",{
+            method: 'POST',
+            body: JSON.stringify(contenido),
+            headers:{
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(res=> res.text())
+        .then(data=>{
+            generateAlert("success",data);
+            console.log(data);
+        })
+        .catch((error)=>{
+            generateAlert("error",error);
+        })
+    }
+    else{
+        generateAlert('error',"Error al cargar todos los datos por favor cargue los datos y reintente nuevamente !");
+    }
 }
 function reseteoFormulario(){
     // Reiniciar el formulario
