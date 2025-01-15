@@ -81,7 +81,6 @@ botonNext.addEventListener("click", (e) => {
 });
 botonSmt.addEventListener("click", (e) => {
   e.preventDefault();
-  console.log("hola");
   validadorFinal(contador, valorForm.value, contenedorDatos);
 });
 
@@ -428,14 +427,10 @@ function comprobarEstadoCarga(estado) {
       botonNext.style.display = "none";
       botonSmt.style.display = "block";
 }
-  // if (estado === valorForm.value) {
-  // }
 }
 function validadorFinal(estado1, estado2, contenido) {
-  console.log("que onda pibe");
-  console.log(estado1, estado2, contenido);
   if (estado1 === estado2) {
-    fetch("/js/prueba.json", {
+    fetch("/php/backend.php", {
       method: "POST",
       body: JSON.stringify(contenido),
       headers: {
@@ -449,7 +444,7 @@ function validadorFinal(estado1, estado2, contenido) {
       })
       .catch((error) => {
         generateAlert("error", error);
-        console.log(error);
+        console.error(error);
       });
   } else {
     generateAlert(
