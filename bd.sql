@@ -1,4 +1,4 @@
-use aportes_municipales;
+use datos_empleados;
 
 -- Tabla de empleados
 create table empleados(

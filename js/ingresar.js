@@ -415,42 +415,37 @@ function cargarFormulario() {
   });
   contenedorDatos.push(objetosCargados);
   contador++;
-  console.log(contador);
-  console.log(contenedorDatos);
 }
 function comprobarEstadoCarga(estado) {
   console.log(estado);
   if (estado < valorForm.value) {
     reseteoFormulario();
   }else{
-      console.log(estado);
       botonNext.style.display = "none";
       botonSmt.style.display = "block";
 }
 }
 function validadorFinal(estado1, estado2, contenido) {
-  if (estado1 === estado2) {
+  console.log(estado1,estado2,contenido);
+  if (estado1.value === estado2.value) {
+    const payload = JSON.stringify(contenido);
     fetch("/php/backend.php", {
       method: "POST",
-      body: JSON.stringify(contenido),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: payload,
+      headers:{
+        'Content-Type': 'application/json',
+      }
     })
-      .then((res) => res.text())
+      .then((res) => res.json())
       .then((data) => {
-        generateAlert("success","Datos ingresados con exito!");
-        console.log("si los enviamos pibe",data);
+        console.log("si funciona pibe");
+        console.log(data);
       })
       .catch((error) => {
         generateAlert("error", error);
-        console.error(error);
       });
   } else {
-    generateAlert(
-      "error",
-      "Error al cargar todos los datos por favor cargue los datos y reintente nuevamente !"
-    );
+    document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
   }
 }
 function reseteoFormulario() {
