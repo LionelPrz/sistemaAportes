@@ -60,6 +60,14 @@ const campos = {
   ejecucion: false,
 };
 
+const categorias = {
+  empleados:["cuil","nombre","apellido","tipo_contratacion"],
+  sueldos: ["total_remunerativo","total_no_remunerativo","tipo_aporte_adicional","monto_aporte_adicional"],
+  licencias: ["tipo_licencia","dias_licencia"],
+  cargos: ["cargo","clase","categoria"],
+  contrataciones: ["mes","year","dias_trabajados"]
+}
+
 inputs.forEach((input) => {
   input.addEventListener("keyup", validarFormulario);
   input.addEventListener("blur", validarFormulario);
@@ -81,7 +89,7 @@ botonNext.addEventListener("click", (e) => {
 });
 botonSmt.addEventListener("click", (e) => {
   e.preventDefault();
-  validadorFinal(contador, valorForm.value, contenedorDatos);
+  validadorFinal(contador,valorForm.value,contenedorDatos);
 });
 
 function validarFormulario(e) {
@@ -409,11 +417,26 @@ function generateAlert(resultado, mensaje = null) {
 }
 function cargarFormulario() {
   let datosFormulario = new FormData(form);
-  let objetosCargados = {};
-  datosFormulario.forEach((item, columna) => {
-    objetosCargados[columna] = item;
+  let objetoClasificado = Object.keys(categorias).reduce((acc,categoria)=>{
+    acc[categoria] ={};
+    return acc;
+
+  },{});
+  datosFormulario.forEach((value,key)=>{
+    Object.entries(categorias).forEach(([categoria,campos])=>{
+      if(campos.includes(key)){
+        if(key === "nombre" || key === "apellido"){
+          objetoClasificado.empleados.nombre_completo = objetoClasificado.empleados.nombre_completo ? `${objetoClasificado.empleados.nombre_completo} ${value}`: value;
+        }else{
+          objetoClasificado[categoria][key=== "year" ? "año" : key] = value;
+        }if(["sueldos","licencias","cargos","contrataciones"].includes(categoria)){
+              objetoClasificado[categoria].empleados = datosFormulario.get("cuil");
+        }
+      }
+    });
   });
-  contenedorDatos.push(objetosCargados);
+  contenedorDatos.push(objetoClasificado);
+    console.log("Datos Clasificados :",objetoClasificado);
   contador++;
 }
 function comprobarEstadoCarga(estado) {

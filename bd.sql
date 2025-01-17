@@ -21,6 +21,8 @@ create table sueldos(
 	empleados bigint,
 	total_remunerativo float(7,2) not null,
 	total_no_remunerativo float(7,2) not null,
+	tipo_aporte_adicional varchar(3) not null,
+	monto_aporte_adicional varchar(3) not null,
 -- 	FK de la tabla empleados
 	foreign key (empleados) references empleados(cuil)
 );
