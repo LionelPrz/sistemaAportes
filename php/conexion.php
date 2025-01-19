@@ -1,5 +1,5 @@
 <?php
-$host = '192.168.77.118';
+$host = 'localhost';
 $port = '3306'; // Puerto encontrado
 $dbname = 'datos_empleados';
 $username = 'root';

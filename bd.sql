@@ -4,15 +4,7 @@ use datos_empleados;
 create table empleados(
 	cuil bigint primary key,
 	nombre_completo VARCHAR(50) not null,
-	regimenes tinyint not null,
--- 	FK del catalogo regimenes
-	foreign key(regimenes) references regimen_contratacion(regimen_id)
-);
-
--- Tabla de regimenes de contratacion
-create table regimen_contratacion(
-	regimen_id tinyint primary key,
-	tipo_contratacion VARCHAR(50) not null
+	tipo_contratacion int not null unsigned,
 );
 
 -- Tabla de suedos
@@ -42,8 +34,8 @@ create table cargos(
 	cargo_id int unsigned auto_increment primary key,
 	asignaciones bigint not null,
 	categoria varchar(50) not null,
-	clase_nivel varchar(15),
-	cargo_funcion varchar(30),
+	clase_nivel varchar(50),
+	cargo_funcion varchar(50),
 -- 	FK de la tabla empledos
 	foreign key (asignaciones) references empleados(cuil)
 );
@@ -53,7 +45,7 @@ create table contrataciones(
 	contratacion_id int unsigned auto_increment primary key,
 	contrato bigint not null,
 	mes tinyint not null,
-	año year not null,
+	año int not null,
 	dias_trabajados tinyint not null,
 -- 	FK de la tabla de empleados
 	foreign key (contrato) references empleados(cuil)

@@ -66,7 +66,7 @@ const categorias = {
   licencias: ["tipo_licencia","dias_licencia"],
   cargos: ["cargo","clase","categoria"],
   contrataciones: ["mes","year","dias_trabajados"]
-}
+};
 
 inputs.forEach((input) => {
   input.addEventListener("keyup", validarFormulario);
@@ -425,12 +425,19 @@ function cargarFormulario() {
   datosFormulario.forEach((value,key)=>{
     Object.entries(categorias).forEach(([categoria,campos])=>{
       if(campos.includes(key)){
-        if(key === "nombre" || key === "apellido"){
+        if (key === "cuil" || key === "empleados" || key === "mes" || key === "dias_trabajados" || key === "dias_licencia" || key === "tipo_licencia" || key === "tipo_contratacion" || key === "year") {
+          value = parseInt(value, 10);
+      }
+      if (key === "total_remunerativo" || key === "total_no_remunerativo") {
+        value = parseFloat(value);
+      }
+      if(key === "nombre" || key === "apellido"){
           objetoClasificado.empleados.nombre_completo = objetoClasificado.empleados.nombre_completo ? `${objetoClasificado.empleados.nombre_completo} ${value}`: value;
-        }else{
+        }else{  
           objetoClasificado[categoria][key=== "year" ? "año" : key] = value;
         }if(["sueldos","licencias","cargos","contrataciones"].includes(categoria)){
-              objetoClasificado[categoria].empleados = datosFormulario.get("cuil");
+              let cuilParseado = parseInt(datosFormulario.get("cuil"),10);
+              objetoClasificado[categoria].empleados = cuilParseado;
         }
       }
     });
@@ -440,7 +447,6 @@ function cargarFormulario() {
   contador++;
 }
 function comprobarEstadoCarga(estado) {
-  console.log(estado);
   if (estado < valorForm.value) {
     reseteoFormulario();
   }else{
@@ -449,20 +455,16 @@ function comprobarEstadoCarga(estado) {
 }
 }
 function validadorFinal(estado1, estado2, contenido) {
-  console.log(estado1,estado2,contenido);
   if (estado1.value === estado2.value) {
-    const payload = JSON.stringify(contenido);
     fetch("/php/backend.php", {
       method: "POST",
-      body: payload,
-      headers:{
-        'Content-Type': 'application/json',
-      }
+      body: JSON.stringify(contenido),
+      ContentType: 'application/json',
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("si funciona pibe");
-        console.log(data);
+        generateAlert("success",data);
+        console.log("Exito master!");
       })
       .catch((error) => {
         generateAlert("error", error);
