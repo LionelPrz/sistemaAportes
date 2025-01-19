@@ -429,8 +429,12 @@ function cargarFormulario() {
           value = parseInt(value, 10);
       }
       if (key === "total_remunerativo" || key === "total_no_remunerativo") {
+        // Elimina separadores de miles y ajusta el separador decimal
+        value = value.replace(/\./g, '').replace(',', '.');
         value = parseFloat(value);
-      }
+        console.log("Valor normalizado:", value);
+    }
+    
       if(key === "nombre" || key === "apellido"){
           objetoClasificado.empleados.nombre_completo = objetoClasificado.empleados.nombre_completo ? `${objetoClasificado.empleados.nombre_completo} ${value}`: value;
         }else{  
