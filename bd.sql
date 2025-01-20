@@ -2,29 +2,30 @@ use datos_empleados;
 
 -- Tabla de empleados
 create table empleados(
-	cuil bigint primary key,
+	cuil varchar(15) primary key not null,
 	nombre_completo VARCHAR(50) not null,
-	tipo_contratacion int not null unsigned,
+	tipo_contratacion int unsigned not null 
 );
 
--- Tabla de suedos
+-- Tabla de sueldos
 create table sueldos(
-	sueldo_id int unsigned primary key auto_increment,
-	empleados bigint,
-	total_remunerativo float(7,2) not null,
-	total_no_remunerativo float(7,2) not null,
-	tipo_aporte_adicional varchar(3) not null,
-	monto_aporte_adicional varchar(3) not null,
--- 	FK de la tabla empleados
-	foreign key (empleados) references empleados(cuil)
+    sueldo_id int unsigned primary key auto_increment,
+    empleados varchar(15),  -- Cambié el tipo de dato a varchar(15)
+    total_remunerativo varchar(15) not null,
+    total_no_remunerativo varchar(15) not null,
+    tipo_aporte_adicional varchar(3) not null,
+    monto_aporte_adicional varchar(3) not null,
+    -- FK de la tabla empleados
+    foreign key (empleados) references empleados(cuil)
 );
+
 
 -- Tabla de licencias 
 create table licencias(
 	licencias_id int unsigned auto_increment primary key,
 	tipo_licencia tinyint not null,
 	dias_licencia tinyint not null,
-	licencias bigint,
+	licencias varchar(15),
 -- 	FK de la tabla empleados
 	foreign key (licencias) references empleados(cuil)
 );
@@ -32,7 +33,7 @@ create table licencias(
 -- Tabla de cargos
 create table cargos(
 	cargo_id int unsigned auto_increment primary key,
-	asignaciones bigint not null,
+	asignaciones varchar(15) not null,
 	categoria varchar(50) not null,
 	clase_nivel varchar(50),
 	cargo_funcion varchar(50),
@@ -43,7 +44,7 @@ create table cargos(
 -- Tabla de contrataciones
 create table contrataciones(
 	contratacion_id int unsigned auto_increment primary key,
-	contrato bigint not null,
+	contrato varchar(15) not null,
 	mes tinyint not null,
 	año int not null,
 	dias_trabajados tinyint not null,
@@ -52,7 +53,6 @@ create table contrataciones(
 );
 
 -- Creacion de los indices para optimizar las consultas
-create index idx_regimenes on empleados(regimenes);
 create index idx_empleados_sueldos on sueldos(empleados);
 create index idx_empleados_licencias on licencias(licencias);
 create index idx_empleados_cargos on cargos(asignaciones);
@@ -65,7 +65,7 @@ create index idx_año_contrataciones on contrataciones(año);
 SELECT 
     e.cuil AS empleado_cuil,
     e.nombre_completo AS empleado_nombre,
-    rc.tipo_contratacion AS regimen_tipo,
+    e.tipo_contratacion as regimen,
     s.sueldo_id AS sueldo_id,
     s.total_remunerativo AS sueldo_remunerativo,
     s.total_no_remunerativo AS sueldo_no_remunerativo,
@@ -76,13 +76,12 @@ SELECT
     c.categoria AS cargo_categoria,
     c.clase_nivel AS cargo_clase,
     c.cargo_funcion AS cargo_funcion,
-    con.contratacion_id AS contratacion_id,
-    con.mes AS contratacion_mes,
-    con.año AS contratacion_año,
-    con.dias_trabajados AS contratacion_dias
+    c2.contratacion_id AS contratato,
+    c2.mes AS contratacion_mes,
+    c2.año AS contratacion_año,
+    c2.dias_trabajados AS contratacion_dias
 FROM empleados e
-LEFT JOIN regimen_contratacion rc ON e.regimenes = rc.regimen_id
 LEFT JOIN sueldos s ON e.cuil = s.empleados
 LEFT JOIN licencias l ON e.cuil = l.licencias
 LEFT JOIN cargos c ON e.cuil = c.asignaciones
-LEFT JOIN contrataciones con ON e.cuil = con.contrato;
+left join contrataciones c2 on e.cuil  = c2.contrato 

@@ -428,13 +428,10 @@ function cargarFormulario() {
         if (key === "cuil" || key === "empleados" || key === "mes" || key === "dias_trabajados" || key === "dias_licencia" || key === "tipo_licencia" || key === "tipo_contratacion" || key === "year") {
           value = parseInt(value, 10);
       }
+      // Procesar sueldos
       if (key === "total_remunerativo" || key === "total_no_remunerativo") {
-        // Elimina separadores de miles y ajusta el separador decimal
-        value = value.replace(/\./g, '').replace(',', '.');
-        value = parseFloat(value);
-        console.log("Valor normalizado:", value);
+      console.log(value);
     }
-    
       if(key === "nombre" || key === "apellido"){
           objetoClasificado.empleados.nombre_completo = objetoClasificado.empleados.nombre_completo ? `${objetoClasificado.empleados.nombre_completo} ${value}`: value;
         }else{  
@@ -467,8 +464,8 @@ function validadorFinal(estado1, estado2, contenido) {
     })
       .then((res) => res.json())
       .then((data) => {
-        generateAlert("success",data);
-        console.log("Exito master!");
+        generateAlert("success","Insercion Exitosa!");
+        console.log(data);
       })
       .catch((error) => {
         generateAlert("error", error);
