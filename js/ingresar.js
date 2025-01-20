@@ -1,9 +1,6 @@
 let form = document.querySelector(".form");
 let Scontratacion = document.getElementById("contratacion");
 let Sliquidacion = document.getElementById("liquidacion");
-let Scargo = document.getElementById("cargo");
-let Scategoria = document.getElementById("categoria");
-let Sclase = document.getElementById("clase");
 let SaporteAdd = document.getElementById("aporte_adicional");
 let SmontoApt = document.getElementById("monto_aporte_adicional");
 let Stlicencia = document.getElementById("licencia");
@@ -22,9 +19,9 @@ const expresiones = {
   tipo_contratacion: /^(1|2|3|4|5)$/,
   tipo_liquidacion: /^(1|2|3)$/,
   dias_trabajados: /^([0-9]|[1-2][0-9]|3[0])$/,
-  cargo: /^(Intendente|Viceintendente|Administrativo)$/,
-  clase: /^(Intendente|Viceintendente|Administrativo)$/,
-  categoria: /^(Intendente|Viceintendente|Administrativo)$/,
+  cargo: /^[a-zA-ZÀ-ÿ\s]{1,50}$/,
+  clase: /^[a-zA-ZÀ-ÿ\s]{1,50}$/,
+  categoria: /^[a-zA-ZÀ-ÿ\s]{1,50}$/,
   total_remunerativo: /^\d{1,3}(\.\d{3})*(,\d{1,2})?$/,
   total_no_remunerativo: /^\d{1,3}(\.\d{3})*(,\d{1,2})?$/,
   tipo_aporte_adicional: /^\$-$/,
@@ -33,8 +30,7 @@ const expresiones = {
   dias_licencia: /^([0-9]|[1-2][0-9]|3[0-1])$/,
   mes: /^(1|2|3|4|5|6|7|8|9|10|11|12)$/,
   year: /^(19[0-9]{2}|20[0-9]{2})$/,
-  // input: /^([1-9][0-9])$/
-  input: /^([1-9])$/,
+  input: /^([1-9][0-9])$/
 };
 
 const campos = {
@@ -231,9 +227,6 @@ function rellenarSelects() {
   if (!campos.ejecucion) {
     // limmpieza de las opciones anteriores
     SaporteAdd.innerHTML = "";
-    Scargo.innerHTML = "";
-    Scategoria.innerHTML = "";
-    Sclase.innerHTML = "";
     Sliquidacion.innerHTML = "";
     Smes.innerHTML = "";
     SmontoApt.innerHTML = "";
@@ -243,33 +236,6 @@ function rellenarSelects() {
       `
             <option disabled selected>Tipo aporte adicional</option>
             <option value="$-">$-</option>
-    `
-    );
-    Scargo.insertAdjacentHTML(
-      "beforeend",
-      `
-            <option disabled selected>Cargo asignado</option>
-            <option value="Intendente">Intendente</option>
-            <option value="Viceintendente">Viceintendente</option>
-            <option value="Administrativo">Administrativo</option>
-    `
-    );
-    Scategoria.insertAdjacentHTML(
-      "beforeend",
-      `
-            <option disabled selected>Cateoria asignada</option>
-            <option value="Intendente">Intendente</option>
-            <option value="Viceintendente">Viceintendente</option>
-            <option value="Administrativo">Administrativo</option>
-    `
-    );
-    Sclase.insertAdjacentHTML(
-      "beforeend",
-      `
-            <option disabled selected>Clase asignada</option>
-            <option value="Intendente">Intendente</option>
-            <option value="Viceintendente">Viceintendente</option>
-            <option value="Administrativo">Administrativo</option>
     `
     );
     Sliquidacion.insertAdjacentHTML(
@@ -428,10 +394,6 @@ function cargarFormulario() {
         if (key === "cuil" || key === "empleados" || key === "mes" || key === "dias_trabajados" || key === "dias_licencia" || key === "tipo_licencia" || key === "tipo_contratacion" || key === "year") {
           value = parseInt(value, 10);
       }
-      // Procesar sueldos
-      if (key === "total_remunerativo" || key === "total_no_remunerativo") {
-      console.log(value);
-    }
       if(key === "nombre" || key === "apellido"){
           objetoClasificado.empleados.nombre_completo = objetoClasificado.empleados.nombre_completo ? `${objetoClasificado.empleados.nombre_completo} ${value}`: value;
         }else{  

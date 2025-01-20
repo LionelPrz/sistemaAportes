@@ -14,18 +14,33 @@ let cuilEncontrado;
 let mesesDiponibles;
 let valorCuil;
 
-fetch("/js/prueba.json")
-.then(response => response.json())
-.then(data => {
-    contenido = data;
-    cargarDatos(contenido);
-});
+
 
 formulario.addEventListener('submit', (e) => {
     e.preventDefault();
     valorCuil = document.getElementById('cuil').value;
-    encontrarCuil(valorCuil);
-})
+    fetch("/php/consulta.php",{
+        method: "POST",
+        body: JSON.stringify({cuil:valorCuil}),
+        headers:{
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+        if(!response.ok){
+            throw new Error(`Error en la solicitud: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        contenido = data;
+        cargarDatos(contenido);
+        encontrarCuil(valorCuil);
+    })
+    .catch(error =>{
+        console.error('Hubo un error en la consulta:', error);
+    })
+});
 
 botonGenerar.addEventListener('click', event => {
     event.preventDefault();
@@ -39,6 +54,7 @@ botonGenerar.addEventListener('click', event => {
 });
 
 function cargarDatos(datosCargados) {
+    console.log(datosCargados);
     datosCargados.forEach(elemento => {
         datos.push(elemento);
     });
@@ -99,39 +115,64 @@ function encontrarCuil(datosComparados) {
 }
 
 function generarConsulta(cuilFiltrado, mesFiltrado, yearFiltrado) {
-    let datoConsulta = cuilEncontrado.find(item => item.cuil === cuilFiltrado && item.mes === mesFiltrado && item.year === yearFiltrado);
-    console.log(datoConsulta);
-    contenedorYear.insertAdjacentHTML('beforeend', `
+    // Realizar el fetch para obtener los datos desde el backend
+    fetch('/php/datosEmpleados.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            cuil: cuilFiltrado,
+            mes: mesFiltrado,
+            year: yearFiltrado
+        })
+    })
+    .then(response => response.json())  // Convertir la respuesta en formato JSON
+    .then(data => {
+        if (data.error) {
+            // Si hay un error, mostrar el mensaje
+            console.error(data.error);
+            return;
+        }
+
+        // Si los datos están disponibles, mostrarlos en el contenedor
+        contenedorYear.insertAdjacentHTML('beforeend', `
             <h3 class="empleado-text">Datos del Empleado</h3>
-                <ul class="ul-empleado">
-                    <li class="li-empleado"><p class="ul-text">Nombre: ${datoConsulta.nombre}</p></li>
-                    <li class="li-empleado"><p class="ul-text">Apellido: ${datoConsulta.apellido}</p></li>
-                    <li class="li-empleado"><p class="ul-text">Cargo: ${datoConsulta.cargo}</p></li>
-                    <li class="li-empleado"><p class="ul-text">Clase: ${datoConsulta.clase}</p></li>
-                    <li class="li-empleado"><p class="ul-text">Categoria: ${datoConsulta.categoria}</p></li>
-                    <li class="li-empleado"><p class="ul-text">Tipo contratación: ${datoConsulta.tipoContratacion}</p></li>
-                    <li class="li-empleado"><p class="ul-text">Tipo liquidación: ${datoConsulta.tipoLiquidacion}</p></li>
-                    <li class="li-empleado"><p class="ul-text">Dias trabajados: ${datoConsulta.diasTrabajados}</p></li>
-                </ul>
+            <ul class="ul-empleado">
+                <li class="li-empleado"><p class="ul-text">Nombre: ${data.nombre}</p></li>
+                <li class="li-empleado"><p class="ul-text">Apellido: ${data.apellido}</p></li>
+                <li class="li-empleado"><p class="ul-text">Cargo: ${data.cargo}</p></li>
+                <li class="li-empleado"><p class="ul-text">Clase: ${data.clase}</p></li>
+                <li class="li-empleado"><p class="ul-text">Categoria: ${data.categoria}</p></li>
+                <li class="li-empleado"><p class="ul-text">Tipo contratación: ${data.tipo_contratacion}</p></li>
+                <li class="li-empleado"><p class="ul-text">Tipo liquidación: ${data.tipo_liquidacion}</p></li>
+                <li class="li-empleado"><p class="ul-text">Dias trabajados: ${data.dias_trabajados}</p></li>
+            </ul>
         `);
-    contenedorMes.insertAdjacentHTML('beforeend', `
+
+        contenedorMes.insertAdjacentHTML('beforeend', `
             <h3 class="previsional-text">Datos Previsionales</h3>
-                <ul class="ul-previsional">
-                    <li class="li-previsional"><p class="ul-text">Total Remunerativo: $${datoConsulta.totalRemunerativo}</p></li>
-                    <li class="li-previsional"><p class="ul-text">Total no remunerativo: $${datoConsulta.totalNoRemunerativo}</p></li>
-                    <li class="li-previsional"><p class="ul-text">Aporte adicional: ${datoConsulta.aporteAdicional}</p></li>
-                    <li class="li-previsional"><p class="ul-text">Monto aporte adicional: ${datoConsulta.montoAporteAdicional}</p></li>
-                    <li class="li-previsional"><p class="ul-text">Tipo de licencia: ${datoConsulta.tipoLicencia}</p></li>
-                    <li class="li-previsional"><p class="ul-text">Dias de licencia: ${datoConsulta.diasLicencia}</p></li>
-                    <li class="li-previsional"><p class="ul-text">Mes: ${datoConsulta.mes}</p></li>
-                    <li class="li-previsional"><p class="ul-text">Año: ${datoConsulta.year}</p></li>
-                </ul>
+            <ul class="ul-previsional">
+                <li class="li-previsional"><p class="ul-text">Total Remunerativo: $${data.total_remunerativo}</p></li>
+                <li class="li-previsional"><p class="ul-text">Total no remunerativo: $${data.total_no_remunerativo}</p></li>
+                <li class="li-previsional"><p class="ul-text">Aporte adicional: ${data.aporte_adicional}</p></li>
+                <li class="li-previsional"><p class="ul-text">Monto aporte adicional: ${data.monto_aporte_adicional}</p></li>
+                <li class="li-previsional"><p class="ul-text">Tipo de licencia: ${data.tipo_licencia}</p></li>
+                <li class="li-previsional"><p class="ul-text">Dias de licencia: ${data.dias_licencia}</p></li>
+                <li class="li-previsional"><p class="ul-text">Mes: ${data.mes}</p></li>
+                <li class="li-previsional"><p class="ul-text">Año: ${data.año}</p></li>
+            </ul>
         `);
-    // Cambio de funcion del boton de consulta
-    botonGenerar.style.display = "none";
-    botonReseteo.style.display = "block";
-    botonConsultar.disabled = true;
-    botonReseteo.addEventListener('click', reiniciarEstado);
+
+        // Cambio de función del botón de consulta
+        botonGenerar.style.display = "none";
+        botonReseteo.style.display = "block";
+        botonConsultar.disabled = true;
+        botonReseteo.addEventListener('click', reiniciarEstado);
+    })
+    .catch(error => {
+        console.error("Error al obtener los datos: ", error);
+    });
 }
 
 function reiniciarEstado() {
