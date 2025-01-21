@@ -33,15 +33,16 @@ try {
             if (isset($registro['sueldos']) && is_array($registro['sueldos'])) {
                 $sueldo = $registro['sueldos'];
                 if (isset($sueldo['total_remunerativo'], $sueldo['total_no_remunerativo'], $sueldo['tipo_aporte_adicional'], $sueldo['monto_aporte_adicional'])) {
-                    $querySueldo = "INSERT INTO sueldos(empleados, total_remunerativo, total_no_remunerativo, tipo_aporte_adicional, monto_aporte_adicional)
-                                    VALUES (?, ?, ?, ?, ?)";
+                    $querySueldo = "INSERT INTO sueldos(empleados, total_remunerativo, total_no_remunerativo, tipo_aporte_adicional, monto_aporte_adicional,tipo_liquidacion)
+                                    VALUES (?, ?, ?, ?, ?, ?)";
                     $stmtSueldo = $pdo->prepare($querySueldo);
                     $stmtSueldo->execute([
                         $empleado['cuil'], // Relación con empleado
                         $sueldo['total_remunerativo'],
                         $sueldo['total_no_remunerativo'],
                         $sueldo['tipo_aporte_adicional'],
-                        $sueldo['monto_aporte_adicional']
+                        $sueldo['monto_aporte_adicional'],
+                        $sueldo['tipo_liquidacion']
                     ]);
                 } else {
                     throw new Exception("Error: datos incompletos en 'sueldos'.");
@@ -85,7 +86,7 @@ try {
             if (isset($registro['contrataciones']) && is_array($registro['contrataciones'])) {
                 $contrato = $registro['contrataciones'];
                 if (isset($contrato['mes'], $contrato['año'], $contrato['dias_trabajados'])) {
-                    $queryContratacion = "INSERT INTO contrataciones(contrato, mes, año, dias_trabajados) VALUES (?, ?, ?, ?)";
+                    $queryContratacion = "INSERT INTO contrataciones(contrato, mes, year, dias_trabajados) VALUES (?, ?, ?, ?)";
                     $stmtContratacion = $pdo->prepare($queryContratacion);
                     $stmtContratacion->execute([
                         $empleado['cuil'],

@@ -17,22 +17,22 @@ try {
     s.total_no_remunerativo,
     s.tipo_aporte_adicional,
     s.monto_aporte_adicional,
+    s.tipo_liquidacion,
     l.tipo_licencia,
     l.dias_licencia,
     c.categoria,
     c.clase_nivel,
     c.cargo_funcion,
     c2.mes,
-    c2.año,
+    c2.year,
     c2.dias_trabajados
-FROM 
-    empleados e
+FROM empleados e
 JOIN sueldos s ON e.cuil = s.empleados
 JOIN licencias l ON e.cuil = l.licencias
 JOIN cargos c ON e.cuil = c.asignaciones
 JOIN contrataciones c2 ON e.cuil = c2.contrato
 WHERE 
-    e.cuil = ? AND t.mes = ? AND t.año = ?";
+    e.cuil = ? AND c2.mes = ? AND c2.year = ?";
 
     // Preparar y ejecutar la consulta
     $stmt = $pdo->prepare($query);

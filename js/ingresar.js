@@ -58,7 +58,7 @@ const campos = {
 
 const categorias = {
   empleados:["cuil","nombre","apellido","tipo_contratacion"],
-  sueldos: ["total_remunerativo","total_no_remunerativo","tipo_aporte_adicional","monto_aporte_adicional"],
+  sueldos: ["total_remunerativo","total_no_remunerativo","tipo_aporte_adicional","monto_aporte_adicional","tipo_liquidacion"],
   licencias: ["tipo_licencia","dias_licencia"],
   cargos: ["cargo","clase","categoria"],
   contrataciones: ["mes","year","dias_trabajados"]
@@ -391,7 +391,7 @@ function cargarFormulario() {
   datosFormulario.forEach((value,key)=>{
     Object.entries(categorias).forEach(([categoria,campos])=>{
       if(campos.includes(key)){
-        if (key === "cuil" || key === "empleados" || key === "mes" || key === "dias_trabajados" || key === "dias_licencia" || key === "tipo_licencia" || key === "tipo_contratacion" || key === "year") {
+        if (key === "cuil" || key === "empleados" || key === "mes" || key === "dias_trabajados" || key === "dias_licencia" || key === "tipo_licencia" || key === "tipo_contratacion" || key === "tipo_liquidacion" || key === "year") {
           value = parseInt(value, 10);
       }
       if(key === "nombre" || key === "apellido"){

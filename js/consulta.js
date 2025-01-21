@@ -129,20 +129,20 @@ function generarConsulta(cuilFiltrado, mesFiltrado, yearFiltrado) {
     })
     .then(response => response.json())  // Convertir la respuesta en formato JSON
     .then(data => {
+        console.log(data);
         if (data.error) {
             // Si hay un error, mostrar el mensaje
             console.error(data.error);
             return;
         }
-
         // Si los datos están disponibles, mostrarlos en el contenedor
         contenedorYear.insertAdjacentHTML('beforeend', `
             <h3 class="empleado-text">Datos del Empleado</h3>
             <ul class="ul-empleado">
                 <li class="li-empleado"><p class="ul-text">Nombre: ${data.nombre}</p></li>
                 <li class="li-empleado"><p class="ul-text">Apellido: ${data.apellido}</p></li>
-                <li class="li-empleado"><p class="ul-text">Cargo: ${data.cargo}</p></li>
-                <li class="li-empleado"><p class="ul-text">Clase: ${data.clase}</p></li>
+                <li class="li-empleado"><p class="ul-text">Cargo: ${data.cargo_funcion}</p></li>
+                <li class="li-empleado"><p class="ul-text">Clase: ${data.clase_nivel}</p></li>
                 <li class="li-empleado"><p class="ul-text">Categoria: ${data.categoria}</p></li>
                 <li class="li-empleado"><p class="ul-text">Tipo contratación: ${data.tipo_contratacion}</p></li>
                 <li class="li-empleado"><p class="ul-text">Tipo liquidación: ${data.tipo_liquidacion}</p></li>
@@ -155,12 +155,12 @@ function generarConsulta(cuilFiltrado, mesFiltrado, yearFiltrado) {
             <ul class="ul-previsional">
                 <li class="li-previsional"><p class="ul-text">Total Remunerativo: $${data.total_remunerativo}</p></li>
                 <li class="li-previsional"><p class="ul-text">Total no remunerativo: $${data.total_no_remunerativo}</p></li>
-                <li class="li-previsional"><p class="ul-text">Aporte adicional: ${data.aporte_adicional}</p></li>
+                <li class="li-previsional"><p class="ul-text">Aporte adicional: ${data.tipo_aporte_adicional}</p></li>
                 <li class="li-previsional"><p class="ul-text">Monto aporte adicional: ${data.monto_aporte_adicional}</p></li>
                 <li class="li-previsional"><p class="ul-text">Tipo de licencia: ${data.tipo_licencia}</p></li>
                 <li class="li-previsional"><p class="ul-text">Dias de licencia: ${data.dias_licencia}</p></li>
                 <li class="li-previsional"><p class="ul-text">Mes: ${data.mes}</p></li>
-                <li class="li-previsional"><p class="ul-text">Año: ${data.año}</p></li>
+                <li class="li-previsional"><p class="ul-text">Año: ${data.year}</p></li>
             </ul>
         `);
 

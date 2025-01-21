@@ -1,72 +1,38 @@
-let botonYear = document.getElementById('year-btn');
-let botonMes = document.getElementById('mes-btn');
+// Obtenemos el contenedor donde se mostrarán los años
 let yearContainer = document.getElementById('info-card1');
-let mesContainer = document.getElementById('info-card2');
-let formulario = document.getElementById('form-generate');
-let datos = [];
-let yearSelected;
-let mesSelected;
-let yearDisponibles;
-let mesDiponibles;
 
-fetch("/js/prueba.json")
-    .then(response => response.json())
-    .then(data => {
-        let contenido = data;
-        cargarDatos(contenido);
-    });
+// Fetch inicial para obtener los años disponibles
+fetch("/php/generarArchivos.php")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Error al obtener los años");
+        }
+        return response.json();
+    })
+    .then(years => {
+        // Llenamos el contenedor con los años obtenidos
+        cargarYears(years);
+    })
+    .catch(error => console.error("Error en el fetch:", error));
 
-formulario.addEventListener('submit', (e) => {
-    e.preventDefault();
-});
-
-function cargarDatos(datosObtenidos) {
-    datos.push(datosObtenidos);
-    encontrarYear(datosObtenidos);
-}
-
-function encontrarYear(datosRecepcionados) {
-    yearDisponibles = [...new Set(datosRecepcionados.map(item => item.year))];
-    console.log(yearDisponibles);
-    if (yearDisponibles.length > 0) {
-        yearContainer.innerHTML = '';
-        yearDisponibles.forEach(year => {
-            yearContainer.insertAdjacentHTML('beforeend', `
-                        <button class="year-container" id="${year}" type="button">
-                        Año: ${year}
-                    </button>
-                `);
-        });
-        // Recuperar los botones recien creados por el filtro
-        let contenidoBotones = document.querySelectorAll('#info-card1 button');
-        // Recorremos el elemento contenedor y asignamos los eventos
-        contenidoBotones.forEach(botones => {
-            botones.addEventListener('click', (e) => {
-                yearSelected = e.currentTarget.id;
-                encontrarMes(datosRecepcionados, yearSelected);
-            });
-        });
-    }
-}
-function encontrarMes(datosFiltrados, datoSeleccionado) {
-    mesDiponibles = [...new Set(datosFiltrados.filter(item => item.year === datoSeleccionado).map(item => item.mes))];
-    console.log(mesDiponibles);
-    mesContainer.innerHTML = '';
-    // Generacion de los meses en botones
-    mesDiponibles.forEach(mes => {
-        mesContainer.insertAdjacentHTML('beforeend', `
-            <button class="mes-container" id="${mes}" type="button">
-                Mes: ${mes}
+// Función para cargar los años en el contenedor
+function cargarYears(years) {
+    yearContainer.innerHTML = ''; // Limpiar el contenedor
+    years.forEach(year => {
+        yearContainer.insertAdjacentHTML('beforeend', `
+            <button class="year-container" id="${year}" type="button">
+                Año: ${year}
             </button>
         `);
     });
-    let contenidoBotones = document.querySelectorAll('#info-card2 button');
-    contenidoBotones.forEach(boton => {
-        boton.addEventListener('click', (e) => {
-            mesSelected = e.currentTarget.id;
+
+    // Asociar eventos a los botones generados
+    let yearButtons = document.querySelectorAll('.year-container');
+    yearButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            let yearSelected = button.id;
+            console.log("Año seleccionado:", yearSelected);
+            // Aquí llamarás al siguiente fetch para obtener los meses
         });
     });
 }
-
-
-
