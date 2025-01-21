@@ -2,7 +2,12 @@
 let yearContainer = document.getElementById('info-card1');
 
 // Fetch inicial para obtener los años disponibles
-fetch("/php/generarArchivos.php")
+fetch("/php/generarArchivos.php",{
+    method: 'POST',
+    headers:{
+        // 'application/json'
+    }
+})
     .then(response => {
         if (!response.ok) {
             throw new Error("Error al obtener los años");
@@ -27,7 +32,7 @@ function cargarYears(years) {
     });
 
     // Asociar eventos a los botones generados
-    let yearButtons = document.querySelectorAll('.year-container');
+    let yearButtons = document.querySelectorAll('year-container');
     yearButtons.forEach(button => {
         button.addEventListener('click', () => {
             let yearSelected = button.id;

@@ -419,7 +419,7 @@ function comprobarEstadoCarga(estado) {
 }
 function validadorFinal(estado1, estado2, contenido) {
   if (estado1.value === estado2.value) {
-    fetch("/php/backend.php", {
+    fetch("/php/insertarDatos.php", {
       method: "POST",
       body: JSON.stringify(contenido),
       ContentType: 'application/json',

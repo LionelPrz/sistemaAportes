@@ -4,9 +4,9 @@
     // Consulta para obtener los años disponibles
     try{
     $years = [];
-    $consulta = "SELECT DISTINCT year AS año FROM contrataciones ORDER BY year";
+    $consulta = "SELECT DISTINCT year FROM contrataciones";
     $stmt = $pdo->query($consulta);
-        $stmt->fetchAll(PDO::FETCH_COLUMN);
+       $years = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
         header('Content-Type:application/json');
         echo json_encode($years);

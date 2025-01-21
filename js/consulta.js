@@ -19,7 +19,7 @@ let valorCuil;
 formulario.addEventListener('submit', (e) => {
     e.preventDefault();
     valorCuil = document.getElementById('cuil').value;
-    fetch("/php/consulta.php",{
+    fetch("/php/consultarDatos.php",{
         method: "POST",
         body: JSON.stringify({cuil:valorCuil}),
         headers:{
