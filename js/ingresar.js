@@ -394,7 +394,7 @@ function cargarFormulario() {
     Object.entries(categorias).forEach(([categoria, campos]) => {
       if (campos.includes(key)) {
         // Parsear los valores que deben ser enteros
-        if (key === "cuil" || key === "empleados" || key === "mes" || key === "dias_trabajados" || key === "dias_licencia" || key === "tipo_licencia" || key === "tipo_contratacion" || key === "tipo_liquidacion" || key === "year") {
+        if ( key === "empleados" || key === "mes" || key === "dias_trabajados" || key === "dias_licencia" || key === "tipo_licencia" || key === "tipo_contratacion" || key === "tipo_liquidacion" || key === "year") {
           value = parseInt(value, 10);
         }
 

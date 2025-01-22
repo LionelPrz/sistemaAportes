@@ -46,13 +46,14 @@ create table contrataciones(
 	contratacion_id int unsigned auto_increment primary key,
 	contrato varchar(15) not null,
 	mes tinyint not null,
-	año int not null,
+	year int not null,
 	dias_trabajados tinyint not null,
 -- 	FK de la tabla de empleados
 	foreign key (contrato) references empleados(cuil)
 );
 
 -- Creacion de los indices para optimizar las consultas
+create index idx_empleados_cuil on empleados(cuil);
 create index idx_empleados_sueldos on sueldos(empleados);
 create index idx_empleados_licencias on licencias(licencias);
 create index idx_empleados_cargos on cargos(asignaciones);
@@ -65,11 +66,11 @@ create index idx_año_contrataciones on contrataciones(año);
 SELECT 
     e.cuil AS empleado_cuil,
     e.nombre_completo AS empleado_nombre,
-    e.tipo_contratacion as regimen,
+    e.tipo_contratacion as regimen_contratacion,
     s.sueldo_id AS sueldo_id,
     s.total_remunerativo AS sueldo_remunerativo,
     s.total_no_remunerativo AS sueldo_no_remunerativo,
-    s.tipo_licencias as tipo_licencias,
+    s.tipo_liquidacion as tipo_liquidacion,
     l.licencias_id AS licencia_id,
     l.tipo_licencia AS licencia_tipo,
     l.dias_licencia AS licencia_dias,
@@ -78,14 +79,39 @@ SELECT
     c.clase_nivel AS cargo_clase,
     c.cargo_funcion AS cargo_funcion,
     c2.contratacion_id AS contratato,
-    c2.mes AS contratacion_mes,
-    c2.year AS contratacion_año,
-    c2.dias_trabajados AS contratacion_dias
+    c2.mes AS mes,
+    c2.year AS year,
+    c2.dias_trabajados AS dias_trabajados
 FROM empleados e
 LEFT JOIN sueldos s ON e.cuil = s.empleados
 LEFT JOIN licencias l ON e.cuil = l.licencias
 LEFT JOIN cargos c ON e.cuil = c.asignaciones
-left join contrataciones c2 on e.cuil  = c2.contrato
+left join contrataciones c2 on e.cuil  = c2.contrato 
+
+delete from empleados;
+delete from sueldos;
+delete from cargos;
+delete from contrataciones;
+delete from licencias;
+
+ALTER TABLE sueldos AUTO_INCREMENT = 1;
+ALTER TABLE cargos AUTO_INCREMENT = 1;
+ALTER TABLE contrataciones AUTO_INCREMENT = 1;
+ALTER TABLE licencias AUTO_INCREMENT = 1;
+
+select * from contrataciones;
+select * from sueldos;
+select * from contrataciones;
+
+SELECT cuil FROM empleados;
+
+alter table contrataciones change column año year int;
+alter table sueldos drop column tipo_licencias;
+update sueldos set tipo_liquidacion = 1;
+delete from sueldos where sueldo_id = 11;
+
+select mes,year from contrataciones;
+update contrataciones set year = 2020 where mes = 2;
 
 -- Modificaciones a la tabla de sueldos 
 alter table sueldos add column tipo_licencias int ;
@@ -133,8 +159,34 @@ alter table cargos add constraint fk_empleados_cargos
 foreign key(asignaciones,mes,year)
 references empleados(cuil,mes,year);
 -- Tabla Contrataciones
+select mes from contrataciones;
+update contrataciones set mes = null where contratacion_id >= 1;
+update contrataciones set year = null where contratacion_id >= 1;
+alter table contrataciones change column year year smallint;
 alter table contrataciones add constraint fk_empleados_contrataciones
 foreign key(contrato,mes,year)
 references empleados(cuil,mes,year);
 
+-- relleno de datos
+update contrataciones set mes = 2 where contratacion_id >=1;
+update contrataciones set year = 2020 where contratacion_id >= 1;
+
+select * from contrataciones;
+select * from empleados;
+select * from sueldos;
+select * from cargos;
+select * from licencias;
+update empleados set mes = 2 where mes = 0;
+update empleados set year = 2020 where year = 0;
+
+update licencias set mes = 2 where licencias_id >= 1;
+update licencias set year = 2020 where licencias_id >= 1;
+
+update sueldos set mes = 2 where sueldo_id >= 1;
+update sueldos set year = 2020 where sueldo_id >= 1;
+ 
+update cargos set mes = 2 where cargo_id >= 1;
+update cargos set year = 2020 where cargo_id >= 1;
+
+delete from empleados where cuil= 11111111111;
 

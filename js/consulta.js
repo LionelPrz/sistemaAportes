@@ -15,7 +15,6 @@ let mesesDiponibles;
 let valorCuil;
 
 
-
 formulario.addEventListener('submit', (e) => {
     e.preventDefault();
     valorCuil = document.getElementById('cuil').value;

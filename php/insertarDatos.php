@@ -14,15 +14,15 @@ try {
                 $empleado = $registro['empleados'];
 
                 // Validar campos del empleado
-                if (isset($empleado['cuil'], $empleado['nombre_completo'], $empleado['tipo_contratacion'] ,$empleado['mes'], $empleado['year'])) {
+                if (isset($empleado['cuil'],$empleado['mes'], $empleado['year'], $empleado['nombre_completo'], $empleado['tipo_contratacion'] )) {
                     $queryEmpleado = "INSERT INTO empleados(cuil,mes,year, nombre_completo, tipo_contratacion) VALUES (?,?,?,?,?)";
                     $stmtEmpleado = $pdo->prepare($queryEmpleado);
                     $stmtEmpleado->execute([
                         $empleado['cuil'],
-                        $empleado['nombre_completo'],
-                        $empleado['tipo_contratacion'],
+                        $empleado['mes'],  
                         $empleado['year'],
-                        $empleado['mes']  
+                        $empleado['nombre_completo'],
+                        $empleado['tipo_contratacion']
                     ]);
             } else {
                     throw new Exception("Error: datos incompletos para 'empleados'.");
@@ -58,19 +58,18 @@ if (isset($registro['sueldos']) && is_array($registro['sueldos'])) {
     }
 }
 
-
             // Procesar licencias
             if (isset($registro['licencias']) && is_array($registro['licencias'])) {
                 $licencia = $registro['licencias'];
-                if (isset($licencia['tipo_licencia'], $licencia['dias_licencia'] ,$licencia['mes'], $licencia['year'])) {
+                if (isset($licencia['tipo_licencia'], $licencia['dias_licencia'] ,$licencia['empleados']['mes'], $licencia['empleados']['year'])) {
                     $queryLicencia = "INSERT INTO licencias(licencias,mes,year,tipo_licencia, dias_licencia) VALUES (?,?,?,?,?)";
                     $stmtLicencia = $pdo->prepare($queryLicencia);
                     $stmtLicencia->execute([
-                        $empleado['cuil'],
+                        $licencia['empleados']['cuil'],
+                        $licencia['empleados']['mes'],
+                        $licencia['empleados']['year'],
                         $licencia['tipo_licencia'],
-                        $licencia['dias_licencia'],
-                        $licencia['year'],
-                        $licencia['mes']
+                        $licencia['dias_licencia']
                     ]);
                 } else {
                     throw new Exception("Error: datos incompletos en 'licencias'.");
@@ -80,16 +79,16 @@ if (isset($registro['sueldos']) && is_array($registro['sueldos'])) {
             // Procesar cargos
             if (isset($registro['cargos']) && is_array($registro['cargos'])) {
                 $cargo = $registro['cargos'];
-                if (isset($cargo['categoria'], $cargo['clase'], $cargo['cargo'] ,$contrato['mes'], $contrato['year'])) {
+                if (isset($cargo['categoria'], $cargo['clase'], $cargo['cargo'] ,$cargo['empleados']['mes'], $cargo['empleados']['year'])) {
                     $queryCargo = "INSERT INTO cargos(asignaciones, mes, year, categoria, clase_nivel, cargo_funcion) VALUES (?,?,?,?,?,?)";
                     $stmtCargo = $pdo->prepare($queryCargo);
                     $stmtCargo->execute([
-                        $empleado['cuil'],
+                        $cargo['empleados']['cuil'],
+                        $cargo['empleados']['mes'],
+                        $cargo['empleados']['year'],
                         $cargo['categoria'],
                         $cargo['clase'],
-                        $cargo['cargo'],
-                        $cargo['year'],
-                        $cargo['mes']
+                        $cargo['cargo']
                     ]);
                 } else {
                     throw new Exception("Error: datos incompletos en 'cargos'.");
@@ -99,16 +98,14 @@ if (isset($registro['sueldos']) && is_array($registro['sueldos'])) {
             // Procesar contrataciones
             if (isset($registro['contrataciones']) && is_array($registro['contrataciones'])) {
                 $contrato = $registro['contrataciones'];
-                if (isset($contrato['mes'], $contrato['año'], $contrato['dias_trabajados'] ,$contrato['mes'], $contrato['year'])) {
-                    $queryContratacion = "INSERT INTO contrataciones(contrato, mes, year, dias_trabajados) VALUES (?,?,?,?,?,?)";
+                if (isset($contrato['dias_trabajados'] ,$contrato['empleados']['mes'], $contrato['empleados']['year'])) {
+                    $queryContratacion = "INSERT INTO contrataciones(contrato, mes, year, dias_trabajados) VALUES (?,?,?,?)";
                     $stmtContratacion = $pdo->prepare($queryContratacion);
                     $stmtContratacion->execute([
-                        $empleado['cuil'],
-                        $contrato['mes'],
-                        $contrato['año'],
-                        $contrato['dias_trabajados'],
-                        $contrato['year'],
-                        $contrato['mes']
+                        $contrato['empleados']['cuil'],
+                        $contrato['empleados']['mes'],
+                        $contrato['empleados']['year'],
+                        $contrato['dias_trabajados']
                     ]);
                 } else {
                     throw new Exception("Error: datos incompletos en 'contrataciones'.");
@@ -125,4 +122,4 @@ if (isset($registro['sueldos']) && is_array($registro['sueldos'])) {
     $pdo->rollBack(); // Revertir la transacción si hay un error
     echo json_encode(["Error" => $e->getMessage()]);
 }
-?>
+?>  
