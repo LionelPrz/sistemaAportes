@@ -69,6 +69,7 @@ SELECT
     s.sueldo_id AS sueldo_id,
     s.total_remunerativo AS sueldo_remunerativo,
     s.total_no_remunerativo AS sueldo_no_remunerativo,
+    s.tipo_licencias as tipo_licencias,
     l.licencias_id AS licencia_id,
     l.tipo_licencia AS licencia_tipo,
     l.dias_licencia AS licencia_dias,
@@ -78,10 +79,62 @@ SELECT
     c.cargo_funcion AS cargo_funcion,
     c2.contratacion_id AS contratato,
     c2.mes AS contratacion_mes,
-    c2.año AS contratacion_año,
+    c2.year AS contratacion_año,
     c2.dias_trabajados AS contratacion_dias
 FROM empleados e
 LEFT JOIN sueldos s ON e.cuil = s.empleados
 LEFT JOIN licencias l ON e.cuil = l.licencias
 LEFT JOIN cargos c ON e.cuil = c.asignaciones
-left join contrataciones c2 on e.cuil  = c2.contrato 
+left join contrataciones c2 on e.cuil  = c2.contrato
+
+-- Modificaciones a la tabla de sueldos 
+alter table sueldos add column tipo_licencias int ;
+show create table sueldos;
+alter table sueldos drop foreign key sueldos_ibfk_1;
+alter table sueldos add column mes tinyint;
+alter table sueldos add column year smallint;
+
+-- Modificaciones a la tabla de licencias
+show create table licencias;
+alter table licencias drop foreign key licencias_ibfk_1;
+alter table licencias add column mes tinyint;
+alter table licencias add column year smallint;
+
+-- Modificaciones a la tabla de cargos
+show create table cargos ;
+alter table cargos drop foreign key cargos_ibfk_1;
+alter table cargos add column mes tinyint;
+alter table cargos add column year smallint;
+
+-- Modificaciones a la tabla de contrataciones
+show create table contrataciones ;
+alter table contrataciones drop foreign key contrataciones_ibfk_1;
+alter table contrataciones add column mes tinyint;
+alter table contrataciones drop column año;
+alter table contrataciones add column year smallint;
+
+-- Modificaciones a la tabla de empleados
+alter table empleados drop primary key;
+alter table empleados add column mes tinyint;
+alter table empleados add column year smallint;
+alter table empleados add primary key(cuil, mes, year);
+
+-- Asignaciones de las nuevas claves foraneas
+-- Tabla Sueldos
+alter table sueldos add constraint fk_empleados_sueldos
+foreign key(empleados,mes,year)
+references empleados(cuil,mes,year);
+-- Tabla Licencias
+alter table licencias add constraint fk_empleados_licencias
+foreign key(licencias,mes,year)
+references empleados(cuil,mes,year);
+-- Tabla Cargos
+alter table cargos add constraint fk_empleados_cargos
+foreign key(asignaciones,mes,year)
+references empleados(cuil,mes,year);
+-- Tabla Contrataciones
+alter table contrataciones add constraint fk_empleados_contrataciones
+foreign key(contrato,mes,year)
+references empleados(cuil,mes,year);
+
+

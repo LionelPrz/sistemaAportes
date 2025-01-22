@@ -30,7 +30,8 @@ const expresiones = {
   dias_licencia: /^([0-9]|[1-2][0-9]|3[0-1])$/,
   mes: /^(1|2|3|4|5|6|7|8|9|10|11|12)$/,
   year: /^(19[0-9]{2}|20[0-9]{2})$/,
-  input: /^([1-9][0-9])$/
+  // input: /^([1-9][0-9])$/
+  input: /^(10|[1-9])$/
 };
 
 const campos = {
@@ -57,7 +58,7 @@ const campos = {
 };
 
 const categorias = {
-  empleados:["cuil","nombre","apellido","tipo_contratacion"],
+  empleados:["cuil","mes","year","nombre","apellido","tipo_contratacion"],
   sueldos: ["total_remunerativo","total_no_remunerativo","tipo_aporte_adicional","monto_aporte_adicional","tipo_liquidacion"],
   licencias: ["tipo_licencia","dias_licencia"],
   cargos: ["cargo","clase","categoria"],
@@ -383,32 +384,54 @@ function generateAlert(resultado, mensaje = null) {
 }
 function cargarFormulario() {
   let datosFormulario = new FormData(form);
-  let objetoClasificado = Object.keys(categorias).reduce((acc,categoria)=>{
-    acc[categoria] ={};
+  let objetoClasificado = Object.keys(categorias).reduce((acc, categoria) => {
+    acc[categoria] = {}; // Inicializa las categorías vacías
     return acc;
+  }, {});
 
-  },{});
-  datosFormulario.forEach((value,key)=>{
-    Object.entries(categorias).forEach(([categoria,campos])=>{
-      if(campos.includes(key)){
+  datosFormulario.forEach((value, key) => {
+    // Iterar sobre cada categoría para agrupar
+    Object.entries(categorias).forEach(([categoria, campos]) => {
+      if (campos.includes(key)) {
+        // Parsear los valores que deben ser enteros
         if (key === "cuil" || key === "empleados" || key === "mes" || key === "dias_trabajados" || key === "dias_licencia" || key === "tipo_licencia" || key === "tipo_contratacion" || key === "tipo_liquidacion" || key === "year") {
           value = parseInt(value, 10);
-      }
-      if(key === "nombre" || key === "apellido"){
-          objetoClasificado.empleados.nombre_completo = objetoClasificado.empleados.nombre_completo ? `${objetoClasificado.empleados.nombre_completo} ${value}`: value;
-        }else{  
-          objetoClasificado[categoria][key=== "year" ? "año" : key] = value;
-        }if(["sueldos","licencias","cargos","contrataciones"].includes(categoria)){
-              let cuilParseado = parseInt(datosFormulario.get("cuil"),10);
-              objetoClasificado[categoria].empleados = cuilParseado;
+        }
+
+        // Agrupar nombre y apellido para la categoría empleados
+        if (key === "nombre" || key === "apellido") {
+          objetoClasificado.empleados.nombre_completo = objetoClasificado.empleados.nombre_completo 
+            ? `${objetoClasificado.empleados.nombre_completo} ${value}` 
+            : value;
+        } else {
+          // // Para las demás categorías, asociar mes y año
+          // if (["sueldos", "licencias", "cargos", "contrataciones"].includes(categoria)) {
+          // }
+          // Agregar el valor a la categoría correspondiente
+          objetoClasificado[categoria][key === "year" ? "year" : key] = value;
+        }
+
+        // Asociar el cuil a todas las categorías que lo necesiten
+        if (["sueldos", "licencias", "cargos", "contrataciones"].includes(categoria)) {
+          let cuilParseado = datosFormulario.get("cuil");
+         // Ajustar la clave compuesta para cuil, mes y año
+        objetoClasificado[categoria].empleados = {
+          cuil: cuilParseado,
+          mes: parseInt(datosFormulario.get("mes"), 10),
+          year: parseInt(datosFormulario.get("year"), 10)
+    };
+
         }
       }
     });
   });
+
+  // Agregar el objeto clasificado al contenedor de datos
   contenedorDatos.push(objetoClasificado);
-    console.log("Datos Clasificados :",objetoClasificado);
+  console.log("Datos Clasificados:", objetoClasificado);
   contador++;
 }
+
 function comprobarEstadoCarga(estado) {
   if (estado < valorForm.value) {
     reseteoFormulario();
