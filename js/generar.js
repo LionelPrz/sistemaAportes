@@ -5,21 +5,16 @@ let yearContainer = document.getElementById('info-card1');
 fetch("/php/generarArchivos.php",{
     method: 'POST',
     headers:{
-        // 'application/json'
-    }
+        'Content-Type':'application/json',
+    },
+    body: JSON.stringify({tipo:'year'}),
 })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Error al obtener los años");
-        }
-        return response.json();
-    })
-    .then(years => {
-        // Llenamos el contenedor con los años obtenidos
-        cargarYears(years);
-    })
-    .catch(error => console.error("Error en el fetch:", error));
-
+    .then((response)=>{
+        response.json()})
+    .then((data)=>{
+        console.log(data);
+        cargarYears(data);
+});
 // Función para cargar los años en el contenedor
 function cargarYears(years) {
     yearContainer.innerHTML = ''; // Limpiar el contenedor
@@ -38,6 +33,15 @@ function cargarYears(years) {
             let yearSelected = button.id;
             console.log("Año seleccionado:", yearSelected);
             // Aquí llamarás al siguiente fetch para obtener los meses
+            fetch('/php/generarArchivos.php',{
+                method: 'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+                body: JSON.stringify({tipo:'mes', year: yearSelected})
+            })
+            .then((response)=> response.json)
+            .then((data)=> console.log(data));  
         });
     });
 }
