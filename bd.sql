@@ -190,3 +190,24 @@ update cargos set year = 2020 where cargo_id >= 1;
 
 delete from empleados where cuil= 11111111111;
 
+update empleados set id_empleado = 35  where cuil = 20294292560 and mes = 5;
+
+-- Creando Trigger
+select version();
+show create table empleados;
+select @@sql_mode;
+show variables like 'log_bin_trust_function_creators';
+select * from empleados where tipo_contratacion = 2;
+update empleados set tipo_contratacion = 2 where tipo_contratacion = 1 and id_empleado not in (id_empleado = 1,id_empleado = 19,id_empleado = 3);
+update empleados set tipo_contratacion = 1 where id_empleado = 3;
+update empleados set tipo_contratacion = 1 where id_empleado = 19;
+update empleados set tipo_contratacion = 3 where id_empleado = 23;
+update empleados set tipo_contratacion = 3 where id_empleado = 29;
+
+-- iterador de id_empleado provisorio
+set @id = 0;
+update empleados set id_empleado = (@id := @id + 1);
+select * from empleados where mes = 3;
+select * from cargos;
+select clase_nivel ,cargo_funcion,mes,year from cargos where categoria = "Concejal";
+update empleados set id_empleado = 0;

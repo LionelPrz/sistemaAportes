@@ -47,22 +47,22 @@ fetch("/php/generarArchivos.php", {
 
 }
 // Funcion para cargar los meses en el contenedor
-function cargarMeses(meses){
+function cargarMeses(years){
     fetch('/php/generarArchivos.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ tipo: 'mes', year: meses })
+        body: JSON.stringify({ tipo: 'mes', year: years })
     })
     .then((response) => response.json()) // Llama a .json() correctamente
     .then((data) =>{
         console.log(data);
         mesContainer.innerHTML = ''; // Limpiar el contenedor
         data.forEach(mes => {
-            yearContainer.insertAdjacentHTML('beforeend', `
-                <button class="year-container" id="${mes}" type="button">
-                    Año: ${mes}
+            mesContainer.insertAdjacentHTML('beforeend', `
+                <button class="mes-container" id="${mes}" type="button">
+                    Mes: ${mes}
                 </button>
             `);
         });
@@ -71,8 +71,12 @@ function cargarMeses(meses){
             button.addEventListener('click',()=>{
                 mesSelected = button.id;
                 console.log("Mes seleccionado:",mesSelected);
+                generarTabla(yearSelected,mesSelected);
         });
     });
 })
     .catch((error) => console.error("Error en fetch:", error)); // Agrega manejo de errores
+}
+function generarTabla(dato1,dato2){
+    console.log(dato1,dato2);
 }
