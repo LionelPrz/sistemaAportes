@@ -74,7 +74,7 @@ header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetm
 header('Content-Disposition: attachment;filename="myfile.xlsx"');
 header('Cache-Control: max-age=0');
 
-$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer = IOFactory::createWriter($spreadSheet, 'Xlsx');
 $writer->save('php://output');
 
 } catch (Exception $e) {
