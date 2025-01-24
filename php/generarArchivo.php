@@ -67,15 +67,15 @@ try {
         $fila++;
     }
 
-    // Encabezados HTTP para la descarga
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header("Content-Disposition: attachment;filename={$nombreArchivo}");
-    header('Cache-Control: max-age=0');
+/* Here there will be some code where you create $spreadsheet */
 
-    // Enviar archivo
-    $writer = IOFactory::createWriter($spreadSheet, 'Xlsx');
-    $writer->save('php://output');
-    exit;
+// redirect output to client browser
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="myfile.xlsx"');
+header('Cache-Control: max-age=0');
+
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 
 } catch (Exception $e) {
     // Manejo de errores
