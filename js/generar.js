@@ -13,7 +13,7 @@ yearMainBtn.addEventListener('click',()=>{
 // Función para cargar los años en el contenedor
 function cargarYears() {
     // Fetch inicial para obtener los años disponibles
-fetch("/php/generarArchivos.php", {
+fetch("/php/seleccionarArchivos.php", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ fetch("/php/generarArchivos.php", {
 }
 // Funcion para cargar los meses en el contenedor
 function cargarMeses(years){
-    fetch('/php/generarArchivos.php', {
+    fetch('/php/seleccionarArchivos.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -77,6 +77,25 @@ function cargarMeses(years){
 })
     .catch((error) => console.error("Error en fetch:", error)); // Agrega manejo de errores
 }
-function generarTabla(dato1,dato2){
-    console.log(dato1,dato2);
+function generarTabla(dato1, dato2) {
+    fetch('/php/generarArchivo.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            mes: dato2,
+            year: dato1,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error("Error del servidor:", data.error);
+            alert("Error: " + data.error); // Notificar al usuario
+        } else {
+            console.log("Archivo generado exitosamente");
+        }
+    })
+    .catch(error => console.error("Error en el fetch:", error));
 }
