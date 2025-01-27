@@ -83,19 +83,29 @@ function generarTabla(dato1, dato2) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: new URLSearchParams({
-            mes: dato2,
-            year: dato1,
-        }),
+        body: new URLSearchParams({ mes: dato2, year: dato1 }),
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            console.error("Error del servidor:", data.error);
-            alert("Error: " + data.error); // Notificar al usuario
-        } else {
-            console.log("Archivo generado exitosamente");
-        }
-    })
-    .catch(error => console.error("Error en el fetch:", error));
+        .then(response => {
+            if (response.headers.get('Content-Type').includes('application/json')) {
+                return response.json();
+            } else {
+                return response.blob(); // Para archivos como Excel
+            }
+        })
+        .then(data => {
+            if (data instanceof Blob) {
+                const url = window.URL.createObjectURL(data);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Informe_${dato2}_${dato1}.xlsx`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            } else if (data.error) {
+                console.error("Error del servidor:", data.error);
+                alert("Error: " + data.error); // Notificar al usuario
+            }
+        })
+        .catch(error => console.error("Error en el fetch:", error));
+    
 }

@@ -53,7 +53,6 @@ botonGenerar.addEventListener('click', event => {
 });
 
 function cargarDatos(datosCargados) {
-    console.log(datosCargados);
     datosCargados.forEach(elemento => {
         datos.push(elemento);
     });
@@ -72,6 +71,7 @@ function encontrarCuil(datosComparados) {
 
     function encontrarYear(cuil) {
         yearDisponibles = [...new Set(cuil.map(item => item.year))];
+        console.log(yearDisponibles);
         contenedorYear.innerHTML = '';
         // Generacion de los items tipo botones
         yearDisponibles.forEach(year => {
@@ -87,18 +87,22 @@ function encontrarCuil(datosComparados) {
         contenidoBotones.forEach(botones => {
             botones.addEventListener('click', (e) => {
                 yearSelect = e.currentTarget.id;
+                console.log(yearSelect);
+                console.log(cuilEncontrado);
                 encontrarMeses(cuilEncontrado, yearSelect);
             });
         });
     }
 
     function encontrarMeses(datosEncontrados, yearSeleccionado) {
+        yearSeleccionado = parseInt(yearSeleccionado,10);
         mesesDiponibles = [...new Set(datosEncontrados.filter(item => item.year === yearSeleccionado).map(item => item.mes))];
+        console.log(mesesDiponibles);
         contenedorMes.innerHTML = '';
         // Generacion de los items tipo botones
         mesesDiponibles.forEach(mes => {
             contenedorMes.insertAdjacentHTML('beforeend', `
-                <button class="mes-container" id="${mes}" type="button">
+                <button class="year-container" id="${mes}" type="button">
                     Mes: ${mes}
                 </button>
             `);
