@@ -11,7 +11,7 @@ const rutasBotones = [
     { id: 'insert-btn', route: '../html/ingresar.html' },
     { id: 'consult-btn', route: '../html/consultar.html' },
     { id: 'generate-btn', route: '../html/generar.html' },
-    // {id:'insert-btn', route:'../html/insertar.html'},
+    { id:'import-btn', route:'../html/importarExcel.html'},
 ];
 
 botones.forEach(boton => {

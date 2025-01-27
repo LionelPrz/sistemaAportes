@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 // Recibir los datos del POST
 $mesSeleccionado = $_POST['mes'];
 $yearSeleccionado = $_POST['year'];
-$nombreArchivo = "Informe_{$mesSeleccionado}_{$yearSeleccionado}.xlsx";
+$nombreArchivo = "Declaracion Jurada Mes {$mesSeleccionado} Año {$yearSeleccionado}.xlsx";
 
 try {
     $query = "SELECT e.cuil AS cuil,
