@@ -89,17 +89,23 @@ input, select, textarea {
     background-color: var(--cards-light); /* Fondo por defecto */
 }
 .import-input{
-    display: none;
+    /* opacity: 0; */
+    z-index: 1;
+    position: relative;
+    right: 315px;
+    bottom: 475px;
+    cursor: pointer;
 }
+/* .import-text{
+
+} */
 .import-btn{
-    border: none;
     border-radius: 10px;
-    height: 60px;
+    height: 40px;
     width: 200px;
     font-size: 1.1rem;
     font-weight: 600;
     background-color: var(--bg-main-light);
     color: var(--text-main-light);
     box-shadow: 0 10px 20px rgba(68, 68, 68, 0.4);
-    cursor: pointer;
 }
