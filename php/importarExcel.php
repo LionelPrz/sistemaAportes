@@ -30,7 +30,7 @@ try {
 
         // Iterar sobre las filas del Excel (omitimos la primera fila si es de encabezados)
         foreach ($datosExcel as $indiceFila => $fila) {
-            if ($indiceFila === 1) continue; // Saltar encabezado
+            if ($indiceFila === 10) continue; // Saltar encabezado
             // Almacenar los errores de cada campo en una fila
                 $erroresFila = [];
 
