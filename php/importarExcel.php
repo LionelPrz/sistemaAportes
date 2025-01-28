@@ -7,10 +7,10 @@ $regex = require 'expresiones.php';
 $errores = [];
 
 try {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file-input']) && $_FILES['file-input']['error'] === UPLOAD_ERR_OK) {
         // Ruta temporal del archivo cargado
-        $fileTmpPath = $_FILES['file']['tmp_name'];
-        $fileName = $_FILES['file']['name'];
+        $fileTmpPath = $_FILES['file-input']['tmp_name'];
+        $fileName = $_FILES['file-input']['name'];
 
         // Validar la extensión del archivo
         $allowedExtensions = ['xlsx'];
@@ -30,61 +30,61 @@ try {
 
         // Iterar sobre las filas del Excel (omitimos la primera fila si es de encabezados)
         foreach ($datosExcel as $indiceFila => $fila) {
-            if ($indiceFila === 10) continue; // Saltar encabezado
+            if ($indiceFila < 11) continue; // Saltar encabezado
             // Almacenar los errores de cada campo en una fila
                 $erroresFila = [];
 
             // Verificar y asignar los valores de la fila
-                if(!preg_match($regex['cuil'],$fila['A']??'')){
-                    $erroresFila['cuil'] = 'Cuil invalido en la fila'.($indiceFila+1);
+                if(!preg_match($regex['cuil'],$fila['C']??'')){
+                    $erroresFila['cuil'] = 'Cuil invalido en la fila'.' '.($indiceFila);
                 }
-                if(!preg_match($regex['mes'],$fila['B']??'')){
-                    $erroresFila['mes'] = 'Mes invalido en la fila'.($indiceFila+1);
+                if(!preg_match($regex['mes'],$fila['A']??'')){
+                    $erroresFila['mes'] = 'Mes invalido en la fila'.($indiceFila);
                 }
-                if(!preg_match($regex['year'],$fila['C']??'')){
-                    $erroresFila['year'] = 'Año invalido en la fila'.($indiceFila+1);
+                if(!preg_match($regex['year'],$fila['B']??'')){
+                    $erroresFila['year'] = 'Año invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['nombre'],$fila['D']??'')){
-                    $erroresFila['nombre'] = 'Nombre invalido en la fila'.($indiceFila+1);
+                    $erroresFila['nombre'] = 'Nombre invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['apellido'],$fila['E']??'')){
-                    $erroresFila['apellido'] = 'Apellido invalido en la fila'.($indiceFila+1);
+                    $erroresFila['apellido'] = 'Apellido invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['tipo_contratacion'],$fila['F']??'')){
-                    $erroresFila['tipo_contratacion'] = 'Tipo de contratacion invalido en la fila'.($indiceFila+1);
+                    $erroresFila['tipo_contratacion'] = 'Tipo de contratacion invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['tipo_licencia'],$fila['G']??'')){
-                    $erroresFila['tipo_licencia'] = 'Tipo de licencia invalido en la fila'.($indiceFila+1);
+                    $erroresFila['tipo_licencia'] = 'Tipo de licencia invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['dias_trabajados'],$fila['H']??'')){
-                    $erroresFila['dias_trabajados'] = 'Dias trabajados invalido en la fila'.($indiceFila+1);
+                    $erroresFila['dias_trabajados'] = 'Dias trabajados invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['categoria'],$fila['I']??'')){
-                    $erroresFila['categoria'] = 'Cartegoria invalida en la fila'.($indiceFila+1);
+                    $erroresFila['categoria'] = 'Cartegoria invalida en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['clase'],$fila['J']??'')){
-                    $erroresFila['clase'] = 'Clase invalida en la fila'.($indiceFila+1);
+                    $erroresFila['clase'] = 'Clase invalida en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['cargo'],$fila['K']??'')){
-                    $erroresFila['cargo'] = 'Cargo invalido en la fila'.($indiceFila+1);
+                    $erroresFila['cargo'] = 'Cargo invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['total_remunerativo'],$fila['L']??'')){
-                    $erroresFila['total_remunerativo'] = 'Total remunerativo invalido en la fila'.($indiceFila+1);
+                    $erroresFila['total_remunerativo'] = 'Total remunerativo invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['total_no_remunerativo'],$fila['M']??'')){
-                    $erroresFila['total_no_remunerativo'] = 'Total no remunerativo invalido en la fila'.($indiceFila+1);
+                    $erroresFila['total_no_remunerativo'] = 'Total no remunerativo invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['tipo_aporte_adicional'],$fila['N']??'')){
-                    $erroresFila['tipo_aporte_adicional'] = 'Tipo de aporte adicional invalido en la fila'.($indiceFila+1);
+                    $erroresFila['tipo_aporte_adicional'] = 'Tipo de aporte adicional invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['monto_aporte_adicional'],$fila['O']??'')){
-                    $erroresFila['monto_aporte_adicional'] = 'Monto de aporte adicional invalido en la fila'.($indiceFila+1);
+                    $erroresFila['monto_aporte_adicional'] = 'Monto de aporte adicional invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['tipo_licencia'],$fila['P']??'')){
-                    $erroresFila['tipo_licencia'] = 'Tipo de licencia invalido en la fila'.($indiceFila+1);
+                    $erroresFila['tipo_licencia'] = 'Tipo de licencia invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['dias_licencia'],$fila['Q']??'')){
-                    $erroresFila['dias_licencia'] = 'Dias de licencia invalido en la fila'.($indiceFila+1);
+                    $erroresFila['dias_licencia'] = 'Dias de licencia invalido en la fila'.' '.($indiceFila);
                 }
                 // Almacenamos los errores que puede haber en las filas de datos
                 if(!empty($erroresFila)){
@@ -155,11 +155,12 @@ try {
                 $stmtContratacion->execute([$cuil, $mes, $year, $diasTrabajados]);
             }
         }
-
-        $pdo->commit(); // Confirmar la transacción
-        echo json_encode(["mensaje"=> "Datos importados exitosamente desde Excel"]);
-    } else {
-        echo json_encode(["Error" => "No se recibió ningún archivo o ocurrió un error."]);
+        if(!empty($errores)){
+            echo json_encode(["errores"=>$errores]);
+        }else{
+            $pdo->commit(); // Confirmar la transacción
+            echo json_encode(["mensaje"=> "Datos importados exitosamente desde Excel"]);
+        }
     }
 } catch (Exception $e) {
     $pdo->rollBack(); // Revertir la transacción en caso de error

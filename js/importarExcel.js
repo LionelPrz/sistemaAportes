@@ -19,13 +19,12 @@ importInput.addEventListener('change',function(event){
 
 function enviarArchivo(file){
     let formData = new FormData();
-    formData.append('file',file);
-    
+    formData.append('file-input',file);
     fetch('/php/importarExcel.php',{
         method: 'POST',
         body: formData,
     })
-        .then(res=>res.json())
+        .then(res=> res.json())
         .then(data=>{
             if(data.errores){
                 Object.keys(data.errores).forEach(fila=>{
@@ -38,7 +37,6 @@ function enviarArchivo(file){
                 console.log(data.mensaje);
             }
         })
-        .catch(error=>{
-            console.error('Error:',error);
-        })
+        .catch(error=>
+            console.log('Error:', error));
 }
