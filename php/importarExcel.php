@@ -153,11 +153,10 @@ try {
             }
         }
         if(!empty($errores)){
-            // echo json_encode(["errores"=>$errores]);
-            echo json_encode(["error"=>$errores]);
+            echo json_encode(["errores"=>$errores]);
         }else{
             $pdo->commit(); // Confirmar la transacción
-            echo json_encode(["mensaje"=> "Datos importados exitosamente desde Excel"]);
+            echo json_encode(["mensaje"=>"Datos Importados exitosamente desde el excel"]);
         }
     }
 } catch (Exception $e) {

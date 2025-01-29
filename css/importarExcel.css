@@ -31,6 +31,7 @@ main{
     grid-row: 2/3;
     display: grid;
     gap: 15px;  
+    grid-template-columns: 1fr,400px;
 }
 aside{
     border-radius: 10px;
@@ -127,4 +128,127 @@ input[type="file"]{
 }
 .upload-btn:active{
     transform: scale(0.9);
+}
+
+/* Alerts Dinamicos*/
+
+.custom-alert{
+	position: relative;
+	padding: 0rem 0rem 1rem 0rem;
+	display: flex;
+	flex-direction: column;
+	border-radius: 10px;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--button-disabled);
+	color: var(--form-input-text);
+	width: 90%;
+	max-width: 500px;
+	text-align: center;
+}
+.alert-progress-bar{
+	width: 100%;
+	height: 20px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+.bar-content{
+	display: block;
+	animation: progress-animation linear 5s;
+	width: 100%;
+	height: 18px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+.green1{
+	background-color: var(--color-secondary);
+}
+.green{
+	background-color: var(--color-primary);
+}
+.red1{
+	background-color:  #ff4242;
+}
+.red{
+	background-color: #d31414
+}
+.blue1{
+	background-color: #1877F2;
+}
+.blue{
+	background-color: #7baff3;
+}
+
+.alert-img{
+	width: 150px;
+	height: 150px;
+	border-radius: 10px;
+	margin-bottom: .1rem;
+}
+.alert-text{
+	padding: .6rem ;
+	margin: 0 1rem;
+	background-color: var(--button-background);
+	border-radius: 10px;
+	color: var(--button-text);
+	text-align: center;
+	font-size: 1.6rem;
+	font-weight: bold;
+}
+
+.alert-text-error{
+	padding: 1rem ;
+	margin: 0 1rem;
+	background-color: #bb2929;
+	border-radius: 10px;
+	color: var(--button-text);
+	text-align: center;
+	font-size: 1.5rem;
+	font-weight: bold;
+	
+}
+.alert-text-info{
+	padding: 1rem ;
+	margin: 0 1rem;
+	background-color: #1b69cf;
+	border-radius: 10px;
+	color: var(--button-text);
+	text-align: center;
+	font-size: 1.5rem;
+	font-weight: bold;
+	
+}
+
+.custom-alert-error{
+	box-shadow: 2px 2px 8px 4px #7a2323;
+}
+.custom-alert-success{
+	box-shadow: 2px 2px 8px 4px var(--button-hover);
+}
+.custom-alert-info{
+	box-shadow: 2px 2px 8px 4px #5994e0;
+}
+/* Contenedor del Alert del formulario/errores */
+.alert-overlay{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0,0,0,0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 3;
+}
+
+
+@keyframes progress-animation{
+	from{
+		width: 100%;
+	}
+	to{
+		width: 0%;
+	}
 }
