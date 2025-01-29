@@ -63,6 +63,7 @@ const categorias = {
   licencias: ["tipo_licencia","dias_licencia"],
   cargos: ["cargo","clase","categoria"],
   contrataciones: ["mes","year","dias_trabajados"]
+
 };
 
 inputs.forEach((input) => {
@@ -88,7 +89,6 @@ botonSmt.addEventListener("click", (e) => {
   e.preventDefault();
   validadorFinal(contador,valorForm.value,contenedorDatos);
 });
-
 function validarFormulario(e) {
   switch (e.target.name) {
     // Validacion cuil
@@ -431,7 +431,6 @@ function cargarFormulario() {
   console.log("Datos Clasificados:", objetoClasificado);
   contador++;
 }
-
 function comprobarEstadoCarga(estado) {
   if (estado < valorForm.value) {
     reseteoFormulario();
