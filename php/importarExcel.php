@@ -35,26 +35,26 @@ try {
                 $erroresFila = [];
 
             // Verificar y asignar los valores de la fila
-                if(!preg_match($regex['cuil'],$fila['C']??'')){
-                    $erroresFila['cuil'] = 'Cuil invalido en la fila'.' '.($indiceFila);
-                }
-                if(!preg_match($regex['mes'],$fila['A']??'')){
-                    $erroresFila['mes'] = 'Mes invalido en la fila'.($indiceFila);
-                }
-                if(!preg_match($regex['year'],$fila['B']??'')){
-                    $erroresFila['year'] = 'Año invalido en la fila'.' '.($indiceFila);
-                }
-                if(!preg_match($regex['nombre'],$fila['D']??'')){
-                    $erroresFila['nombre'] = 'Nombre invalido en la fila'.' '.($indiceFila);
-                }
-                if(!preg_match($regex['apellido'],$fila['E']??'')){
-                    $erroresFila['apellido'] = 'Apellido invalido en la fila'.' '.($indiceFila);
-                }
-                if(!preg_match($regex['tipo_contratacion'],$fila['F']??'')){
-                    $erroresFila['tipo_contratacion'] = 'Tipo de contratacion invalido en la fila'.' '.($indiceFila);
-                }
-                if(!preg_match($regex['tipo_licencia'],$fila['G']??'')){
-                    $erroresFila['tipo_licencia'] = 'Tipo de licencia invalido en la fila'.' '.($indiceFila);
+            if(!preg_match($regex['mes'],$fila['A']??'')){
+                $erroresFila['mes'] = 'Mes invalido en la fila'.($indiceFila);
+            }
+            if(!preg_match($regex['year'],$fila['B']??'')){
+                $erroresFila['year'] = 'Año invalido en la fila'.' '.($indiceFila);
+            }
+            if(!preg_match($regex['cuil'],$fila['C']??'')){
+                $erroresFila['cuil'] = 'Cuil invalido en la fila'.' '.($indiceFila);
+            }
+            if(!preg_match($regex['nombre'],$fila['D']??'')){
+                $erroresFila['nombre'] = 'Nombre invalido en la fila'.' '.($indiceFila);
+            }
+            if(!preg_match($regex['apellido'],$fila['E']??'')){
+                $erroresFila['apellido'] = 'Apellido invalido en la fila'.' '.($indiceFila);
+            }
+            if(!preg_match($regex['tipo_contratacion'],$fila['F']??'')){
+                $erroresFila['tipo_contratacion'] = 'Tipo de contratacion invalido en la fila'.' '.($indiceFila);
+            }
+                if(!preg_match($regex['tipo_liquidacion'],$fila['G']??'')){
+                    $erroresFila['tipo_liquidacion'] = 'Tipo de liquidacion invalido en la fila'.' '.($indiceFila);
                 }
                 if(!preg_match($regex['dias_trabajados'],$fila['H']??'')){
                     $erroresFila['dias_trabajados'] = 'Dias trabajados invalido en la fila'.' '.($indiceFila);
@@ -68,12 +68,12 @@ try {
                 if(!preg_match($regex['cargo'],$fila['K']??'')){
                     $erroresFila['cargo'] = 'Cargo invalido en la fila'.' '.($indiceFila);
                 }
-                if(!preg_match($regex['total_remunerativo'],$fila['L']??'')){
-                    $erroresFila['total_remunerativo'] = 'Total remunerativo invalido en la fila'.' '.($indiceFila);
-                }
-                if(!preg_match($regex['total_no_remunerativo'],$fila['M']??'')){
-                    $erroresFila['total_no_remunerativo'] = 'Total no remunerativo invalido en la fila'.' '.($indiceFila);
-                }
+                // if(!preg_match($regex['total_remunerativo'],$fila['L']??'')){
+                //     $erroresFila['total_remunerativo'] = 'Total remunerativo invalido en la fila'.' '.($indiceFila);
+                // }
+                // if(!preg_match($regex['total_no_remunerativo'],$fila['M']??'')){
+                //     $erroresFila['total_no_remunerativo'] = 'Total no remunerativo invalido en la fila'.' '.($indiceFila);
+                // }
                 if(!preg_match($regex['tipo_aporte_adicional'],$fila['N']??'')){
                     $erroresFila['tipo_aporte_adicional'] = 'Tipo de aporte adicional invalido en la fila'.' '.($indiceFila);
                 }
@@ -92,34 +92,33 @@ try {
                     continue;
                 }
 
-                $cuil = $fila['A'] ?? null;
-                $mes = $fila['B'] ?? null;
-                $year = $fila['C'] ?? null;
+                $cuil = $fila['C'] ?? null;
+                $mes = $fila['A'] ?? null;
+                $year = $fila['B'] ?? null;
                 $nombre = $fila['D'] ?? null;
                 $apellido = $fila['E'] ?? null;
                 $tipoContratacion = $fila['F'] ?? null;
-                $totalRemunerativo = $fila['G'] ?? null;
-                $totalNoRemunerativo = $fila['H'] ?? null;
-                $tipoAporteAdicional = $fila['I'] ?? null;
-                $montoAporteAdicional = $fila['J'] ?? null;
-                $tipoLiquidacion = $fila['K'] ?? null;
-                $tipoLicencia = $fila['L'] ?? null;
-                $diasLicencia = $fila['M'] ?? null;
-                $categoria = $fila['N'] ?? null;
-                $claseNivel = $fila['P'] ?? null;
-                $cargoFuncion = $fila['P'] ?? null;
+                $totalRemunerativo = $fila['L'] ?? null;
+                $totalNoRemunerativo = $fila['M'] ?? null;
+                $tipoAporteAdicional = $fila['N'] ?? null;
+                $montoAporteAdicional = $fila['O'] ?? null;
+                $tipoLiquidacion = $fila['G'] ?? null;
+                $tipoLicencia = $fila['P'] ?? null;
+                $diasLicencia = $fila['Q'] ?? null;
+                $categoria = $fila['I'] ?? null;
+                $claseNivel = $fila['J'] ?? null;
+                $cargoFuncion = $fila['K'] ?? null;
                 $diasTrabajados = $fila['Q'] ?? null;
 
+                // $cuil = str_replace('-','',$cuil);
                 // Concatenacion de los valores de apellido y nombre para la bd
                 $nombreCompleto = trim($nombre.' '.$apellido);
                 // Formateado de los valores de los sueldos remunerativo
-                $totalRemunerativo = str_replace('$','',$totalRemunerativo);
-                $totalRemunerativo = str_replace(',','.',$totalRemunerativo);
-                $totalRemunerativo = str_replace('.',',',$totalRemunerativo);
+                $totalRemunerativo = str_replace(['$', '.'], '', $totalRemunerativo);
+                $totalRemunerativo = str_replace(',', '.', $totalRemunerativo);                
                 // Formateando el valor de sueldo no remunerativo
-                $totalNoRemunerativo = str_replace('$','',$totalNoRemunerativo);
-                $totalNoRemunerativo = str_replace(',','.',$totalNoRemunerativo);
-                $totalNoRemunerativo = str_replace('.',',',$totalNoRemunerativo);
+                $totalNoRemunerativo = str_replace(['$', '.'], '', $totalRemunerativo);
+                $totalNoRemunerativo = str_replace(',', '.', $totalRemunerativo);                
 
             // Insertar en la tabla empleados
                 $queryEmpleado = "INSERT INTO empleados (cuil, mes, year, nombre_completo, tipo_contratacion) VALUES (?, ?, ?, ?, ?)";
