@@ -61,8 +61,18 @@ body{
 transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-[data-theme="dark"]{
-    transition: background-color 0.5s ease, color 0.5s ease;
+/* Ajustes para el tema oscuro */
+[data-theme="dark"] header,
+[data-theme="dark"] main,
+[data-theme="dark"] aside,
+[data-theme="dark"] footer,
+[data-theme="dark"] .card {
+    background: rgba(45, 45, 45, 0.8); /* Fondo semi-transparente (tema oscuro) */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Borde sutil */
+}
+[data-theme="dark"] .custom-alert {
+  background: rgba(45, 45, 45, 0.9); /* Fondo semi-transparente (tema oscuro) */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Borde sutil */
 }
 
 /* Dark mode */
@@ -127,4 +137,22 @@ transition: background-color 0.5s ease, color 0.5s ease;
 		width: 0%;
 	}
 }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
+@keyframes progress-animation{
+	from{
+		width: 100%;
+	}
+	to{
+		width: 0%;
+	}
+}
+/* Animación sutil al seleccionar archivo */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}

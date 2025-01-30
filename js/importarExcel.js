@@ -18,29 +18,29 @@ importInput.addEventListener('change',function(event){
     });
 });
 
-function enviarArchivo(file){
+function enviarArchivo(file) {
     let formData = new FormData();
-    formData.append('file-input',file);
+    formData.append('file-input', file);
+
     fetch('/php/importarExcel.php', {
         method: 'POST',
         body: formData,
     })
-        .then(res => res.json())
-        .then(data => {
-            if(data.Error){
-                generateAlert("error", data.Error);
-            }
-            if(data.errores){
-                generateAlert("error",JSON.stringify(data.errores));
-            }
-            else{
-                generateAlert("success",data.mensaje || "Datos importados con exito");
-            }
-        })
-        .catch(error => {
-            console.error("Error en fetch:", error); // Ver el error en consola
-            generateAlert("error", "Error en la petición");
-        });
+    .then(res => res.json())
+    .then(data => {
+        if (data.errores) {
+            mostrarErroresEnGrilla(data.errores); // Solo muestra el panel de errores
+        } else if (data.Error) {
+            generateAlert("error", data.Error);
+        } else {
+            generateAlert("success", "¡Datos importados correctamente!");
+            document.getElementById('error-layout').innerHTML = '';
+        }
+    })
+    .catch(error => {
+        console.error("Error en fetch:", error);
+        generateAlert("error", "Error en la conexión");
+    });
 }
 function generateAlert(resultado, mensaje = null){
 
@@ -110,4 +110,117 @@ function generateAlert(resultado, mensaje = null){
             setTimeout(()=>{
                 idCont.remove()
             },5000);
-    }
+}
+function generateConfirmAlert(mensaje, callbackAceptar, callbackCancelar) {
+    // Evitar duplicados
+    if (document.getElementById("customConfirmAlert")) return;
+
+    // Crear el alert de confirmación
+    const alertHTML = `
+        <div id="customConfirmAlert" class="alert-overlay">
+            <div class="custom-alert custom-alert-warning">
+                <div class="alert-progress-bar red1">
+                    <span class="bar-content red"></span>
+                </div>
+                <img src="/assets/info-warning-alert.jpg" class="alert-img" alt="Advertencia">
+                <p class="alert-text-warning">${mensaje}</p>
+                <div class="warning-btn-container">
+                    <button class="warning-btn-confirm upload-btn">Aceptar</button>
+                    <button class="warning-btn-cancel upload-btn">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Insertar en el DOM
+    alertContainer.insertAdjacentHTML('afterend', alertHTML);
+
+    // Manejar clics en los botones
+    const confirmBtn = document.querySelector('.warning-btn-confirm');
+    const cancelBtn = document.querySelector('.warning-btn-cancel');
+    const alertElement = document.getElementById('customConfirmAlert');
+
+    confirmBtn.addEventListener('click', () => {
+        alertElement.remove();
+        if (callbackAceptar) callbackAceptar();
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        alertElement.remove();
+        if (callbackCancelar) callbackCancelar();
+    });
+
+    // Cerrar al hacer clic fuera del alert
+    alertElement.addEventListener('click', (e) => {
+        if (e.target === alertElement) {
+            alertElement.remove();
+        }
+    });
+}
+function mostrarErroresEnGrilla(errores) {
+    const main = document.querySelector('main');
+    const errorList = document.createElement('div');
+    const errorLayout = document.getElementById('error-layout');
+    // Mostrar el panel de errores y ajustar la grilla
+    main.classList.add('has-errors');
+    errorLayout.classList.add('visible');
+    errorLayout.innerHTML = '<h3>Errores encontrados:</h3>';
+    errorList.className = 'error-list';
+
+    // Iterar sobre cada fila con errores (ej: "12", "13", etc.)
+    Object.keys(errores).forEach(fila => {
+        const erroresFila = errores[fila]; // Objeto con los errores de la fila
+
+        // Iterar sobre cada campo erróneo (ej: "mes", "cuil")
+        Object.entries(erroresFila).forEach(([campo, mensaje]) => {
+            const errorItem = document.createElement('div');
+            errorItem.className = 'error-item';
+            errorItem.innerHTML = `
+                <span class="error-fila">Fila ${fila}</span>
+                <span class="error-campo">${campo.toUpperCase()}:</span>
+                <span class="error-mensaje">${mensaje}</span>
+            `;
+            errorList.appendChild(errorItem);
+        });
+    });
+
+    errorLayout.appendChild(errorList);
+
+    // Botón de reintentar
+    const retryBtn = document.createElement('button');
+    retryBtn.className = 'upload-btn';
+    retryBtn.textContent = 'Reintentar importación';
+    retryBtn.onclick = () => {
+        generateConfirmAlert(
+            "¿Desea reintentar? Se borrarán los errores y el archivo actual.",
+            () => {
+                reiniciarFormulario(); // Limpiar todo
+            },
+            () => console.log("Reintento cancelado.")
+        );
+    };
+    errorLayout.appendChild(retryBtn);
+}
+function reiniciarFormulario() {
+    const main = document.querySelector('main');
+    const errorLayout = document.getElementById('error-layout');
+
+    // Ocultar el panel de errores y resetear la grilla
+    main.classList.remove('has-errors');
+    errorLayout.classList.remove('visible');
+    errorLayout.innerHTML = '';
+    // Limpiar el input de archivo
+    const importInput = document.getElementById('file-input');
+    importInput.value = ''; // Elimina el archivo seleccionado
+    
+    // Restaurar el texto del botón de selección
+    const inputLabel = document.getElementById('input-file-label');
+    inputLabel.textContent = 'Seleccionar Archivo';
+    
+    // Eliminar el botón de subida si existe
+    const uploadBtn = document.getElementById('upload-btn');
+    if (uploadBtn) uploadBtn.remove();
+    
+    // Limpiar el panel de errores
+    errorLayout.innerHTML = '';
+}
