@@ -16,22 +16,30 @@
             <h1>header</h1>
         </header>
         <main class="card import-container">
-            <div id="input-container" class="input-container">
-                <input type="file" id="file-input" name="file-input" accept=".xlsx">
-                <label id="input-file-label" class="input-file-label" for="file-input">Seleccionar Archivo</label>
-                <section id="upload-container" class="upload-container"></section>
-            </div>
-            <div class="error-aside-container">
-                <section id="error-layout" class="error-layout"></section>
-            </div>
-        </main>
-        <aside class="card">
-            <p>aside</p>
-        </aside>
-        <footer class="card">
-            <p>footer</p>
-        </footer>
-    </div>
+                <div class="terminal-content-container">
+                    <div class="terminal_toolbar">
+                        <div class="butt">
+                            <button class="btn btn-color"></button>
+                            <button class="btn btn-color"></button>
+                            <button class="btn btn-color"></button>
+                        </div>
+                        <p class="user">Importacion Excel</p>
+                        <button class="add_tab">+</button>
+                    </div>
+                    <div class="terminal_body">
+                        <div id="input-container" class="input-container">
+                        <input type="file" id="file-input" name="file-input" accept=".xlsx">
+                        <label id="input-file-label" class="input-file-label" for="file-input">Seleccionar Archivo</label>
+                        <section id="upload-container" class="upload-container"></section>
+                    </div>
+                    <div class="error-aside-container">
+                        <section id="error-layout" class="error-layout"></section>
+                    </div>
+                    </div>
+                </div>
+            </main>
+        <aside class="card"><p>aside</p></aside>
+        <footer class="card"><p>footer</p></footer>
     <script src="/js/importarExcel.js"></script>
 </body>
 </html>

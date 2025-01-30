@@ -2,20 +2,32 @@ let importInput = document.getElementById('file-input');
 let uploadContainer = document.getElementById('upload-container');
 let alertContainer = document.getElementById('error-layout');
 
-importInput.addEventListener('change',function(event){
-    let fileName = event.currentTarget;
+importInput.addEventListener('change', function (event) {
+    let file = event.target.files[0];
     let buttonText = document.querySelector('.input-file-label');
 
-    if(fileName.files.length > 0 && !document.getElementById('upload-btn')){
-        buttonText.textContent = fileName.files[0].name;
-        uploadContainer.insertAdjacentHTML('beforeend',`
+    if (file) {
+        buttonText.textContent = file.name;
+
+        // Verificar si el botón ya existe y eliminarlo para evitar duplicados
+        let uploadBtn = document.getElementById('upload-btn');
+        if (uploadBtn) uploadBtn.remove();
+
+        // Crear botón dinámicamente
+        uploadContainer.insertAdjacentHTML('beforeend', `
             <button id="upload-btn" class="upload-btn" type="button">Subir Archivo</button>
         `);
+
+        uploadBtn = document.getElementById('upload-btn');
+
+        // Agregar evento para subir archivo
+        uploadBtn.addEventListener('click', () => {
+            // Agregar animación de carga
+            uploadBtn.innerHTML = '<span class="loading-spinner"></span> Subiendo...';
+            uploadBtn.disabled = true;
+            enviarArchivo(file);
+        });
     }
-    let uploadBtn = document.getElementById('upload-btn');
-    uploadBtn.addEventListener('click',()=>{
-        enviarArchivo(fileName.files[0]);
-    });
 });
 
 function enviarArchivo(file) {
@@ -26,21 +38,140 @@ function enviarArchivo(file) {
         method: 'POST',
         body: formData,
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(Error `${res.status}: ${res.statusText}`);
+        }
+        return res.json();
+    })
     .then(data => {
+        let uploadBtn = document.getElementById('upload-btn');
+
         if (data.errores) {
-            mostrarErroresEnGrilla(data.errores); // Solo muestra el panel de errores
+            mostrarErroresEnGrilla(data.errores);
         } else if (data.Error) {
             generateAlert("error", data.Error);
         } else {
             generateAlert("success", "¡Datos importados correctamente!");
-            document.getElementById('error-layout').innerHTML = '';
+            reiniciarFormulario();
         }
+
+        // Restaurar botón después de la carga
+        uploadBtn.innerHTML = "Subir Archivo";
+        uploadBtn.disabled = false;
     })
     .catch(error => {
         console.error("Error en fetch:", error);
-        generateAlert("error", "Error en la conexión");
+        generateAlert("error", "Error en la conexión o datos inválidos.");
+
+        // Restaurar botón en caso de error
+        let uploadBtn = document.getElementById('upload-btn');
+        if (uploadBtn) {
+            uploadBtn.innerHTML = "Subir Archivo";
+            uploadBtn.disabled = false;
+        }
     });
+}
+function generateAlert(resultado, mensaje = null) {
+    if (document.getElementById("customAlert")) return;
+
+    let texto, imagen, claseCont, claseText, clasePbar, claseBar;
+
+    switch (resultado) {
+        case "error":
+            imagen = "/assets/ayuyu-angry-png.png";
+            texto = mensaje || "Se produjo un error.";
+            claseCont = "custom-alert custom-alert-error";
+            claseText = "alert-text-error";
+            clasePbar = "alert-progress-bar red1";
+            claseBar = "bar-content red";
+            break;
+            case "success":
+            imagen = "/assets/typo yukari A2.png";
+            texto = mensaje || "Operación exitosa.";
+            claseCont = "custom-alert custom-alert-success";
+            claseText = "alert-text";
+            clasePbar = "alert-progress-bar green1";
+            claseBar = "bar-content green";
+            break;
+        case "info":
+            imagen = "/assets/info-warning-alert.jpg";
+            texto = mensaje || "Información importante.";
+            claseCont = "custom-alert custom-alert-info";
+            claseText = "alert-text-info";
+            clasePbar = "alert-progress-bar blue1";
+            claseBar = "bar-content blue";
+            break;
+        }
+
+    alertContainer.insertAdjacentHTML('afterend', `
+        <div id="customAlert" class="alert-overlay fade-in">
+            <div class="${claseCont}">
+                <div class="${clasePbar}"><span class="${claseBar}"></span></div>
+                <img src="${imagen}" class="alert-img">
+                <p class="${claseText}">${texto}</p>
+            </div>
+        </div>
+    `);
+
+    setTimeout(() => {
+        document.getElementById("customAlert").classList.add("fade-out");
+        setTimeout(() => document.getElementById("customAlert")?.remove(), 500);
+    }, 4000);
+}
+function mostrarErroresEnGrilla(errores) {
+    const main = document.querySelector('main');
+    const errorLayout = document.getElementById('error-layout');
+    
+    main.classList.add('has-errors');
+    errorLayout.classList.add('visible');
+    errorLayout.innerHTML = '<h3>Errores encontrados:</h3>';
+
+    let errorList = document.createElement('div');
+    errorList.className = 'error-list';
+
+    Object.keys(errores).forEach(fila => {
+        Object.entries(errores[fila]).forEach(([campo, mensaje]) => {
+            const errorItem = document.createElement('div');
+            errorItem.className = 'error-item fade-in';
+            errorItem.innerHTML = `
+                <span class="error-fila">Fila ${fila}</span>
+                <span class="error-campo">${campo.toUpperCase()}:</span>
+                <span class="error-mensaje">${mensaje}</span>
+            `;
+            errorList.appendChild(errorItem);
+        });
+    });
+
+    errorLayout.appendChild(errorList);
+
+    let retryBtn = document.createElement('button');
+    retryBtn.className = 'upload-btn';
+    retryBtn.textContent = 'Reintentar importación';
+    retryBtn.onclick = () => {
+        generateConfirmAlert("¿Desea reintentar?", reiniciarFormulario);
+    };
+    errorLayout.appendChild(retryBtn);
+}
+function reiniciarFormulario() {
+    const main = document.querySelector('main');
+    const errorLayout = document.getElementById('error-layout');
+
+    main.classList.remove('has-errors');
+    errorLayout.classList.remove('visible');
+    errorLayout.innerHTML = '';
+
+    let importInput = document.getElementById('file-input');
+    importInput.value = '';
+
+    setTimeout(() => {
+        importInput.value = null;
+    }, 0);
+
+    document.getElementById('input-file-label').textContent = 'Seleccionar Archivo';
+    
+    let uploadBtn = document.getElementById('upload-btn');
+    if (uploadBtn) uploadBtn.remove();
 }
 function generateAlert(resultado, mensaje = null){
 
@@ -156,71 +287,4 @@ function generateConfirmAlert(mensaje, callbackAceptar, callbackCancelar) {
             alertElement.remove();
         }
     });
-}
-function mostrarErroresEnGrilla(errores) {
-    const main = document.querySelector('main');
-    const errorList = document.createElement('div');
-    const errorLayout = document.getElementById('error-layout');
-    // Mostrar el panel de errores y ajustar la grilla
-    main.classList.add('has-errors');
-    errorLayout.classList.add('visible');
-    errorLayout.innerHTML = '<h3>Errores encontrados:</h3>';
-    errorList.className = 'error-list';
-
-    // Iterar sobre cada fila con errores (ej: "12", "13", etc.)
-    Object.keys(errores).forEach(fila => {
-        const erroresFila = errores[fila]; // Objeto con los errores de la fila
-
-        // Iterar sobre cada campo erróneo (ej: "mes", "cuil")
-        Object.entries(erroresFila).forEach(([campo, mensaje]) => {
-            const errorItem = document.createElement('div');
-            errorItem.className = 'error-item';
-            errorItem.innerHTML = `
-                <span class="error-fila">Fila ${fila}</span>
-                <span class="error-campo">${campo.toUpperCase()}:</span>
-                <span class="error-mensaje">${mensaje}</span>
-            `;
-            errorList.appendChild(errorItem);
-        });
-    });
-
-    errorLayout.appendChild(errorList);
-
-    // Botón de reintentar
-    const retryBtn = document.createElement('button');
-    retryBtn.className = 'upload-btn';
-    retryBtn.textContent = 'Reintentar importación';
-    retryBtn.onclick = () => {
-        generateConfirmAlert(
-            "¿Desea reintentar? Se borrarán los errores y el archivo actual.",
-            () => {
-                reiniciarFormulario(); // Limpiar todo
-            },
-            () => console.log("Reintento cancelado.")
-        );
-    };
-    errorLayout.appendChild(retryBtn);
-}
-function reiniciarFormulario() {
-    const main = document.querySelector('main');
-    const errorLayout = document.getElementById('error-layout');
-
-    // Ocultar el panel de errores y resetear la grilla
-    main.classList.remove('has-errors');
-    errorLayout.classList.remove('visible');
-    errorLayout.innerHTML = '';
-    // Limpiar el input de archivo
-    const importInput = document.getElementById('file-input');
-    importInput.value = ''; // Elimina el archivo seleccionado
-    
-    // Restaurar el texto del botón de selección
-    const inputLabel = document.getElementById('input-file-label');
-    inputLabel.textContent = 'Seleccionar Archivo';
-    
-    // Eliminar el botón de subida si existe
-    const uploadBtn = document.getElementById('upload-btn');
-    if (uploadBtn) uploadBtn.remove();
-    
-    // Limpiar el panel de errores
-    errorLayout.innerHTML = '';
 }

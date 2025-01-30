@@ -88,7 +88,7 @@ try {
                 }
                 // Almacenamos los errores que puede haber en las filas de datos
                 if(!empty($erroresFila)){
-                    $errores[$indiceFila + 1]= $erroresFila;
+                    $errores[$indiceFila]= $erroresFila;
                     continue;
                 }
 

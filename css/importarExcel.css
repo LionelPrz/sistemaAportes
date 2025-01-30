@@ -129,23 +129,17 @@ input[type="file"]{
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 /* Estilos estructurales para el layout */
-.import-container{
+.terminal-content-container{
+    height: 100%;
+    width: 95%;
+    background-color: #7baff3;
+    border-radius: 10px;
+    padding: 8rem;
+    margin: .3rem;
     display: grid;
     grid-template-columns: 1fr;
 }
-.import-container.has-errors{
-    grid-template-columns: 1fr 450px;
-}
-.input-container{
-    grid-column: 1/2;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 1.5rem;
-    margin: 1.2rem;
-}
-.error-aside-container{
-    grid-column: 2/3;
-}
+
 /* Estilo para el botón de subir */
 .upload-btn {
     display: inline-block;
@@ -370,4 +364,131 @@ input[type="file"]{
 .error-layout.visible {
     display: block; /* O display: grid si usas grid internamente */
 }
+.fade-in {
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeIn 0.5s forwards;
+}
 
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
+/* Estilos del terminal */
+
+.terminal_toolbar {
+    display: flex;
+    height: 35px;
+    align-items: center;
+    padding: 0 15px;
+    background: var(--terminal-bg);
+    justify-content: space-between;
+  }
+  
+  .header_terminal_toolbar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: .7rem;
+  }
+  
+  .butt {
+    display: flex;
+    align-items: center;
+  }
+  
+  .btn {
+    height: 13px;
+    width: 13px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .btn:hover {
+    transform: scale(1.1);
+  }
+  
+  .btn-color:nth-child(1) {
+    background: #ff5f56;
+  }
+  
+  .btn-color:nth-child(2) {
+    background: #ffbd2e;
+  }
+  
+  .btn-color:nth-child(3) {
+    background: #27c93f;
+  }
+  
+  .add_tab {
+    border: none;
+    color: var(--main-text-color);
+    background: #3a3a3a;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .add_tab:hover {
+    background: #4a4a4a;
+  }
+  
+  .user {
+    color: var(--user-lb);
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .terminal_body {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    font-family: system-ui, monospace;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 1.5;
+    overflow-y: auto;
+    white-space: normal;
+  }
+  
+  .terminal_prompt {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+  }
+  
+  .terminal_user {
+    color: var(--title-color);
+  }
+  
+  .terminal_location {
+    color: #0066ff;
+  }
+  
+  .terminal_bling {
+    color: #ff00ff;
+  }
+  
+  .terminal_body {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 35px);
+    padding: 16px;
+    font-family: system-ui, monospace;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 1.5;
+    overflow-y: auto;
+    white-space: normal;
+  }
