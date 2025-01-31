@@ -3,12 +3,39 @@
     padding: 0;
     box-sizing: border-box;
 }
+:root {
+    /* Dark Theme */
+    --bg-dark: #1a1d21;
+    --surface-dark: rgba(35, 38, 42, 0.8);
+    --text-dark: #e8e8e8;
+    --primary-dark: #3d9bff;
+    --border-dark: rgba(255, 255, 255, 0.1);
+    
+    /* Light Theme */
+    --bg-light: #f5f5f7;
+    --surface-light: rgba(255, 255, 255, 0.8);
+    --text-light: #1a1d21;
+    --primary-light: #007aff;
+    --border-light: rgba(0, 0, 0, 0.1);
+    
+    /* Comunes */
+    --blur-bg: blur(20px);
+    --border-radius: 12px;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --bg: var(--bg-dark);
+    --surface: var(--surface-dark);
+    --text: var(--text-dark);
+    --primary: var(--primary-dark);
+    --border: var(--border-dark);
+}
+
 body{
-    background-color: var(--bg-main-light);
-    color: var(--text-main-light);
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Mono', monospace;
+    margin: 0;
     font-size: 1.3rem;
     font-weight: 700;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .container{
     display: grid;
@@ -38,8 +65,9 @@ main{
     grid-column: 2/3;
     grid-row: 2/3;
     display: grid;
-    gap: 15px;  
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr 400px; /* 2 columnas */
+    gap: 20px;
+    padding: 20px;
 }
 aside{
     border-radius: 10px;
@@ -85,410 +113,211 @@ input, select, textarea {
     transition: 0.5s;
     animation: loading1274 2.5s ease;
 }
-/* Estilos generales para el darkmode */
-.card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    border-radius: 10px;
-    transition: all .3s;
-    transition: transform 400ms, box-shadow 400ms;
-    background-color: var(--cards-light); /* Fondo por defecto */
-}
-input[type="file"]{
-    display: none;
-}
 
-/* Estilo para el input de archivo */
-.input-file-label {
-    display: inline-block;
-    text-transform: uppercase;
-    color: #fff;
-    background: var(--button-background);
-    text-align: center;
-    padding: 1rem 1.8rem;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    letter-spacing: 0.1rem;
-    user-select: none;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+/* MAIN - Contenedor principal */
+main.card {
+    position: relative;
+    height: calc(100% - 40px);
+    min-height: 0;
+    overflow: hidden; /* Contiene elementos hijos */
 }
+/* === Correcciones de Visibilidad === */
 
-.input-file-label:hover {
-    background: var(--button-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-}
-
-.input-file-label:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-/* Estilos estructurales para el layout */
-.terminal-content-container{
-    height: 100%;
-    width: 95%;
-    background-color: #7baff3;
-    border-radius: 10px;
-    padding: 8rem;
-    margin: .3rem;
+/* Contenedor Principal */
+.terminal-main-container {
+    background: var(--surface);
+    border-radius: var(--border-radius);
+    padding: 20px;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 400px;
+    gap: 20px;
+    height: 80vh;
 }
 
-/* Estilo para el botón de subir */
-.upload-btn {
-    display: inline-block;
-    margin-top: 1rem;
-    background: var(--button-background);
-    color: var(--button-text);
-    border: none;
-    padding: 0.8rem 1.5rem;
-    font-size: 1.2rem;
-    cursor: pointer;
-    text-transform: uppercase;
+/* Panel de Errores */
+.error-panel {
+    background: var(--surface);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    opacity: 1; /* Forzar visibilidad para pruebas */
+    visibility: visible; /* Forzar visibilidad para pruebas */
+    border: 1px solid var(--border);
+}
+
+/* Contenedor de Botones */
+.button-container {
+    background: var(--surface);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    border: 1px solid var(--border);
+}
+
+/* Texto y Contenido */
+.terminal-header span,
+.terminal-button,
+.error-panel span {
+    color: var(--text);
+}
+
+/* === Ajustes de Layout === */
+
+main.import-container {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* === Estilos macOS Ajustados === */
+.terminal-header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: var(--blur-bg);
+    margin: -20px -20px 20px -20px;
+    padding: 15px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.terminal-button {
+
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
+    color: var(--text);
+    margin: 0 auto;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    transition: transform 0.2s ease;
-}
-.upload-btn:hover {
-    background: var(--button-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    padding: 1.2rem;
+    text-align: center;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1.2rem;
 }
 
-.upload-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.error-item {
+    background: rgba(255, 95, 86, 0.1);
+    border: 1px solid rgba(255, 95, 86, 0.2);
+    color: var(--text);
 }
-.upload-container {
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-/* Alerts Dinamicos*/
-.custom-alert{
-	position: relative;
-	padding: 0rem 0rem 1rem 0rem;
-	display: flex;
-	flex-direction: column;
-	border-radius: 10px;
-	justify-content: center;
-	align-items: center;
-    width: 90%;
-    max-width: 500px;
-    min-height: 200px;
-	text-align: center;
-    background: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
-    backdrop-filter: blur(10px); /* Efecto de blur */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.5s ease;
-}
-.alert-progress-bar{
-	width: 100%;
-	height: 20px;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-}
-.bar-content{
-	display: block;
-	animation: progress-animation linear 5s;
-	width: 100%;
-	height: 18px;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-}
-.green1{
-	background-color: var(--color-secondary);
-}
-.green{
-	background-color: var(--color-primary);
-}
-.red1{
-	background-color:  #ff4242;
-}
-.red{
-	background-color: #d31414
-}
-.blue1{
-	background-color: #1877F2;
-}
-.blue{
-	background-color: #7baff3;
-}
-
-.alert-img{
-	width: 150px;
-	height: 150px;
-	border-radius: 10px;
-	margin-bottom: .1rem;
-}
-.alert-text{
-	padding: .6rem ;
-	margin: 0 1rem;
-	background-color: var(--button-background);
-	border-radius: 10px;
-	color: var(--button-text);
-	text-align: center;
-	font-size: 1.6rem;
-	font-weight: bold;
-}
-
-.alert-text-error{
-	padding: 1rem ;
-	margin: 0 1rem;
-	background-color: #bb2929;
-	border-radius: 10px;
-	color: var(--button-text);
-	text-align: center;
-	font-size: 1.5rem;
-	font-weight: bold;
-	
-}
-.alert-text-info{
-	padding: 1rem ;
-	margin: 0 1rem;
-	background-color: #1b69cf;
-	border-radius: 10px;
-	color: var(--button-text);
-	text-align: center;
-	font-size: 1.5rem;
-	font-weight: bold;
-	
-}
-
-.custom-alert-error{
-	box-shadow: 2px 2px 8px 4px #7a2323;
-}
-.custom-alert-success{
-	box-shadow: 2px 2px 8px 4px var(--button-hover);
-}
-.custom-alert-info{
-	box-shadow: 2px 2px 8px 4px #5994e0;
+.error-panel.visible {
+    animation: slideIn 0.3s ease-out forwards;
 }
 .alert-overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px); /* Opcional: efecto de blur */
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
     display: flex;
-    justify-content: center;
     align-items: center;
-    z-index: 9999;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.alert-content {
+    background: var(--surface);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    max-width: 550px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: alertEnter 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.alert-img{
+    height: 250px;
+    width: 250px;
+}
+
+@keyframes alertEnter {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.alert-text {
+    margin: 1rem 0;
+    background-color: var(--surface);
+    padding: 2rem;
     border-radius: 10px;
-    backdrop-filter: blur(5px); /* Blur solo dentro del main */
+    color: #ff6414;
 }
 
-/* Estilos específicos para el alert de confirmación */
-.custom-alert-warning {
-    background: rgba(255, 243, 205, 0.95);
-    border: 2px solid #ffd351 ;
-    box-shadow: 2px 2px 8px 4px rgba(255, 193, 7, 0.2) ;
-}
-
-.alert-text-warning {
-    color: #856404 ;
-    font-size: 1.4rem ;
-    background-color: transparent ;
-}
-
-.warning-btn-container {
+.alert-actions {
     display: flex;
     gap: 1rem;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 }
 
-.warning-btn-confirm {
-    background-color: #28a745 ; /* Verde */
-}
-
-.warning-btn-cancel {
-    background-color: #dc3545 ; /* Rojo */
-}
-
-/* Panel de errores (sidebar) */
-[data-theme="dark"] .error-layout {
-    background: var(--cards-dark);
-}
-.error-layout {
-    display: none; /* Oculto inicialmente */
-    background: var(--cards-light);
-    border-radius: 10px;
-    padding: 2.5rem;
-    margin: 1.4rem;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-[data-theme="dark"] #error-layout {
-    background: var(--cards-dark);
-}
-
-/* Items de error */
-.error-item {
-    padding: .5rem;
-    margin-bottom: 1rem;
-    background: rgba(255, 0, 0, 0.1);
-    border-left: 4px solid #ff4444;
-    border-radius: 5px;
-}
-
-.error-fila {
-    font-weight: bold;
-    color: #ff4444;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-.error-campo {
-    color: var(--text-main-light);
-    font-weight: 600;
-}
-
-.error-mensaje {
-    color: var(--text-main-light);
-    font-size: 0.9rem;
-}
-.error-layout.visible {
-    display: block; /* O display: grid si usas grid internamente */
-}
-.fade-in {
-    opacity: 0;
-    transform: translateY(-10px);
-    animation: fadeIn 0.5s forwards;
-}
-
-.fade-out {
-    animation: fadeOut 0.5s forwards;
-}
-
-/* Estilos del terminal */
-
-.terminal_toolbar {
-    display: flex;
-    height: 35px;
-    align-items: center;
-    padding: 0 15px;
-    background: var(--terminal-bg);
-    justify-content: space-between;
-  }
-  
-  .header_terminal_toolbar {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: .7rem;
-  }
-  
-  .butt {
-    display: flex;
-    align-items: center;
-  }
-  
-  .btn {
-    height: 13px;
-    width: 13px;
-    border-radius: 50%;
-    margin-right: 8px;
+.confirm-btn, .cancel-btn {
+    flex: 1;
+    padding: 0.8rem 1.5rem;
     border: none;
+    border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  
-  .btn:hover {
-    transform: scale(1.1);
-  }
-  
-  .btn-color:nth-child(1) {
-    background: #ff5f56;
-  }
-  
-  .btn-color:nth-child(2) {
-    background: #ffbd2e;
-  }
-  
-  .btn-color:nth-child(3) {
-    background: #27c93f;
-  }
-  
-  .add_tab {
-    border: none;
-    color: var(--main-text-color);
-    background: #3a3a3a;
-    padding: 4px 8px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-  
-  .add_tab:hover {
-    background: #4a4a4a;
-  }
-  
-  .user {
-    color: var(--user-lb);
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .terminal_body {
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    font-family: system-ui, monospace;
-    font-weight: bold;
-    font-size: 17px;
-    line-height: 1.5;
-    overflow-y: auto;
-    white-space: normal;
-  }
-  
-  .terminal_prompt {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: center;
-  }
-  
-  .terminal_user {
-    color: var(--title-color);
-  }
-  
-  .terminal_location {
-    color: #0066ff;
-  }
-  
-  .terminal_bling {
-    color: #ff00ff;
-  }
-  
-  .terminal_body {
-    display: flex;
-    flex-direction: column;
-    height: calc(100% - 35px);
-    padding: 16px;
-    font-family: system-ui, monospace;
-    font-weight: bold;
-    font-size: 17px;
-    line-height: 1.5;
-    overflow-y: auto;
-    white-space: normal;
-  }
+    transition: var(--transition);
+}
+
+.confirm-btn {
+    background: var(--primary);
+    color: white;
+}
+
+.cancel-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
+}
+
+/* === Modo Claro === */
+@media (prefers-color-scheme: light) {
+    .terminal-header {
+        background: rgba(255, 255, 255, 0.6);
+    }
+    
+    .terminal-button {
+        background: rgba(255, 255, 255, 0.7);
+    }
+    
+    .error-item {
+        background: rgba(255, 95, 86, 0.08);
+    }
+}
+
+/* Ajustes modo claro */
+@media (prefers-color-scheme: light) {
+    .button-container {
+        background: rgba(255, 255, 255, 0.6);
+        border-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    .terminal-button {
+        background: rgba(255, 255, 255, 0.7);
+        border-color: rgba(0, 0, 0, 0.05);
+        box-shadow: 
+            0 4px 6px rgba(0, 0, 0, 0.03),
+            inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    }
+    
+    .error-list::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.15);
+    }
+}
+/* === Responsive === */
+@media (max-width: 1200px) {
+    .terminal-main-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .error-panel {
+        margin-top: 20px;
+    }
+}
+/* Animación sutil al mostrar errores */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
