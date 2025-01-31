@@ -15,19 +15,19 @@
         <header class="card">
             <h1>header</h1>
         </header>
-        <main class="import-container">
+        <main id="importContainer" class="import-container">
             <div class="terminal-main-container">
-                <!-- Contenedor Principal -->
-                <div class="button-container">
+                <div id="buttonContainer" class="button-container">
+                    <!-- ... header y botones ... -->
                     <div class="terminal-header">
                         <div class="terminal-buttons">
                             <div class="terminal-btn close"></div>
                             <div class="terminal-btn minimize"></div>
                             <div class="terminal-btn maximize"></div>
                         </div>
-                        <span>Terminal.app</span>
+                        <span>Importar archivos Excel</span>
                     </div>
-                    
+                        <p>Ingrese el archivo Excel a cargar !</p>
                     <button class="terminal-button" id="mainButton">
                         <span class="icon">􀈒</span>
                         Subir Archivo
@@ -36,9 +36,8 @@
                         ↑ Subir Archivo
                     </button>
                 </div>
-        
                 <!-- Panel de Errores -->
-                <div id="errorPanel" class="error-panel visible"> <!-- Forzado visible para pruebas -->
+                <div id="errorPanel" class="error-panel">
                     <div class="terminal-header">
                         <div class="terminal-buttons">
                             <div class="terminal-btn close"></div>
@@ -48,18 +47,38 @@
                         <span>Errores</span>
                     </div>
                     
-                    <div id="error-layout" class="error-list">
-                        <!-- Ejemplo de errores -->
-                    <button class="terminal-button" id="retryBtn">
-                        <span class="icon">􀎭</span>
-                        Reintentar
-                    </button>
+                    <!-- Contenedor con scroll -->
+                    <div class="error-list-container">
+                        <div id="errorList" class="error-list">
+                            <!-- Los errores se insertarán aquí -->
+                        </div>
+                    </div>
+                    
+                    <!-- Footer fijo -->
+                    <div class="error-panel-footer">
+                        <button class="terminal-button" id="retryBtn">
+                            <span class="icon">􀎭</span>
+                            Reintentar
+                        </button>
+                    </div>
                 </div>
             </div>
-            <input type="file" id="file-input" hidden>
+            <input accept=".xlsx" type="file" id="file-input" hidden>
         </main>
         <aside class="card">
-            <p>aside</p>
+            <div class="terminal-main-container">
+                <div id="asideContainer" class="aside-container">
+                    <!-- ... header y botones ... -->
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <div class="terminal-btn close"></div>
+                            <div class="terminal-btn minimize"></div>
+                            <div class="terminal-btn maximize"></div>
+                        </div>
+                        <span>Barra Lateral</span>
+                    </div>
+                    </div>
+                </div>
         </aside>
         <footer class="card">
             <p>footer</p>

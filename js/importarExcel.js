@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
         errorPanel: document.getElementById('errorPanel'),
         errorList: document.getElementById('errorList'),
         retryBtn: document.getElementById('retryBtn'),
-        terminalContainer: document.getElementById('buttonContainer')
+        terminalContainer: document.getElementById('buttonContainer'),
+        importContainer: document.getElementById('importContainer')
     };
 
     // Estado mejorado
@@ -73,18 +74,38 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 
-    function showErrorPanel() {
-        elements.errorPanel.classList.add('visible');
-        elements.errorList.innerHTML = state.errors.map(error => `
-            <div class="error-item">
-                <span class="error-fila">Fila ${error.fila}</span>
-                <span class="error-campo">${error.campo}:</span>
-                <span class="error-mensaje">${error.mensaje}</span>
-            </div>
-        `).join('');
-        
-        updateUIState();
-    }
+    // function showErrorPanel() {
+    //     // Verificar existencia de elementos
+    //     if (!elements.errorPanel || !elements.errorList) {
+    //         console.error('Elementos del panel de errores no encontrados');
+    //         return;
+    //     }
+    
+    //     try {
+    //         // Mostrar panel
+    //         elements.errorPanel.classList.add('visible');
+    //         elements.terminalContainer.classList.add('hidden');
+    //         // Generar contenido con scroll
+    //         elements.errorList.innerHTML = state.errors.map(error => `
+    //             <div class="error-item">
+    //                 <span class="error-fila">Fila ${error.fila}</span>
+    //                 <span class="error-campo">${error.campo}:</span>
+    //                 <span class="error-mensaje">${error.mensaje}</span>
+    //             </div>
+    //         `).join('');
+            
+    //         // Ajustar scroll al inicio
+    //         const container = elements.errorPanel.querySelector('.error-list-container');
+    //         if (container) {
+    //             container.scrollTop = 0;
+    //         }
+            
+    //         updateUIState();
+    //     } catch (error) {
+    //         console.error('Error al mostrar errores:', error);
+    //         generateAlert('error', 'Error al procesar los errores');
+    //     }
+    // }
 
     function handleSuccess() {
         generateAlert('success', '¡Archivo importado correctamente!');
@@ -93,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleUploadError(error) {
         generateAlert('error', error);
+        console.log(error);
         resetState();
     }
 
@@ -136,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
             : '↑ Subir Archivo';
         updateUIState();
     }
-
     // Sistema de alertas mejorado
     function generateAlert(type, message) {
         const alertConfig = {
@@ -170,40 +191,134 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        document.body.insertAdjacentHTML('beforeend', alertHTML);
-        setTimeout(() => document.querySelector('.alert-overlay').remove(), 5000);
+        elements.importContainer.insertAdjacentHTML('beforeend', alertHTML);
+        setTimeout(() => document.querySelector('.alert-overlay').remove(), 3500);
     }
 
     function generateConfirmAlert(message, confirmCallback) {
-        const alertHTML = `
-            <div class="alert-overlay confirm">
-                <div class="alert-content">
-                    <div class="alert-text">
-                        <h3>Confirmación</h3>
-                        <p>${message}</p>
-                    </div>
-                    <div class="alert-actions">
-                        <button class="confirm-btn">Aceptar</button>
-                        <button class="cancel-btn">Cancelar</button>
-                    </div>
+        // Crear el contenedor del alert
+        const alertContainer = document.createElement('div');
+        alertContainer.className = 'alert-overlay confirm';
+        
+        // Crear el contenido del alert
+        alertContainer.innerHTML = `
+            <div class="alert-content">
+                <img src="/assets/info-warning-alert.jpg" class="alert-image" alt="imagen mamalona">
+                <div class="alert-text">
+                    <h3>Confirmación</h3>
+                    <p>${message}</p>
+                </div>
+                <div class="alert-actions">
+                    <button class="confirm-btn">Aceptar</button>
+                    <button class="cancel-btn">Cancelar</button>
                 </div>
             </div>
         `;
     
-        // Insertar el HTML
-        document.body.insertAdjacentHTML('beforeend', alertHTML);
-        
-        // Obtener la referencia al alert recién creado
-        const alertElement = document.querySelector('.alert-overlay.confirm');
-        
+        // Insertar en el DOM
+        elements.importContainer.appendChild(alertContainer);
+    
         // Manejar clics en los botones
-        alertElement.querySelector('.confirm-btn').addEventListener('click', () => {
+        const confirmBtn = alertContainer.querySelector('.confirm-btn');
+        const cancelBtn = alertContainer.querySelector('.cancel-btn');
+    
+        confirmBtn.addEventListener('click', () => {
             confirmCallback();
-            alertElement.remove();
+            removeAlert(alertContainer);
         });
+    
+        cancelBtn.addEventListener('click', () => {
+            removeAlert(alertContainer);
+        });
+    
+        // Función para remover el alert con animación
+        function removeAlert(alertElement) {
+            alertElement.classList.add('removing');
+            setTimeout(() => {
+                alertElement.remove();
+            }, 300); // Coincide con la duración de la animación CSS
+        }
+    }
+    function showErrorPanel() {
+        // Verificar existencia de elementos
+        if (!elements.errorPanel || !elements.errorList) {
+            console.error('Elementos del panel de errores no encontrados');
+            return;
+        }
+    
+        try {
+            elements.errorPanel.classList.add('visible');
+            elements.terminalContainer.classList.add('hidden');
+            elements.errorList.innerHTML = state.errors.map(error => `
+                <div class="error-item">
+                    <span class="error-fila">Fila ${error.fila}</span>
+                    <span class="error-campo">${error.campo}:</span>
+                    <span class="error-mensaje">${error.mensaje}</span>
+                </div>
+            `).join('');
+            
+            updateUIState();
+        } catch (error) {
+            console.error('Error al mostrar errores:', error);
+            generateAlert('error', 'Error al procesar los errores');
+        }
+    }
+    
+    function resetState() {
+        try {
+            state.currentFile = null;
+            state.errors = [];
+            state.hasErrors = false;
+            
+            if (elements.fileInput) elements.fileInput.value = '';
+            if (elements.uploadButton) elements.uploadButton.style.display = 'none';
+            if (elements.errorPanel) elements.errorPanel.classList.remove('visible');
+            if (elements.mainButton) {
+                elements.mainButton.textContent = '↑ Seleccionar Archivo';
+                elements.terminalContainer.classList.remove('hidden');
+            }
+                
+            
+            // Limpiar lista de errores de forma segura
+            if (elements.errorList) elements.errorList.innerHTML = '';
+            
+            updateUIState();
+        } catch (error) {
+            console.error('Error al resetear estado:', error);
+            generateAlert('error', 'Error al reiniciar el sistema');
+        }
+    }
+    
+    function updateUIState() {
+        try {
+            if (elements.mainButton) {
+                elements.mainButton.disabled = state.isUploading;
+            }
+            
+            if (elements.uploadButton) {
+                elements.uploadButton.disabled = state.isUploading || !state.currentFile;
+            }
+            
+            if (elements.retryBtn) {
+                elements.retryBtn.style.display = state.hasErrors ? 'flex' : 'none';
+            }
+        } catch (error) {
+            console.error('Error al actualizar UI:', error);
+        }
+    }
+    
+    function updateLoadingState(isLoading) {
+        if (!elements.uploadButton) return;
         
-        alertElement.querySelector('.cancel-btn').addEventListener('click', () => {
-            alertElement.remove();
-        });
+        try {
+            elements.uploadButton.innerHTML = isLoading 
+                ? '<span class="terminal-loader"></span> Subiendo...' 
+                : '↑ Subir Archivo';
+                
+            updateUIState();
+        } catch (error) {
+            console.error('Error al actualizar estado de carga:', error);
+            generateAlert('error', 'Error en la interfaz de carga');
+        }
     }
 });

@@ -28,10 +28,10 @@ const expresiones = {
   monto_aporte_adicional: /^\$-$/,
   tipo_licencia: /^(1|2|3)$/,
   dias_licencia: /^([0-9]|[1-2][0-9]|3[0-1])$/,
-  mes: /^(1|2|3|4|5|6|7|8|9|10|11|12)$/,
+  mes: /^(1|2|3|4|5|6|6.5|7|8|9|10|11|12|12.5)$/,
   year: /^(19[0-9]{2}|20[0-9]{2})$/,
-  // input: /^([1-9][0-9])$/
-  input: /^(10|[1-9])$/
+  input: /^([1-9][0-9])$/
+  // input: /^(10|[1-9])$/
 };
 
 const campos = {
@@ -258,12 +258,14 @@ function rellenarSelects() {
             <option value="4">Abril</option>
             <option value="5">Mayo</option>
             <option value="6">Junio</option>
-            <option value="7">Julio</option>
+            <option value="6.5">Junio Aguinaldo</option>
+            <option value="7>Julio</option>
             <option value="8">Agosto</option>
             <option value="9">Septiembre</option>
             <option value="10">Octubre</option>
             <option value="11">Noviembre</option>
             <option value="12">Diciembre</option>
+            <option value="12.5">Diciembre Aguinaldo</option>
 
     `
     );
@@ -394,8 +396,11 @@ function cargarFormulario() {
     Object.entries(categorias).forEach(([categoria, campos]) => {
       if (campos.includes(key)) {
         // Parsear los valores que deben ser enteros
-        if ( key === "empleados" || key === "mes" || key === "dias_trabajados" || key === "dias_licencia" || key === "tipo_licencia" || key === "tipo_contratacion" || key === "tipo_liquidacion" || key === "year") {
+        if ( key === "empleados" || key === "dias_trabajados" || key === "dias_licencia" || key === "tipo_licencia" || key === "tipo_contratacion" || key === "tipo_liquidacion" || key === "year") {
           value = parseInt(value, 10);
+        }
+        if(key === "mes"){
+          value = parseFloat(value);
         }
 
         // Agrupar nombre y apellido para la categoría empleados

@@ -55,7 +55,7 @@ header, main, aside, footer, .card {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 header{
-    grid-column: 2/3;
+    grid-column: 1/3;
     grid-row: 1/2;
     border-radius: 10px;
 }
@@ -67,12 +67,11 @@ main{
     display: grid;
     grid-template-columns: 1fr 400px; /* 2 columnas */
     gap: 20px;
-    padding: 20px;
 }
 aside{
     border-radius: 10px;
     grid-column: 1/2;
-    grid-row: 1/3;
+    grid-row: 2/3;
 }
 footer{
     border-radius: 10px;
@@ -117,9 +116,6 @@ input, select, textarea {
 /* MAIN - Contenedor principal */
 main.card {
     position: relative;
-    height: calc(100% - 40px);
-    min-height: 0;
-    overflow: hidden; /* Contiene elementos hijos */
 }
 /* === Correcciones de Visibilidad === */
 
@@ -127,29 +123,70 @@ main.card {
 .terminal-main-container {
     background: var(--surface);
     border-radius: var(--border-radius);
-    padding: 20px;
     display: grid;
-    grid-template-columns: 1fr 400px;
     gap: 20px;
-    height: 80vh;
+    height: 100%;
 }
 
 /* Panel de Errores */
 .error-panel {
+    display: none;
+    flex-direction: column;
+    max-height: 650px; /* Ajusta esto según el diseño */
+    width: 100%;
     background: var(--surface);
     border-radius: var(--border-radius);
     padding: 20px;
-    opacity: 1; /* Forzar visibilidad para pruebas */
-    visibility: visible; /* Forzar visibilidad para pruebas */
     border: 1px solid var(--border);
+    overflow: hidden; /* Evita que el panel en sí tenga scroll */
+}
+.button-container.hidden{
+    display: none;
+}
+.error-panel.visible{
+    display: flex;
+    height: 100%;
+    animation: slideIn 0.3s ease-out forwards;
 }
 
+.error-list-container {
+    flex: 1; /* Hace que este contenedor crezca y use el espacio disponible */
+    overflow-y: auto; /* Activa el scroll interno */
+    border-radius: var(--border-radius);
+    padding: 10px;
+}
+
+.error-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.error-item {
+    padding: 5px;
+    border-radius: var(--border-radius);
+    background: var(--blur-bg);
+    border-left: 5px solid red;
+}
+
+.error-panel-footer {
+    padding: 10px;
+    background:var(--blur-bg);
+    text-align: center;
+    border-top: 1px solid var(--surface);
+}
 /* Contenedor de Botones */
 .button-container {
     background: var(--surface);
     border-radius: var(--border-radius);
     padding: 20px;
     border: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-direction: column;
+    gap: .8rem;
+
 }
 
 /* Texto y Contenido */
@@ -167,7 +204,6 @@ main.import-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 20px;
 }
 
 /* === Estilos macOS Ajustados === */
@@ -192,14 +228,10 @@ main.import-container {
     font-weight: 600;
     font-size: 1.2rem;
 }
-
 .error-item {
     background: rgba(255, 95, 86, 0.1);
     border: 1px solid rgba(255, 95, 86, 0.2);
     color: var(--text);
-}
-.error-panel.visible {
-    animation: slideIn 0.3s ease-out forwards;
 }
 .alert-overlay {
     position: fixed;
@@ -212,7 +244,28 @@ main.import-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 10;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    border-radius: var(--border-radius);
+}
+
+.alert-overlay.removing {
+    opacity: 0;
+}
+.alert-image{
+    height: 300px;
+    width: 300px;
+    border-radius: var(--border-radius);
+}
+
+.alert-content {
+    background: var(--surface);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: alertEnter 0.3s ease-out;
 }
 
 .alert-content {
@@ -233,10 +286,6 @@ main.import-container {
     width: 250px;
 }
 
-@keyframes alertEnter {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
 
 .alert-text {
     margin: 1rem 0;
@@ -271,6 +320,20 @@ main.import-container {
     border: 1px solid var(--border);
 }
 
+/* Seccion del aside */
+.aside-container{
+    height: 100%;
+    background: var(--surface);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    border: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-direction: column;
+    gap: .8rem;
+}
+
 /* === Modo Claro === */
 @media (prefers-color-scheme: light) {
     .terminal-header {
@@ -297,7 +360,7 @@ main.import-container {
         background: rgba(255, 255, 255, 0.7);
         border-color: rgba(0, 0, 0, 0.05);
         box-shadow: 
-            0 4px 6px rgba(0, 0, 0, 0.03),
+        0 4px 6px rgba(0, 0, 0, 0.03),
             inset 0 1px 2px rgba(255, 255, 255, 0.8);
     }
     
@@ -319,5 +382,9 @@ main.import-container {
 @keyframes slideIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+@keyframes alertEnter {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
