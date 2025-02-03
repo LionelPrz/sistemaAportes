@@ -131,7 +131,7 @@ body{
     backdrop-filter: blur(25px);
 }
 .container{
-    background: var(--text);
+    background: url(/assets/Futaba.jpg);
 }
 /* Botones */
 .terminal-button {

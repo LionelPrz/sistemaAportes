@@ -108,7 +108,7 @@ try {
                 $categoria = $fila['I'] ?? null;
                 $claseNivel = $fila['J'] ?? null;
                 $cargoFuncion = $fila['K'] ?? null;
-                $diasTrabajados = $fila['Q'] ?? null;
+                $diasTrabajados = $fila['H'] ?? null;
 
 
                 $cuil = str_replace('-','',$cuil);

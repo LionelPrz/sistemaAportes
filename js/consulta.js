@@ -2,17 +2,24 @@ let datos = [];
 let contenido;
 let contenedorMes = document.getElementById('info-card2');
 let contenedorYear = document.getElementById('info-card1');
+let contenedorDatosConsultados = document.getElementById('consultDatos');
 let formulario = document.querySelector('.form-consult');
-let botonGenerar = document.getElementById('generate-consult-btn');
-let botonConsultar = document.getElementById('consult-btn');
-let botonReseteo = document.getElementById('reset-consult-btn');
+let botonConsulta = document.getElementById('consultBtn');
+let botonAceptar = document.getElementById('aceptarBtn');
+let contenedorConsultaBtn = document.getElementById('ContainerBtn');
+let contenedorAceptarBtn = document.getElementById('ContainerAct');
 let barraCarga = document.getElementById('loader-bar');
+let seccionConsulta = document.getElementById('section1');
+let seccionSeleccion = document.getElementById('section2');
+let seccionDatos = document.getElementById('section3');
 let yearSelect;
 let mesSelect;
 let yearDisponibles;
 let cuilEncontrado;
 let mesesDiponibles;
 let valorCuil;
+let ulPrevisional;
+let ulEmpleados;
 
 // Seccion para el manejo del aside
 let botonesCategorias = document.querySelectorAll('.boton-aside');
@@ -45,13 +52,15 @@ formulario.addEventListener('submit', (e) => {
         contenido = data;
         cargarDatos(contenido);
         encontrarCuil(valorCuil);
+        seccionConsulta.classList.add('hidden');
+        seccionSeleccion.classList.remove('hidden');
     })
     .catch(error =>{
         console.error('Hubo un error en la consulta:', error);
     })
 });
 
-botonGenerar.addEventListener('click', event => {
+botonConsulta.addEventListener('click', event => {
     event.preventDefault();
     console.log(valorCuil, mesSelect, yearSelect);
     barraCarga.style.display = 'block';
@@ -121,7 +130,7 @@ function encontrarCuil(datosComparados) {
         botonesMes.forEach(boton => {
             boton.addEventListener('click', (e) => {
                 mesSelect = e.currentTarget.id;
-                botonGenerar.disabled = false;
+                contenedorConsultaBtn.classList.remove('hidden');
             });
         });
     }
@@ -148,40 +157,41 @@ function generarConsulta(cuilFiltrado, mesFiltrado, yearFiltrado) {
             console.error(data.error);
             return;
         }
+        seccionSeleccion.classList.add('hidden');
+        seccionDatos.classList.remove('hidden');
+        contenedorDatosConsultados.classList.remove('hidden');
         // Si los datos están disponibles, mostrarlos en el contenedor
-        contenedorYear.insertAdjacentHTML('beforeend', `
+        contenedorDatosConsultados.insertAdjacentHTML('beforeend', `
             <h3 class="empleado-text">Datos del Empleado</h3>
-            <ul class="ul-empleado">
-                <li class="li-empleado"><p class="ul-text">Nombre: ${data.nombre}</p></li>
-                <li class="li-empleado"><p class="ul-text">Apellido: ${data.apellido}</p></li>
-                <li class="li-empleado"><p class="ul-text">Cargo: ${data.cargo_funcion}</p></li>
-                <li class="li-empleado"><p class="ul-text">Clase: ${data.clase_nivel}</p></li>
+            <ul id="ulEmpleado" class="ul-empleado">
+                <li class="li-empleado"><p class="ul-text">Nombre: ${data.Nombre}</p></li>
+                <li class="li-empleado"><p class="ul-text">Apellido: ${data.Apellido}</p></li>
+                <li class="li-empleado"><p class="ul-text">Cargo: ${data.funcion}</p></li>
+                <li class="li-empleado"><p class="ul-text">Clase: ${data.clase}</p></li>
                 <li class="li-empleado"><p class="ul-text">Categoria: ${data.categoria}</p></li>
-                <li class="li-empleado"><p class="ul-text">Tipo contratación: ${data.tipo_contratacion}</p></li>
-                <li class="li-empleado"><p class="ul-text">Tipo liquidación: ${data.tipo_liquidacion}</p></li>
+                <li class="li-empleado"><p class="ul-text">Tipo contratación: ${data.Tipo_contratacion}</p></li>
+                <li class="li-empleado"><p class="ul-text">Tipo liquidación: ${data.Tipo_liquidacion}</p></li>
                 <li class="li-empleado"><p class="ul-text">Dias trabajados: ${data.dias_trabajados}</p></li>
             </ul>
         `);
 
-        contenedorMes.insertAdjacentHTML('beforeend', `
-            <h3 class="previsional-text">Datos Previsionales</h3>
-            <ul class="ul-previsional">
-                <li class="li-previsional"><p class="ul-text">Total Remunerativo: $${data.total_remunerativo}</p></li>
-                <li class="li-previsional"><p class="ul-text">Total no remunerativo: $${data.total_no_remunerativo}</p></li>
-                <li class="li-previsional"><p class="ul-text">Aporte adicional: ${data.tipo_aporte_adicional}</p></li>
-                <li class="li-previsional"><p class="ul-text">Monto aporte adicional: ${data.monto_aporte_adicional}</p></li>
+        contenedorDatosConsultados.insertAdjacentHTML('beforeend', `
+            <ul id="ulPrevisional" class="ul-previsional">
+                <li class="li-previsional"><p class="ul-text">Total Remunerativo: $${data.Total_remunerativo}</p></li>
+                <li class="li-previsional"><p class="ul-text">Total no remunerativo: $${data.Total_no_remunerativo}</p></li>
+                <li class="li-previsional"><p class="ul-text">Aporte adicional: ${data.Tipo_aporte_adicional}</p></li>
+                <li class="li-previsional"><p class="ul-text">Monto aporte adicional: ${data.Monto_aporte_adicional}</p></li>
                 <li class="li-previsional"><p class="ul-text">Tipo de licencia: ${data.tipo_licencia}</p></li>
                 <li class="li-previsional"><p class="ul-text">Dias de licencia: ${data.dias_licencia}</p></li>
-                <li class="li-previsional"><p class="ul-text">Mes: ${data.mes}</p></li>
-                <li class="li-previsional"><p class="ul-text">Año: ${data.year}</p></li>
+                <li class="li-previsional"><p class="ul-text">Mes: ${data.Mes}</p></li>
+                <li class="li-previsional"><p class="ul-text">Año: ${data.Year}</p></li>
             </ul>
         `);
-
         // Cambio de función del botón de consulta
-        botonGenerar.style.display = "none";
-        botonReseteo.style.display = "block";
-        botonConsultar.disabled = true;
-        botonReseteo.addEventListener('click', reiniciarEstado);
+        ulEmpleados = document.getElementById('ulEmpleados');
+        ulPrevisional = document.getElementById('ulPrevisional');
+        contenedorAceptarBtn.classList.remove('hidden');
+        botonAceptar.addEventListener('click', reiniciarEstado);
     })
     .catch(error => {
         console.error("Error al obtener los datos: ", error);
@@ -192,8 +202,8 @@ function reiniciarEstado() {
     contenedorMes.innerHTML = '';
     contenedorYear.innerHTML = '';
     formulario.reset();
-    botonGenerar.style.display = "block";
-    botonGenerar.disabled = true;
-    botonReseteo.style.display = "none";
-    botonConsultar.disabled = false;
+    seccionDatos.classList.add('hidden');
+    botonConsulta.classList.add('hidden');
+    contenedorDatosConsultados.classList.add('hidden');
+    seccionConsulta.classList.remove('hidden');
 }

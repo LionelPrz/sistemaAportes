@@ -15,6 +15,7 @@ try {
     $query = "SELECT e.cuil AS Cuil,
         SUBSTRING_INDEX(e.nombre_completo, ' ', 1) AS Nombre,
         SUBSTRING_INDEX(e.nombre_completo, ' ', -1) AS Apellido,
+    e.tipo_contratacion AS Tipo_contratacion,
     s.tipo_liquidacion AS Tipo_liquidacion,
     s.total_remunerativo AS Total_remunerativo,
     s.total_no_remunerativo AS Total_no_remunerativo,
