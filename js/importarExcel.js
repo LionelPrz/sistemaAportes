@@ -1,12 +1,12 @@
-document.querySelectorAll('.aside-button').forEach(button => {
-    button.addEventListener('mousemove', (e) => {
-        const rect = button.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        button.style.setProperty('--mouse-x', `${x}px`);
-        button.style.setProperty('--mouse-y', `${y}px`);
-    });
-});
+// Seccion para el manejo del aside
+let botonesCategorias = document.querySelectorAll('.boton-aside');
+
+botonesCategorias.forEach(boton=>{
+    boton.addEventListener('click',(e)=>{
+        botonesCategorias.forEach(boton => boton.classList.remove("active"));
+        e.currentTarget.classList.add("active");
+    })
+})
 
 document.addEventListener('DOMContentLoaded', () => {
     // Elementos actualizados
@@ -83,40 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }))
         );
     }
-
-    // function showErrorPanel() {
-    //     // Verificar existencia de elementos
-    //     if (!elements.errorPanel || !elements.errorList) {
-    //         console.error('Elementos del panel de errores no encontrados');
-    //         return;
-    //     }
-    
-    //     try {
-    //         // Mostrar panel
-    //         elements.errorPanel.classList.add('visible');
-    //         elements.terminalContainer.classList.add('hidden');
-    //         // Generar contenido con scroll
-    //         elements.errorList.innerHTML = state.errors.map(error => `
-    //             <div class="error-item">
-    //                 <span class="error-fila">Fila ${error.fila}</span>
-    //                 <span class="error-campo">${error.campo}:</span>
-    //                 <span class="error-mensaje">${error.mensaje}</span>
-    //             </div>
-    //         `).join('');
-            
-    //         // Ajustar scroll al inicio
-    //         const container = elements.errorPanel.querySelector('.error-list-container');
-    //         if (container) {
-    //             container.scrollTop = 0;
-    //         }
-            
-    //         updateUIState();
-    //     } catch (error) {
-    //         console.error('Error al mostrar errores:', error);
-    //         generateAlert('error', 'Error al procesar los errores');
-    //     }
-    // }
-
     function handleSuccess() {
         generateAlert('success', '¡Archivo importado correctamente!');
         resetState();
@@ -138,22 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleRetry() {
-        generateConfirmAlert('¿Desea reiniciar el proceso?', () => {
+        generateConfirmAlert('¿Desea reintentar la carga del archivo?', () => {
             resetState();
             elements.fileInput.click();
         });
-    }
-
-    function resetState() {
-        state.currentFile = null;
-        state.errors = [];
-        state.hasErrors = false;
-        
-        elements.fileInput.value = '';
-        elements.uploadButton.style.display = 'none';
-        elements.errorPanel.classList.remove('visible');
-        elements.mainButton.textContent = '↑ Seleccionar Archivo';
-        updateUIState();
     }
 
     function updateUIState() {
@@ -164,8 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateLoadingState(isLoading) {
         elements.uploadButton.innerHTML = isLoading 
-            ? '<span class="terminal-loader"></span> Subiendo...' 
-            : '↑ Subir Archivo';
+            ? '<span class="terminal-loader"></span>' 
+            : 'Subir Archivo';
         updateUIState();
     }
     // Sistema de alertas mejorado
@@ -215,12 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="alert-content">
                 <img src="/assets/info-warning-alert.jpg" class="alert-image" alt="imagen mamalona">
                 <div class="alert-text">
-                    <h3>Confirmación</h3>
+                    <h3>Aviso</h3>
                     <p>${message}</p>
                 </div>
                 <div class="alert-actions">
-                    <button class="confirm-btn">Aceptar</button>
-                    <button class="cancel-btn">Cancelar</button>
+                    <button class="confirm-btn">Si porfavor</button>
+                    <button class="cancel-btn">No gracias</button>
                 </div>
             </div>
         `;
@@ -284,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (elements.uploadButton) elements.uploadButton.style.display = 'none';
             if (elements.errorPanel) elements.errorPanel.classList.remove('visible');
             if (elements.mainButton) {
-                elements.mainButton.textContent = '↑ Seleccionar Archivo';
+                elements.mainButton.textContent = 'Seleccionar Archivo';
                 elements.terminalContainer.classList.remove('hidden');
             }
                 
@@ -322,8 +276,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         try {
             elements.uploadButton.innerHTML = isLoading 
-                ? '<span class="terminal-loader"></span> Subiendo...' 
-                : '↑ Subir Archivo';
+                ? '<span class="terminal-loader"></span>' 
+                : 'Subir Archivo';
                 
             updateUIState();
         } catch (error) {
