@@ -4,15 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/insertar.css">
-    <link rel="stylesheet" href="/css/colors.css">
+    <link rel="stylesheet" href="/css/common-components.css">
     <title>Ingresar datos</title>
 </head>
 <body>
     <div id="container" class="container">
         <header class="card">
-            <p>hola</p>
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <div class="terminal-btn close"></div>
+                    <div class="terminal-btn minimize"></div>
+                    <div class="terminal-btn maximize"></div>
+                </div>
+                <span></span>
         </header>
         <main class="card">
+            <div class="terminal-main-container">
+                <div id="buttonContainer" class="button-container">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <div class="terminal-btn close"></div>
+                            <div class="terminal-btn minimize"></div>
+                            <div class="terminal-btn maximize"></div>
+                        </div>
+                        <span></span>
+                    </div>
             <form class="card form" id="form" autocomplete="off">
                 <!-- Grupo Cuil -->
                 <div class="formulario__grupo" id="grupo__cuil">
@@ -175,9 +191,56 @@
             </form>
         </main>
         <aside class="card">
-            <p>aside</p>
+            <div class="aside-container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <div class="terminal-btn close"></div>
+                        <div class="terminal-btn minimize"></div>
+                        <div class="terminal-btn maximize"></div>
+                    </div>
+                    <span></span>
+                </div>
+                <div class="redirect-container">
+                    <ul>
+                        <li>
+                            <button id="home" class="boton-aside" type="button">
+                                Regresar Inicio
+                                <i class="fa-solid fa-house-chimney"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="consult" class="boton-aside" type="button">
+                                Consultar Datos
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </li >
+                        <li>
+                            <button id="insert" class="boton-aside" type="button">
+                                Insertar Datos
+                                <i class="fa-regular fa-square-plus"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="import" class="boton-aside" type="button">
+                                Importar Datos
+                                <i class="fa-solid fa-file-import"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="export" class="boton-aside" type="button">
+                                Exportar Datos
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </aside>
-        <footer class="footer-card card">chau</footer>
+        <footer class="card footer-section">
+            <div class="terminal-footerr">
+                <span class="footer-text">Direccion de Urbanismo &copy;2025 Todos los derechos reservados.</span>
+            </div>
+        </footer>
     </div>
     <script src="/js/ingresar.js"></script>
     <script src="https://kit.fontawesome.com/2fe13f77ea.js" crossorigin="anonymous"></script></body>

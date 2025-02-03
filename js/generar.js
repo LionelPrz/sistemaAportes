@@ -10,6 +10,17 @@ yearMainBtn.addEventListener('click',()=>{
     cargarYears();
 });
 
+// Seccion para el manejo del aside
+let botonesCategorias = document.querySelectorAll('.boton-aside');
+
+botonesCategorias.forEach(boton=>{
+    boton.addEventListener('click',(e)=>{
+        botonesCategorias.forEach(boton => boton.classList.remove("active"));
+        e.currentTarget.classList.add("active");
+    })
+})
+
+
 // Función para cargar los años en el contenedor
 function cargarYears() {
     // Fetch inicial para obtener los años disponibles

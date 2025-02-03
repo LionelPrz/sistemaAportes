@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/consulta.css">
-    <link rel="stylesheet" href="/css/colors.css">
+    <link rel="stylesheet" href="/css/common-components.css">
     <title>Consultar Datos</title>
 </head>
 <body>
@@ -13,9 +13,26 @@
       </div>
     <div class="container">
         <header class="card">
-            <h1>header</h1>
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <div class="terminal-btn close"></div>
+                    <div class="terminal-btn minimize"></div>
+                    <div class="terminal-btn maximize"></div>
+                </div>
+                <span></span>
+            </div>
         </header>
         <main>
+            <div class="terminal-main-container">
+                <div id="buttonContainer" class="button-container">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <div class="terminal-btn close"></div>
+                            <div class="terminal-btn minimize"></div>
+                            <div class="terminal-btn maximize"></div>
+                        </div>
+                        <span></span>
+                    </div>
             <section class="section-1 card">
                 <form class="form-consult" id="form">
                     <div class="form-item">
@@ -35,12 +52,58 @@
             </section>
         </main>
         <aside class="card">
-            <p>aside</p>
+            <div class="aside-container">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <div class="terminal-btn close"></div>
+                        <div class="terminal-btn minimize"></div>
+                        <div class="terminal-btn maximize"></div>
+                    </div>
+                    <span></span>
+                </div>
+                <div class="redirect-container">
+                    <ul>
+                        <li>
+                            <button id="home" class="boton-aside" type="button">
+                                Regresar Inicio
+                                <i class="fa-solid fa-house-chimney"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="consult" class="boton-aside" type="button">
+                                Consultar Datos
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </li >
+                        <li>
+                            <button id="insert" class="boton-aside" type="button">
+                                Insertar Datos
+                                <i class="fa-regular fa-square-plus"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="import" class="boton-aside" type="button">
+                                Importar Datos
+                                <i class="fa-solid fa-file-import"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="export" class="boton-aside" type="button">
+                                Exportar Datos
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </aside>
-        <footer class="card">
-            <p>footer</p>
+        <footer class="card footer-section">
+            <div class="terminal-footerr">
+                <span class="footer-text">Direccion de Urbanismo &copy;2025 Todos los derechos reservados.</span>
+            </div>
         </footer>
     </div>
     <script src="/js/consulta.js"></script>
+    <script src="https://kit.fontawesome.com/2fe13f77ea.js" crossorigin="anonymous"></script>
 </body>
 </html>

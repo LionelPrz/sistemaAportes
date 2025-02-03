@@ -12,6 +12,17 @@ let contador = 0;
 let contenedorDatos = [];
 let valorForm;
 
+// Seccion para el manejo del aside
+let botonesCategorias = document.querySelectorAll('.boton-aside');
+
+botonesCategorias.forEach(boton=>{
+    boton.addEventListener('click',(e)=>{
+        botonesCategorias.forEach(boton => boton.classList.remove("active"));
+        e.currentTarget.classList.add("active");
+    })
+})
+
+
 const expresiones = {
   cuil: /^\d{11}$/,
   nombre: /^[a-zA-ZÀ-ÿ\s]{1,20}$/,
