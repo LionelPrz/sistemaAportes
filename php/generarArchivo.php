@@ -1,8 +1,14 @@
 <?php
 require '../vendor/autoload.php';
 require 'conexion.php';
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Font;
+
 
 // Recibir los datos del POST
 $mesSeleccionado = $_POST['mes'];
@@ -19,7 +25,10 @@ try {
         s.total_no_remunerativo AS total_no_remunerativo,
         s.tipo_aporte_adicional AS tipo_aporte_adicional,
         s.monto_aporte_adicional AS monto_aporte_adicional,
-        s.mes AS sueldo_mes,
+        CASE 
+            WHEN s.mes IN(6.5,12.5) THEN s.mes
+            ELSE CAST(s.mes AS UNSIGNED)
+        END AS sueldo_mes,
         s.year AS sueldo_year,
         l.tipo_licencia AS tipo_licencia,
         l.dias_licencia AS dias_licencia,
@@ -27,7 +36,10 @@ try {
         c.categoria AS cargo_categoria,
         c.clase_nivel AS cargo_clase,
         c.cargo_funcion AS cargo_funcion,
-        ctr.mes AS contrato_mes,
+        CASE
+            WHEN ctr.mes IN (6.5,12.5) THEN ctr.mes
+            ELSE CAST(ctr.mes AS UNSIGNED)
+        END AS contrato_mes,
         ctr.year AS contrato_year,
         ctr.dias_trabajados AS dias_trabajados
 FROM empleados e
@@ -66,31 +78,135 @@ ORDER BY e.nombre_completo";
         ->setCreator("Municipalidad de Mantilla")
         ->setTitle("Registro IPS");
     $hojaActiva = $spreadSheet->getActiveSheet();
-    $spreadSheet->getDefaultStyle()->getFont()->setName('Calibri')->setSize(11);
+    $spreadSheet->getDefaultStyle()->getFont()->setName('Calibri')->setSize(12);
 
+    // Estilos Generales
+    $estiloTitulo = [
+        'font' => ['bold'=> true, 'size'=> 14],
+        'alignment'=> ['horizontal'=>Alignment::HORIZONTAL_CENTER],
+        'borders'=>['allBorders'=>['borderStyle'=>Border::BORDER_MEDIUM]],
+    ];
+    $estiloCabezera = [
+        'color' => ['rgb'=>'000'],
+        'fill'=> ['fillType'=>Fill::FILL_SOLID, 'start_color'=>['rgb'=>'FF0000']],
+        'alignment'=> ['horizontal'=>Alignment::HORIZONTAL_LEFT, 'vertical'=>Alignment::VERTICAL_BOTTOM],
+    ];
+    $bordesTablasDatos = [
+        'borders'=>['allBorders'=>['borderStyle'=>Border::BORDER_THIN]],
+    ];
+    $estiloBordes = [
+        'borders'=>[
+            'top'=>['borderStyle'=>Border::BORDER_NONE],
+            'bottom'=>['borderStyle'=>Border::BORDER_DOUBLE],
+            'left'=>['borderStyle'=>Border::BORDER_MEDIUM],
+            'right'=>['borderStyle'=>Border::BORDER_MEDIUM],
+        ],
+    ];
+
+    $estiloTexto = [
+        'font' => ['bold'=> true, 'size'=> 14],
+        'alignment'=> ['horizontal'=>Alignment::HORIZONTAL_LEFT,'vertical'=>Alignment::VERTICAL_BOTTOM],
+        'borders'=>[
+            'left'=>['borderStyle'=>Border::BORDER_MEDIUM],
+            'right'=>['borderStyle'=>Border::BORDER_MEDIUM],
+        ],
+    ];
+
+    // Estilizado de los bordes para simular la fusion
+    $bordeSuperior = [
+        // 'fill'=> ['fillType'=>Fill::FILL_SOLID,'start_color'=>['rgb'=>'FF0488']],
+        'borders'=>[
+            'top'=>['borderStyle'=>Border::BORDER_MEDIUM],
+            'left'=>['borderStyle'=>Border::BORDER_MEDIUM],
+            'right'=>['borderStyle'=>Border::BORDER_MEDIUM]
+        ]
+    ];
+    $bordeContiguo = [
+        // 'fill'=> ['fillType'=>Fill::FILL_SOLID, 'start_color'=>['rgb'=>'FF0000']],
+        'borders'=>[
+            'left'=>['borderStyle'=>Border::BORDER_MEDIUM],
+            'right'=>['borderStyle'=>Border::BORDER_MEDIUM]
+        ],
+    ];
+    $bordeContiguoCFuente=[
+        'font' => ['bold'=> true, 'size'=> 12],
+        'alignment'=> ['horizontal'=>Alignment::HORIZONTAL_CENTER,'vertical'=>Alignment::VERTICAL_CENTER],
+        'borders'=>[
+            'left'=>['borderStyle'=>Border::BORDER_MEDIUM],
+            'right'=>['borderStyle'=>Border::BORDER_MEDIUM]
+        ]
+    ];
+    $bordeDerecha = [
+        'borders'=>[
+            'right'=>['borderStyle'=>Border::BORDER_MEDIUM]
+        ]
+    ];
+    $bordeInferior = [
+        // 'fill'=> ['fillType'=>Fill::FILL_SOLID, 'start_color'=>['rgb'=>'FF0000']],
+        'borders'=>[
+            'bottom'=>['borderStyle'=>Border::BORDER_MEDIUM],
+            'left'=>['borderStyle'=>Border::BORDER_MEDIUM],
+            'right'=>['borderStyle'=>Border::BORDER_MEDIUM],
+        ],
+    ];
+
+    // Estilos de el cabeza de la tabla de datos
+    $estiloCabezal = [
+        'font' => ['bold'=> true, 'size'=> 12],
+        'color' => ['rgb'=>000],
+        'fill'=> ['fillType'=>Fill::FILL_SOLID, 'start_color'=>['rgb'=>'FF0000']],
+        'alignment'=> ['horizontal'=>Alignment::HORIZONTAL_CENTER,'vertical'=>Alignment::VERTICAL_CENTER],
+    ];
     // Encabezados
-    $hojaActiva->fromArray([
-        "Mes",
-        "Año",
-        "Cuil", 
-        "Nombre", 
-        "Apellido", 
-        "Regimen tipo de contratacion",
-        "Tipo de liquidacion", 
-        "Dias trabajados", 
-        "Categoria o agrupacion",
-        "Clase o nivel", 
-        "Cargo o funcion", 
-        "Total remunerativo", 
-        "Total no remunerativo", 
-        "Tipo de aporte adicional", 
-        "Monto del aporte adicional",
-        "Tipo de licencia", 
-        "Dias de licencia",
-    ], null, 'A1');
+    $encabezados = [
+        'Mes','Año','Cuil','Nombre','Apellido','Regimen tipo de contratacíon','Tipo de liquidacíon',
+        'Días trabajados','Categoría o agrupamiento','Clase o nivel','Cargo o función',
+        'Total remunerativo','Total no remunerativo', 'Tipo de aporte adicional','Monto del aporte adicional',
+        'Tipo de licencia','Días de licencia'
+    ];
 
-    $fila = 2;
+    // Inicializacion de los valores de las tablas
+    // $hojaActiva->mergeCells('A1:Q6');
+    $hojaActiva->getStyle('A1:Q6')->applyFromArray($estiloCabezera);
+    
+    // Estilo de la linea A1
+    $hojaActiva->setCellValue('A1','FORMULARIO DE DECLARACIÓN JURADA DE APORTES Y CONTRATACIONES');
+    $hojaActiva->getStyle('A1:Q1')->applyFromArray($estiloTitulo);
+    $hojaActiva->mergeCells('A1:Q1');
 
+    // Estilo de la linea A2
+    $hojaActiva->mergeCells('A2:Q2');
+    $hojaActiva->getStyle('A2:Q2')->applyFromArray($estiloBordes);
+    
+    // Estilo de la linea A3
+    $hojaActiva->setCellValue('A3','FORMULARIO EXTENDIDO POR:');
+    $hojaActiva->getStyle('A3:Q3')->applyFromArray($estiloTexto);
+    
+    // Estilo de la linea A4
+    $hojaActiva->setCellValue('A4','De acuerdo a los antecedentes obrantes en este Organismo y a efectos de ser presentado ante el INSTITUTO DE PREVISION SOCIAL DE LA PROVINCIA DE CORRIENTES, las autoridades que suscriben DECLARA que:');
+    $hojaActiva->mergeCells('A4:Q4');
+    $hojaActiva->getStyle('A4:Q4')->applyFromArray($bordeContiguo);
+    
+    // Estilo de la linea A5
+    $hojaActiva->setCellValue('A5','Tipo de Formulario:                                 Original  | rectificativa 1  | rectificativa 2');
+    $hojaActiva->getStyle('A5:Q5')->applyFromArray($bordeContiguo);
+
+    // Estilo de la linea A6
+    $hojaActiva->getStyle('A6:Q6')->applyFromArray($bordeContiguo);
+
+    //Estilo de la linea A7 a A10
+    $hojaActiva->getStyle('A7:Q7')->applyFromArray($bordeSuperior);
+    $hojaActiva->getStyle('A8:Q8')->applyFromArray($bordeContiguoCFuente);
+    $hojaActiva->getStyle('A9:Q9')->applyFromArray($bordeDerecha);
+    $hojaActiva->getStyle('A10:Q10')->applyFromArray($bordeInferior);
+
+    $hojaActiva->fromArray($encabezados,null,'A8');
+    
+    // Asignacion de tamaño de las columnas segun contenido
+    foreach(range('A','Q')as $columna){
+        $hojaActiva->getColumnDimension($columna)->setWidth(13);
+    }
+    $fila = 11;
     // Recorrer resultados y escribir al Excel
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $hojaActiva->fromArray([
@@ -112,6 +228,8 @@ ORDER BY e.nombre_completo";
             $row['tipo_licencia'],
             $row['dias_licencia'],
         ], null, "A{$fila}");  
+        
+        $hojaActiva->getStyle("A{$fila}:Q{$fila}")->applyFromArray($bordesTablasDatos);
         $fila++;
     }
 
