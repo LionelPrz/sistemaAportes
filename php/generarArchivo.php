@@ -81,19 +81,22 @@ ORDER BY e.nombre_completo";
     $spreadSheet->getDefaultStyle()->getFont()->setName('Calibri')->setSize(12);
 
     // Estilos Generales
-    $estiloTitulo = [
-        'font' => ['bold'=> true, 'size'=> 14],
-        'alignment'=> ['horizontal'=>Alignment::HORIZONTAL_CENTER],
-        'borders'=>['allBorders'=>['borderStyle'=>Border::BORDER_MEDIUM]],
-    ];
     $estiloCabezera = [
-        'color' => ['rgb'=>'000'],
-        'fill'=> ['fillType'=>Fill::FILL_SOLID, 'start_color'=>['rgb'=>'FF0000']],
+        'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => 'fff2cc']],
         'alignment'=> ['horizontal'=>Alignment::HORIZONTAL_LEFT, 'vertical'=>Alignment::VERTICAL_BOTTOM],
     ];
-    $bordesTablasDatos = [
-        'borders'=>['allBorders'=>['borderStyle'=>Border::BORDER_THIN]],
+
+    $estiloTitulo = [
+        'font' => ['bold'=> true, 'size'=> 14],
+        'alignment'=> ['horizontal'=>Alignment::HORIZONTAL_CENTER, 'vertical'=>Alignment::VERTICAL_BOTTOM],
+        'borders'=>[
+                'top'=>['borderStyle'=>Border::BORDER_THIN],
+                'left'=>['borderStyle'=>Border::BORDER_MEDIUM],
+                'right'=>['borderStyle'=>Border::BORDER_MEDIUM],
+                'bottom'=>['borderStyle'=>Border::BORDER_MEDIUM]
+            ],
     ];
+
     $estiloBordes = [
         'borders'=>[
             'top'=>['borderStyle'=>Border::BORDER_NONE],
@@ -102,7 +105,7 @@ ORDER BY e.nombre_completo";
             'right'=>['borderStyle'=>Border::BORDER_MEDIUM],
         ],
     ];
-
+    
     $estiloTexto = [
         'font' => ['bold'=> true, 'size'=> 14],
         'alignment'=> ['horizontal'=>Alignment::HORIZONTAL_LEFT,'vertical'=>Alignment::VERTICAL_BOTTOM],
@@ -111,52 +114,41 @@ ORDER BY e.nombre_completo";
             'right'=>['borderStyle'=>Border::BORDER_MEDIUM],
         ],
     ];
-
+    
     // Estilizado de los bordes para simular la fusion
     $bordeSuperior = [
-        // 'fill'=> ['fillType'=>Fill::FILL_SOLID,'start_color'=>['rgb'=>'FF0488']],
+        'font' => ['bold'=> true, 'size'=> 12],
         'borders'=>[
             'top'=>['borderStyle'=>Border::BORDER_MEDIUM],
             'left'=>['borderStyle'=>Border::BORDER_MEDIUM],
             'right'=>['borderStyle'=>Border::BORDER_MEDIUM]
-        ]
-    ];
+            ]
+        ];
     $bordeContiguo = [
-        // 'fill'=> ['fillType'=>Fill::FILL_SOLID, 'start_color'=>['rgb'=>'FF0000']],
         'borders'=>[
             'left'=>['borderStyle'=>Border::BORDER_MEDIUM],
             'right'=>['borderStyle'=>Border::BORDER_MEDIUM]
         ],
-    ];
-    $bordeContiguoCFuente=[
-        'font' => ['bold'=> true, 'size'=> 12],
-        'alignment'=> ['horizontal'=>Alignment::HORIZONTAL_CENTER,'vertical'=>Alignment::VERTICAL_CENTER],
-        'borders'=>[
-            'left'=>['borderStyle'=>Border::BORDER_MEDIUM],
-            'right'=>['borderStyle'=>Border::BORDER_MEDIUM]
-        ]
     ];
     $bordeDerecha = [
         'borders'=>[
             'right'=>['borderStyle'=>Border::BORDER_MEDIUM]
-        ]
-    ];
+            ]
+        ];
+
     $bordeInferior = [
-        // 'fill'=> ['fillType'=>Fill::FILL_SOLID, 'start_color'=>['rgb'=>'FF0000']],
         'borders'=>[
             'bottom'=>['borderStyle'=>Border::BORDER_MEDIUM],
             'left'=>['borderStyle'=>Border::BORDER_MEDIUM],
             'right'=>['borderStyle'=>Border::BORDER_MEDIUM],
-        ],
+            ],
+        ];
+    
+    // Estilos de el cabeza de la tabla de datos
+    $bordesTablasDatos = [
+        'borders'=>['allBorders'=>['borderStyle'=>Border::BORDER_THIN]],
     ];
 
-    // Estilos de el cabeza de la tabla de datos
-    $estiloCabezal = [
-        'font' => ['bold'=> true, 'size'=> 12],
-        'color' => ['rgb'=>000],
-        'fill'=> ['fillType'=>Fill::FILL_SOLID, 'start_color'=>['rgb'=>'FF0000']],
-        'alignment'=> ['horizontal'=>Alignment::HORIZONTAL_CENTER,'vertical'=>Alignment::VERTICAL_CENTER],
-    ];
     // Encabezados
     $encabezados = [
         'Mes','Año','Cuil','Nombre','Apellido','Regimen tipo de contratacíon','Tipo de liquidacíon',
@@ -164,9 +156,8 @@ ORDER BY e.nombre_completo";
         'Total remunerativo','Total no remunerativo', 'Tipo de aporte adicional','Monto del aporte adicional',
         'Tipo de licencia','Días de licencia'
     ];
-
+    
     // Inicializacion de los valores de las tablas
-    // $hojaActiva->mergeCells('A1:Q6');
     $hojaActiva->getStyle('A1:Q6')->applyFromArray($estiloCabezera);
     
     // Estilo de la linea A1
@@ -196,17 +187,27 @@ ORDER BY e.nombre_completo";
 
     //Estilo de la linea A7 a A10
     $hojaActiva->getStyle('A7:Q7')->applyFromArray($bordeSuperior);
-    $hojaActiva->getStyle('A8:Q8')->applyFromArray($bordeContiguoCFuente);
-    $hojaActiva->getStyle('A9:Q9')->applyFromArray($bordeDerecha);
+    $hojaActiva->getStyle('A7:Q7')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+    $hojaActiva->getStyle('A7:Q7')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+    $hojaActiva->getStyle('A9:Q9')->applyFromArray($bordeContiguo);
     $hojaActiva->getStyle('A10:Q10')->applyFromArray($bordeInferior);
 
-    $hojaActiva->fromArray($encabezados,null,'A8');
     
     // Asignacion de tamaño de las columnas segun contenido
-    foreach(range('A','Q')as $columna){
-        $hojaActiva->getColumnDimension($columna)->setWidth(13);
+    foreach(range('A','Q')as $colunma){
+        $hojaActiva->getColumnDimension($colunma)->setWidth(13);
+        $hojaActiva->mergeCells("{$colunma}7:{$colunma}10");
+        $hojaActiva->getStyle("{$colunma}7:{$colunma}10")->applyFromArray($bordeDerecha);
     }
+    // Asignacion de tamaño al cabezero
+    $hojaActiva->getRowDimension(1)->setRowHeight(24);
+    for ($fila = 2; $fila <= 6; $fila++) {
+        $hojaActiva->getRowDimension($fila)->setRowHeight(-1); // Altura automática
+    }
+    
+    $hojaActiva->fromArray($encabezados,null,'A7');
     $fila = 11;
+
     // Recorrer resultados y escribir al Excel
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $hojaActiva->fromArray([
@@ -229,6 +230,11 @@ ORDER BY e.nombre_completo";
             $row['dias_licencia'],
         ], null, "A{$fila}");  
         
+        // Determinar la última fila de datos
+        $ultimaFila = $fila - 1; // La última fila usada en el while
+        // Aplicar formato de moneda a las columnas de sueldos
+        $hojaActiva->getStyle("L11:M{$ultimaFila}")->getNumberFormat()->setFormatCode('"$"#,##0.00');
+        $hojaActiva->getStyle("O11:O{$ultimaFila}")->getNumberFormat()->setFormatCode('"$"#,##0.00');
         $hojaActiva->getStyle("A{$fila}:Q{$fila}")->applyFromArray($bordesTablasDatos);
         $fila++;
     }
