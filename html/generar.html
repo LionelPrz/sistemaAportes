@@ -30,24 +30,18 @@
                         <span></span>
                     </div>
             <section class="section-1 card">
-                <form id="form-generate" class="form card">
-                    <div class="form-item">
-                        <p class="form-text">Seleccione el año</p>
-                        <button type="button" class="form-btn" id="year-btn">Seleccionar</button>
-                    </div>
-                    <div class="form-item">
-                        <p class="form-text">Seleccione el mes</p>
-                        <button type="button" class="form-btn" id="mes-btn">Seleccionar</button>    
-                    </div>
-                </form>
-            </section>
-            <section class="section-2 card">
-                    <div class="info-container" id="info-card1"></div>
-                    <div class="info-container" id="info-card2"></div>
-            </section>
-                <section class="card section-3" id="info-card3">
-                    <button type="button" class="generate-consult-btn" id="generate-consult-btn" disabled>Generar consulta</button>
-                    <button type="button" class="reset-consult-btn" id="reset-consult-btn">Aceptar</button>
+                <button id="generate-start-btn" class="generate-btn" type="button">Generar Archivo</button>
+                <h3 class="years-text">Seleccione el Año</h3>
+                <div class="contenedor-years">
+                </div>
+                <div class="contenedor-mes">
+                    <h3 class="mes-text">Seleccione el Mes</h3>
+                </div>
+                <div class="error-panel-footer">
+                    <button class="terminal-button" id="retryBtn">
+                        <span class="icon">Generar</span>
+                    </button>
+                </div>
             </section>
         </main>
         <aside class="card">
