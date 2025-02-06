@@ -13,7 +13,7 @@ $tipo = $input['tipo'];
 
 try {
     if ($tipo === 'year') {
-        $consulta = "SELECT DISTINCT year FROM empleados";
+        $consulta = "SELECT DISTINCT year FROM empleados ORDER BY year ASC";
         $stmt = $pdo->query($consulta);
         $years = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
@@ -29,7 +29,9 @@ try {
         }
 
         $yearSeleccionado = $input['year'];
-        $consulta2 = "SELECT DISTINCT mes FROM empleados WHERE year = ? ORDER BY mes";
+        $consulta2 = 
+        "SELECT DISTINCT mes FROM empleados WHERE year = ? ORDER BY mes";
+
         $stmt = $pdo->prepare($consulta2);
         $stmt->bindParam(1, $yearSeleccionado, PDO::PARAM_INT);
         $stmt->execute();

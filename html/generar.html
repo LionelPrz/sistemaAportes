@@ -30,18 +30,23 @@
                         <span></span>
                     </div>
             <section class="section-1 card">
-                <button id="generate-start-btn" class="generate-btn" type="button">Generar Archivo</button>
-                <h3 class="years-text">Seleccione el Año</h3>
-                <div class="contenedor-years">
-                </div>
-                <div class="contenedor-mes">
+                <button id="generate-start-btn" class="generate-btn" type="button">Iniciar Generacion</button>
+                <!-- Contenedor de los years -->
+                    <div id="contenedorFicheroYear" class="contenedor-fichero-year hidden">
+                        <h3 class="years-text">Seleccione el Año</h3>
+                            <div id="contenedorYears" class="contenido-years"></div>
+                    </div>
+                <!-- Contenedor de los meses -->
+                <div id="contenedorFicheroMes" class="contenedor-fichero-mes hidden">
                     <h3 class="mes-text">Seleccione el Mes</h3>
+                        <div id="contenedorMes" class="contenido-mes"></div>
                 </div>
-                <div class="error-panel-footer">
+                <button id="generate-end-btn" class="generate-btn hidden" type="button">Generar Archivo</button>
+                <!-- <div class="error-panel-footer">
                     <button class="terminal-button" id="retryBtn">
                         <span class="icon">Generar</span>
                     </button>
-                </div>
+                </div> -->
             </section>
         </main>
         <aside class="card">

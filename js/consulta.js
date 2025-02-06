@@ -164,27 +164,27 @@ function generarConsulta(cuilFiltrado, mesFiltrado, yearFiltrado) {
         contenedorDatosConsultados.insertAdjacentHTML('beforeend', `
             <h3 class="empleado-text">Datos del Empleado</h3>
             <ul id="ulEmpleado" class="ul-empleado">
-                <li class="li-empleado"><p class="ul-text">Nombre: ${data.Nombre}</p></li>
-                <li class="li-empleado"><p class="ul-text">Apellido: ${data.Apellido}</p></li>
-                <li class="li-empleado"><p class="ul-text">Cargo: ${data.funcion}</p></li>
-                <li class="li-empleado"><p class="ul-text">Clase: ${data.clase}</p></li>
-                <li class="li-empleado"><p class="ul-text">Categoria: ${data.categoria}</p></li>
-                <li class="li-empleado"><p class="ul-text">Tipo contratación: ${data.Tipo_contratacion}</p></li>
-                <li class="li-empleado"><p class="ul-text">Tipo liquidación: ${data.Tipo_liquidacion}</p></li>
+                <li class="li-empleado"><p class="ul-text">Nombre: ${data.nombre}</p></li>
+                <li class="li-empleado"><p class="ul-text">Apellido: ${data.apellido}</p></li>
+                <li class="li-empleado"><p class="ul-text">Cargo: ${data.cargo_funcion}</p></li>
+                <li class="li-empleado"><p class="ul-text">Clase: ${data.cargo_clase}</p></li>
+                <li class="li-empleado"><p class="ul-text">Categoria: ${data.cargo_categoria}</p></li>
+                <li class="li-empleado"><p class="ul-text">Tipo contratación: ${data.tipo_contratacion}</p></li>
+                <li class="li-empleado"><p class="ul-text">Tipo liquidación: ${data.tipo_liquidacion}</p></li>
                 <li class="li-empleado"><p class="ul-text">Dias trabajados: ${data.dias_trabajados}</p></li>
             </ul>
         `);
 
         contenedorDatosConsultados.insertAdjacentHTML('beforeend', `
             <ul id="ulPrevisional" class="ul-previsional">
-                <li class="li-previsional"><p class="ul-text">Total Remunerativo: $${data.Total_remunerativo}</p></li>
-                <li class="li-previsional"><p class="ul-text">Total no remunerativo: $${data.Total_no_remunerativo}</p></li>
-                <li class="li-previsional"><p class="ul-text">Aporte adicional: ${data.Tipo_aporte_adicional}</p></li>
-                <li class="li-previsional"><p class="ul-text">Monto aporte adicional: ${data.Monto_aporte_adicional}</p></li>
+                <li class="li-previsional"><p class="ul-text">Total Remunerativo: $ ${data.total_remunerativo}</p></li>
+                <li class="li-previsional"><p class="ul-text">Total no remunerativo: $ ${data.total_no_remunerativo}</p></li>
+                <li class="li-previsional"><p class="ul-text">Aporte adicional: ${data.tipo_aporte_adicional}</p></li>
+                <li class="li-previsional"><p class="ul-text">Monto aporte adicional: ${data.monto_aporte_adicional}</p></li>
                 <li class="li-previsional"><p class="ul-text">Tipo de licencia: ${data.tipo_licencia}</p></li>
                 <li class="li-previsional"><p class="ul-text">Dias de licencia: ${data.dias_licencia}</p></li>
-                <li class="li-previsional"><p class="ul-text">Mes: ${data.Mes}</p></li>
-                <li class="li-previsional"><p class="ul-text">Año: ${data.Year}</p></li>
+                <li class="li-previsional"><p class="ul-text">Mes: ${data.sueldo_mes}</p></li>
+                <li class="li-previsional"><p class="ul-text">Año: ${data.sueldo_year}</p></li>
             </ul>
         `);
         // Cambio de función del botón de consulta

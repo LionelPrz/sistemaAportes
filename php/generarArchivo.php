@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\Font;
+// use PhpOffice\PhpSpreadsheet\Style\Font;
 
 
 // Recibir los datos del POST
@@ -215,15 +215,15 @@ ORDER BY e.nombre_completo";
             $row['sueldo_year'],
             $row['cuil'],
             $row['nombre'],
-            $row['apellido'],
+            $row['apellido'],   
             $row['tipo_contratacion'],
             $row['tipo_liquidacion'],
             $row['dias_trabajados'],
             $row['cargo_categoria'],
             $row['cargo_clase'],
             $row['cargo_funcion'],
-            $row['total_remunerativo'],
-            $row['total_no_remunerativo'],
+            "$ ".$row['total_remunerativo'],
+            "$ ".$row['total_no_remunerativo'],
             $row['tipo_aporte_adicional'],
             $row['monto_aporte_adicional'], 
             $row['tipo_licencia'],
@@ -234,7 +234,6 @@ ORDER BY e.nombre_completo";
         $ultimaFila = $fila - 1; // La última fila usada en el while
         // Aplicar formato de moneda a las columnas de sueldos
         $hojaActiva->getStyle("L11:M{$ultimaFila}")->getNumberFormat()->setFormatCode('"$"#,##0.00');
-        $hojaActiva->getStyle("O11:O{$ultimaFila}")->getNumberFormat()->setFormatCode('"$"#,##0.00');
         $hojaActiva->getStyle("A{$fila}:Q{$fila}")->applyFromArray($bordesTablasDatos);
         $fila++;
     }
