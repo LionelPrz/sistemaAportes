@@ -78,7 +78,7 @@ input, select, textarea {
 }
 /* Componentes comunes */
 .card, header, main, aside, footer {
-    background: var(--surface);
+    /* background: var(--surface); */
     border: 3px solid var(--border);
     border-radius: 22px;
     backdrop-filter: blur(15px);
