@@ -1,164 +1,169 @@
+// Variables globales
 let datos = [];
+let valorCuil;
+let yearSelect;
+let mesSelect;
 let contenido;
-let contenedorMes = document.getElementById('info-card2');
-let contenedorYear = document.getElementById('info-card1');
+let yearDisponibles;
+let mesesDisponibles;
+let cuilEncontrado;
+
+// Elementos del DOM
+let contenedorMes = document.getElementById('contenido-mes');
+let contenedorYear = document.getElementById('contenido-years');
 let contenedorDatosConsultados = document.getElementById('consultDatos');
 let formulario = document.querySelector('.form-consult');
 let botonConsulta = document.getElementById('consultBtn');
-let botonAceptar = document.getElementById('aceptarBtn');
-let contenedorConsultaBtn = document.getElementById('ContainerBtn');
 let contenedorAceptarBtn = document.getElementById('ContainerAct');
 let barraCarga = document.getElementById('loader-bar');
-let seccionConsulta = document.getElementById('section1');
-let seccionSeleccion = document.getElementById('section2');
-let seccionDatos = document.getElementById('section3');
-let yearSelect;
-let mesSelect;
-let yearDisponibles;
-let cuilEncontrado;
-let mesesDiponibles;
-let valorCuil;
-let ulPrevisional;
-let ulEmpleados;
+let contenedorFichas = document.getElementById('contenedorFichas');
+let fichaMes = document.getElementById('ficha-mes');
+let fichaYear = document.getElementById('ficha-year');
+let fichaConsultar = document.getElementById('ficha-consultar');
+let fichaResultado = document.getElementById('ficha-resultado');
+let textcontainer = document.getElementById('text-container');
 
-// Seccion para el manejo del aside
+// Fichas ordenadas en el flujo correcto
+let fichas = { fichaYear, fichaMes, fichaConsultar, fichaResultado };
+
+// Manejo de aside
 let botonesCategorias = document.querySelectorAll('.boton-aside');
-
-botonesCategorias.forEach(boton=>{
-    boton.addEventListener('click',(e)=>{
-        botonesCategorias.forEach(boton => boton.classList.remove("active"));
+botonesCategorias.forEach(boton => {
+    boton.addEventListener('click', (e) => {
+        botonesCategorias.forEach(b => b.classList.remove("active"));
         e.currentTarget.classList.add("active");
-    })
-})
+    });
+});
 
-
+// Envío del formulario
 formulario.addEventListener('submit', (e) => {
     e.preventDefault();
     valorCuil = document.getElementById('cuil').value;
-    fetch("/php/consultarDatos.php",{
+    fetch("/php/consultarDatos.php", {
         method: "POST",
-        body: JSON.stringify({cuil:valorCuil}),
-        headers:{
-            "Content-Type": "application/json"
-        }
+        body: JSON.stringify({ cuil: valorCuil }),
+        headers: { "Content-Type": "application/json" }
     })
-    .then(response => {
-        if(!response.ok){
-            throw new Error(`Error en la solicitud: ${response.status}`);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
         contenido = data;
         cargarDatos(contenido);
         encontrarCuil(valorCuil);
+        moverFichaAlFrente(fichas.fichaYear);
+        formulario.classList.add('hidden');
+        contenedorFichas.classList.remove('hidden');
     })
-    .catch(error =>{
-        console.error('Hubo un error en la consulta:', error);
-    })
-});
-
-botonConsulta.addEventListener('click', event => {
-    event.preventDefault();
-    console.log(valorCuil, mesSelect, yearSelect);
-    barraCarga.style.display = 'block';
-    contenedorMes.innerHTML = '';
-    contenedorYear.innerHTML = '';
-    generarConsulta(valorCuil, mesSelect, yearSelect);
-    console.log('datos cargados correctamente');
-    barraCarga.style.display = 'none'
-});
-
-function cargarDatos(datosCargados) {
-    datosCargados.forEach(elemento => {
-        datos.push(elemento);
+    .catch(error => {
+        alert('Hubo un error en la consulta: ' + error)
+        location.reload();
     });
+});
+
+// Manejo de clic en solapas
+let solapas = document.querySelectorAll('.solapa');
+solapas.forEach(solapa => {
+    solapa.addEventListener('click', (e) => {
+        let fichaSeleccionada = e.target.parentElement;
+        moverFichaAlFrente(fichaSeleccionada);
+    });
+});
+
+// Mover ficha al frente con desplazamiento suave
+function moverFichaAlFrente(ficha) {
+    let fichero = Object.values(fichas).find(item => item.classList.contains('activa'));
+    
+    if (fichero) {
+        fichero.classList.remove('activa');
+    }
+    
+    ficha.classList.add('activa');
+}
+// Cargar los datos obtenidos
+function cargarDatos(datosCargados) {
+    datos = [...datosCargados];
 }
 
+// Buscar CUIL en los datos
 function encontrarCuil(datosComparados) {
-
     cuilEncontrado = datos.filter(item => item.cuil === datosComparados);
     if (cuilEncontrado.length > 0) {
         encontrarYear(cuilEncontrado);
-    }
-    else {
-        console.error('no hay coincidencias para el cuil numero: ' + cuilEncontrado);
-
-    }
-
-    function encontrarYear(cuil) {
-        yearDisponibles = [...new Set(cuil.map(item => item.year))];
-        console.log(yearDisponibles);
-        contenedorYear.innerHTML = '';
-        // Generacion de los items tipo botones
-        yearDisponibles.forEach(year => {
-            contenedorYear.insertAdjacentHTML('beforeend', `
-                <button class="year-container" id="${year}" type="button">
-                    Año: ${year}
-                </button>
-            `);
-        });
-        // Recuperamos los botones recien creados por el filtro
-        let contenidoBotones = document.querySelectorAll('#info-card1 button');
-        // Ahora lo recorremos con foreach y le damos eventos click
-        contenidoBotones.forEach(botones => {
-            botones.addEventListener('click', (e) => {
-                yearSelect = e.currentTarget.id;
-                console.log(yearSelect);
-                console.log(cuilEncontrado);
-                encontrarMeses(cuilEncontrado, yearSelect);
-            });
-        });
-    }
-
-    function encontrarMeses(datosEncontrados, yearSeleccionado) {
-        yearSeleccionado = parseInt(yearSeleccionado,10);
-        mesesDiponibles = [...new Set(datosEncontrados.filter(item => item.year === yearSeleccionado).map(item => item.mes))];
-        console.log(mesesDiponibles);
-        contenedorMes.innerHTML = '';
-        // Generacion de los items tipo botones
-        mesesDiponibles.forEach(mes => {
-            contenedorMes.insertAdjacentHTML('beforeend', `
-                <button class="year-container" id="${mes}" type="button">
-                    Mes: ${mes}
-                </button>
-            `);
-        });
-        let botonesMes = document.querySelectorAll('#info-card2 button');
-        botonesMes.forEach(boton => {
-            boton.addEventListener('click', (e) => {
-                mesSelect = e.currentTarget.id;
-            });
-        });
+    } else {
+        alert('No hay coincidencias para el CUIL: ' + datosComparados);
+        location.reload();
     }
 }
 
+// Buscar años disponibles
+function encontrarYear(cuil) {
+    yearDisponibles = [...new Set(cuil.map(item => item.year))];
+    contenedorYear.innerHTML = '';
+    yearDisponibles.forEach(year => {
+        contenedorYear.insertAdjacentHTML('beforeend',`
+            <button class="boton-years" id="${year}">Año: ${year}</button>
+            `);
+        });
+    document.querySelectorAll('.boton-years').forEach(button => {
+        button.addEventListener('click', (e) => {
+            yearSelect = e.currentTarget.id;
+            encontrarMeses(cuilEncontrado, yearSelect);
+            moverFichaAlFrente(fichas.fichaMes);
+        });
+    });
+}
+
+// Buscar meses disponibles
+function encontrarMeses(datosEncontrados, yearSeleccionado) {
+    yearSeleccionado = parseInt(yearSeleccionado, 10);
+    mesesDisponibles = [...new Set(datosEncontrados.filter(item => item.year === yearSeleccionado).map(item => item.mes))];
+    contenedorMes.innerHTML = '';
+    mesesDisponibles.forEach(mes => {
+        contenedorMes.insertAdjacentHTML('beforeend', 
+            `<button class="boton-mes" id="${mes}">Mes: ${mes}</button>`);
+    });
+    
+    document.querySelectorAll('.boton-mes').forEach(boton => {
+        boton.addEventListener('click', (e) => {
+            mesSelect = e.currentTarget.id;
+            moverFichaAlFrente(fichas.fichaConsultar);
+        });
+    });
+}
+
+// Generar consulta
+botonConsulta.addEventListener('click', (event) => {
+    event.preventDefault();
+    barraCarga.style.display = 'block';
+    generarConsulta(valorCuil, mesSelect, yearSelect);
+});
+
+// Fetch para obtener datos
 function generarConsulta(cuilFiltrado, mesFiltrado, yearFiltrado) {
-    // Realizar el fetch para obtener los datos desde el backend
     fetch('/php/datosEmpleados.php', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-            cuil: cuilFiltrado,
-            mes: mesFiltrado,
-            year: yearFiltrado
-        })
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ cuil: cuilFiltrado, mes: mesFiltrado, year: yearFiltrado })
     })
-    .then(response => response.json())  // Convertir la respuesta en formato JSON
+    .then(response => response.json())
     .then(data => {
-        console.log(data);
         if (data.error) {
-            // Si hay un error, mostrar el mensaje
-            console.error(data.error);
+            alert(data.error);
             return;
         }
-        // Si los datos están disponibles, mostrarlos en el contenedor
-        contenedorDatosConsultados.insertAdjacentHTML('beforeend', `
-            <h3 class="empleado-text">Datos del Empleado</h3>
-            <ul id="ulEmpleado" class="ul-empleado">
-                <li class="li-empleado"><p class="ul-text">Nombre: ${data.nombre}</p></li>
+        mostrarResultados(data);
+    })
+    .catch(error =>{
+        alert("Error al obtener los datos: " + error)
+        location.reload();
+    });     
+}
+
+// Mostrar resultados en la última ficha
+function mostrarResultados(data) {
+    textcontainer.innerHTML = '';
+    textcontainer.insertAdjacentHTML('beforeend',`
+      <ul id="ulEmpleado" class="ul-empleado">
+            <li class="li-empleado"><p class="ul-text">Nombre: ${data.nombre}</p></li>
                 <li class="li-empleado"><p class="ul-text">Apellido: ${data.apellido}</p></li>
                 <li class="li-empleado"><p class="ul-text">Cargo: ${data.cargo_funcion}</p></li>
                 <li class="li-empleado"><p class="ul-text">Clase: ${data.cargo_clase}</p></li>
@@ -167,9 +172,6 @@ function generarConsulta(cuilFiltrado, mesFiltrado, yearFiltrado) {
                 <li class="li-empleado"><p class="ul-text">Tipo liquidación: ${data.tipo_liquidacion}</p></li>
                 <li class="li-empleado"><p class="ul-text">Dias trabajados: ${data.dias_trabajados}</p></li>
             </ul>
-        `);
-
-        contenedorDatosConsultados.insertAdjacentHTML('beforeend', `
             <ul id="ulPrevisional" class="ul-previsional">
                 <li class="li-previsional"><p class="ul-text">Total Remunerativo: $ ${data.total_remunerativo}</p></li>
                 <li class="li-previsional"><p class="ul-text">Total no remunerativo: $ ${data.total_no_remunerativo}</p></li>
@@ -181,23 +183,17 @@ function generarConsulta(cuilFiltrado, mesFiltrado, yearFiltrado) {
                 <li class="li-previsional"><p class="ul-text">Año: ${data.sueldo_year}</p></li>
             </ul>
         `);
-        // Cambio de función del botón de consulta
-        ulEmpleados = document.getElementById('ulEmpleados');
-        ulPrevisional = document.getElementById('ulPrevisional');
-        contenedorAceptarBtn.classList.remove('hidden');
-        botonAceptar.addEventListener('click', reiniciarEstado);
-    })
-    .catch(error => {
-        console.error("Error al obtener los datos: ", error);
-    });
-}
-
-function reiniciarEstado() {
-    contenedorMes.innerHTML = '';
-    contenedorYear.innerHTML = '';
-    formulario.reset();
-    seccionDatos.classList.add('hidden');
-    botonConsulta.classList.add('hidden');
-    contenedorDatosConsultados.classList.add('hidden');
-    seccionConsulta.classList.remove('hidden');
+        contenedorDatosConsultados.insertAdjacentHTML('beforeend',`
+                <button class="accept-btn hidden" id="aceptarBtn">
+                    <span class="icon">Aceptar</span>
+                </button>
+            `);
+        let botonAceptar = document.getElementById('aceptarBtn');
+        botonAceptar.classList.remove('hidden');
+        moverFichaAlFrente(fichas.fichaResultado);
+        
+        // Reiniciar consulta
+        botonAceptar.addEventListener('click', () => {
+            location.reload();
+        });
 }
