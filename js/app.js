@@ -1,7 +1,3 @@
-// Variables para el night mode
-let darkMode = document.querySelector('.app');
-let cards = document.querySelectorAll('.card');
-let interruptor = document.getElementById('dark');
 // Variables para la redireccion
 let barraCarga = document.getElementById('loader-bar');
 let botones = document.querySelectorAll('.boton');
@@ -19,10 +15,6 @@ botones.forEach(boton => {
         let idbtn = event.currentTarget;
         encontrarRuta(idbtn.id);
     });
-});
-
-interruptor.addEventListener('click', () => {
-    modoOscuro();
 });
 
 // Funcion para el modo oscuro

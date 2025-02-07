@@ -1,3 +1,7 @@
+.container{
+    height: 100vh;
+    padding: 1.5rem;
+}
 /* Componentes Específicos - Consola */
 .terminal-main-container {
     display: grid;

@@ -1,113 +1,122 @@
-.section-1{
+/* Estilos generales */
+.container{
+    height: 100vh;
+    padding: 1.5rem;
+}
+.section-1 {
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: none;
-}
-.generate-btn{
-    height: 60px;
-    width: 300px;
-    border: none;
-    border-radius: 22px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    padding: .5rem;
-    cursor: pointer;
-}
-.contenedor-fichero{
-    height: 90%;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.contenedor-fichero-mes,.contenedor-fichero-year{
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 55px 1fr;
-    height: 100%;
-    width: 100%;
-    padding: 1.4rem;
-    border-radius:22px;
-    border-top-left-radius: 0px;
-    background-color: #20202056;
-    margin-bottom: 2.6rem;
-    transition: .5s;
-    justify-items: start;
+    position: relative;
+    overflow: hidden;
 }
 
-.years-text{
-    display: flex;
-    align-self: flex-start;
-    padding: .3rem;
-    border-top-left-radius: 14px;
-    border-top-right-radius: 14px;
-    font-size: 1.8rem;
-    font-weight: 800;
-    background-color: #fff;
-    color: #202020;
-    text-align: center;
-}
-.mes-text{
-    padding: .3rem;
-    border-top-left-radius: 14px;
-    border-top-right-radius: 14px;
-    font-size: 1.8rem;
-    font-weight: 800;
-    background-color: #fff;
-    color: #202020;
-    text-align: center;
-}
-.contenido-years{
-    padding: 2rem;
-    height: 100%;
+/* Contenedor de fichas solapadas */
+.fichas-container {
+    position: relative;
     width: 100%;
-    background-color: #0f45a1;
-    border-radius: 11px;
-    border-top-left-radius: 0px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    align-content: space-around;
-}
-.contenido-mes{    
-    padding: 2rem;
     height: 100%;
-    width: 100%;
-    background-color: #0f45a1;
-    border-radius: 11px;
-    border-top-left-radius: 0px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    flex-direction: column;
     align-items: center;
-    align-content: space-around;
+    justify-content: center;
+    margin-bottom: 2.5rem;
 }
-.boton-years{
-    padding: .6rem;
-    font-size: 1.4rem;
-    font-weight: bold;
-    width: 140px;
-    height: 50px;
-    border: none;
-    border-radius: 14px;
-    cursor: pointer;
+
+/* Fichas */
+.ficha {
+    position: absolute;
+    width: 75%;
+    height: 80%;
+    background: #c5a53c;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s ease, z-index 0.3s;
 }
-.boton-mes{
-    padding: .6rem;
-    font-size: 1.4rem;
+
+/* Solapas visibles */
+.ficha .solapa {
+    position: absolute;
+    top: -30px;
+    left: 10px;
+    background: #ffacac;
+    padding: 5px 15px;
+    border-radius: 8px 8px 0 0;
     font-weight: bold;
-    width: 140px;
-    height: 50px;
-    border: none;
-    border-radius: 14px;
     cursor: pointer;
+    transition: background 0.3s;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+    color: #020202;
+}
+
+.ficha .solapa:hover {
+    background: #ffacac;
+}
+
+/* Animación de fichas al seleccionarlas */
+.ficha.activa {
+    transform: translateY(-10px) scale(1.05);
+    z-index: 10;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 14px;
+}
+
+/* Hover y active en botones */
+button {
+    padding: 15px 25px;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+.boton-years,.boton-mes{
+    padding: 15px 25px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin: .5rem;
+    width: 200px;
+}
+
+button:hover {
+    background: #1d315c;
+    color: rgb(255, 233, 233);
+}
+
+button:active {
+    transform: scale(0.95);
 }
 .hidden{
     display: none;
-    transition: .5s;
+}
+.final-text, .mes-text , .years-text{
+    padding: .5rem;
+    margin-top: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    background-color: #e9bb24;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #020202;
+}
+.contenedor-final, .contenido-mes , .contenido-years{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 85%;
+    padding: 2.5rem;
+    background-color: #e9bb24;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
 }

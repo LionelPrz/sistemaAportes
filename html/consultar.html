@@ -33,31 +33,37 @@
                         </div>
                         <span></span>
                     </div>
-                <section id="section1" class="section-1 card">
+                <section id="section1" class="section-1">
                     <form class="form-consult" id="form">
                         <div class="form-item">
                             <input class="form-input" type="tel" name="cuil" id="cuil" placeholder="Ingrese cuil" required>
                             <button id="consult-btn" class="consult-btn" type="submit">Consultar</button>
                         </div>
                     </form>
-                </section>
-                <section id="section2" class="section-2 hidden card">
-                    <h3 class="container-text">Seleccione el año de consulta</h3>
-                        <div class="info-container" id="info-card1"></div>
-                    <h3 class="container-text">Seleccione el mes de consulta</h3>
-                        <div class="info-container" id="info-card2"></div>
-                        <div id="ContainerBtn" class="error-panel-footer hidden">
+                    <div id="contenedorFichas" class="fichas-container hidden">
+                        <div class="ficha activa" id="ficha-year">
+                            <div class="solapa">Años</div>
+                            <h3 class="years-text">Seleccione el año de consulta</h3>
+                            <div class="contenido-years" id="info-card1"></div>
+                        </div>
+                        <div class="ficha" id="ficha-mes">
+                            <div class="solapa">Meses</div>
+                            <h3 class="container-text">Seleccione el mes de consulta</h3>
+                            <div class="contenido-mes" id="info-card2"></div>
+                        </div>
+                        <div class="ficha" id="ficha-consultar">
+                            <div class="solapa">Consultar</div>
                             <button class="terminal-button " id="consultBtn">
                                 <span class="icon">Generar Consulta</span>
-                                </button>
-                            </div>
-                </section>
-                <section id="section3" class="section-3 hidden card">
-                    <div id="consultDatos" class="datos-consulta-container hidden"></div>
-                    <div id="ContainerAct" class="error-panel-footer hidden">
-                    <button class="terminal-button " id="aceptarBtn">
-                        <span class="icon">Aceptar</span>
-                        </button>
+                            </button>
+                        </div>
+                        <div class="ficha" id="ficha-resultado">
+                            <div class="solapa">Resultado</div>
+                            <div id="consultDatos" class="datos-consulta-container"></div>
+                            <button class="terminal-button " id="aceptarBtn">
+                                <span class="icon">Aceptar</span>
+                            </button>
+                        </div>
                     </div>
                 </section>
             </div>

@@ -1,43 +1,43 @@
-:root {
-    --bg: #18203565;
-    --surface: rgba(51, 57, 66, 0.048);
-    --text: #e8e8e8;
-    --primary: #3d9bff;
-    --border: rgba(255, 255, 255, 0.1);
-    --blur-bg: blur(20px);
-    --border-radius: 12px;
-    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    --w-h-item: 135px;
-    --position-y-active: 170px;
-}
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+:root {
+    --bg: rgba(24, 32, 53, 0.4); /* Fondo semi-transparente */
+    --surface: rgba(51, 57, 66, 0.15); /* Capa translúcida */
+    --text: #e8e8e8; /* Texto claro */
+    --primary: #3d9bff; /* Color principal */
+    --border: rgba(255, 255, 255, 0.2); /* Bordes más visibles */
+    --blur-bg: blur(20px); /* Desenfoque */
+    --border-radius: 12px;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Sombras suaves */
+}
+
 @media (prefers-color-scheme: light) {
     :root {
-        --bg: #b4b4bb;
-        --surface: rgba(255, 255, 255, 0.8);
-        --text: #1a1d21;
-        --primary: #007aff;
-        --border: rgba(0, 0, 0, 0.1);
+        --bg: rgba(180, 180, 187, 0.6); /* Fondo más claro */
+        --surface: rgba(255, 255, 255, 0.6); /* Capa translúcida más visible */
+        --text: #1a1d21; /* Texto oscuro */
+        --primary: #007aff; /* Azul más vibrante */
+        --border: rgba(0, 0, 0, 0.1); /* Bordes sutiles */
+        --shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* Sombra más suave */
     }
 }
 body {
     background: var(--bg);
-    color: var(--bg);
-    font: 700 1.3rem/1.5 'apple-system',monospace;
-    backdrop-filter: blur(25px);
+    color: var(--text);
+    font: 700 1.3rem/1.5 'apple-system', monospace;
+    backdrop-filter: var(--blur-bg);
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 .container {
     display: grid;
     grid: 200px 1fr 50px / 250px 2fr;
     gap: 15px;
-    /* height: 100vh; */
-    margin: 1rem;
-    padding: 1.8rem;
+    /* margin: 1rem;
+    padding: 1.8rem; */
     border-radius: 40px;
 }
 header{
@@ -76,12 +76,14 @@ input, select, textarea {
     font-size: 1.2rem;
     height: 60px;
 }
-/* Componentes comunes */
+/* Glass Effect para Componentes */
 .card, header, main, aside, footer {
-    /* background: var(--surface); */
-    border: 3px solid var(--border);
-    border-radius: 22px;
-    backdrop-filter: blur(15px);
+    background: var(--surface);
+    border-radius: var(--border-radius);
+    backdrop-filter: var(--blur-bg);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+
 }
 /* Header del Terminal */
 .terminal-header {

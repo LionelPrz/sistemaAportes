@@ -1,13 +1,5 @@
-main{
-    border: none;
-}
+
 .section-1{
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    border: none;
-}
-.section-2{
     display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
@@ -93,32 +85,6 @@ main{
     text-align: center;
     margin: .5rem;
 }
-.year-container{
-    cursor: pointer;
-    margin: .4rem;
-    padding: .5rem;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(68, 68, 68, 0.4);
-    height: 50px;
-    width: 180px;
-    font-size: 1.4rem;
-    font-family: Ubuntu,-apple-system, sans-serif;
-    font-weight: 700;
-}
-.mes-container{
-    cursor: pointer;
-    margin: .4rem;
-    padding: 3px;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(68, 68, 68, 0.4);
-    height: 50px;
-    width: 190px;
-    font-size: 1.4rem;
-    font-family: Ubuntu,-apple-system, sans-serif;
-    font-weight: 700;
-}
 .datos-consulta-container{
     display: grid;
     grid-template-columns: repeat(2,1fr);
@@ -185,6 +151,116 @@ main{
 .hidden{
     display: none;
     transition: .5s;
+}
+
+/* Importacion nuevos estilos */
+
+
+/* Contenedor de fichas solapadas */
+.fichas-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+}
+
+/* Fichas */
+.ficha {
+    position: absolute;
+    width: 75%;
+    height: 80%;
+    background: #c5a53c;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s ease, z-index 0.3s;
+}
+
+/* Solapas visibles */
+.ficha .solapa {
+    position: absolute;
+    top: -30px;
+    left: 10px;
+    background: #ffacac;
+    padding: 5px 15px;
+    border-radius: 8px 8px 0 0;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+    color: #020202;
+}
+
+.ficha .solapa:hover {
+    background: #ffacac;
+}
+
+/* Animación de fichas al seleccionarlas */
+.ficha.activa {
+    transform: translateY(-10px) scale(1.05);
+    z-index: 10;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 14px;
+}
+
+/* Hover y active en botones */
+button {
+    padding: 15px 25px;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+.boton-years,.boton-mes{
+    padding: 15px 25px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin: .5rem;
+    width: 200px;
+}
+
+button:hover {
+    background: #1d315c;
+    color: rgb(255, 233, 233);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+.hidden{
+    display: none;
+}
+.final-text, .mes-text , .years-text{
+    padding: .5rem;
+    margin-top: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    background-color: #e9bb24;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #020202;
+}
+.contenedor-final, .contenido-mes , .contenido-years{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 85%;
+    padding: 2.5rem;
+    background-color: #e9bb24;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
 }
 
 

@@ -52,8 +52,6 @@ formulario.addEventListener('submit', (e) => {
         contenido = data;
         cargarDatos(contenido);
         encontrarCuil(valorCuil);
-        seccionConsulta.classList.add('hidden');
-        seccionSeleccion.classList.remove('hidden');
     })
     .catch(error =>{
         console.error('Hubo un error en la consulta:', error);
@@ -130,7 +128,6 @@ function encontrarCuil(datosComparados) {
         botonesMes.forEach(boton => {
             boton.addEventListener('click', (e) => {
                 mesSelect = e.currentTarget.id;
-                contenedorConsultaBtn.classList.remove('hidden');
             });
         });
     }
@@ -157,9 +154,6 @@ function generarConsulta(cuilFiltrado, mesFiltrado, yearFiltrado) {
             console.error(data.error);
             return;
         }
-        seccionSeleccion.classList.add('hidden');
-        seccionDatos.classList.remove('hidden');
-        contenedorDatosConsultados.classList.remove('hidden');
         // Si los datos están disponibles, mostrarlos en el contenedor
         contenedorDatosConsultados.insertAdjacentHTML('beforeend', `
             <h3 class="empleado-text">Datos del Empleado</h3>

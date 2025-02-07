@@ -22,7 +22,6 @@ botonesCategorias.forEach(boton=>{
     })
 })
 
-
 const expresiones = {
   cuil: /^\d{11}$/,
   nombre: /^[a-zA-ZÀ-ÿ\s]{1,20}$/,
@@ -82,24 +81,31 @@ inputs.forEach((input) => {
   input.addEventListener("blur", validarFormulario);
   input.addEventListener("change", validarFormulario);
 });
+
 form.addEventListener("click", () => {
   rellenarSelects();
 });
+
 window.addEventListener("load", () => {
   generateAlert("info");
 });
+
 botonNext.addEventListener("click", (e) => {
   e.preventDefault();
   if (Object.values(campos).every((campo) => campo)) {
     cargarFormulario();
     console.log(contador);
     comprobarEstadoCarga(contador);
+  }else{
+    document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
   }
 });
+
 botonSmt.addEventListener("click", (e) => {
   e.preventDefault();
   validadorFinal(contador,valorForm.value,contenedorDatos);
 });
+
 function validarFormulario(e) {
   switch (e.target.name) {
     // Validacion cuil
@@ -198,6 +204,7 @@ function validarFormulario(e) {
       .classList.remove("formulario__mensaje-activo");
   }
 }
+
 function validarCampo(expresion, input, campo) {
   if (expresion.test(input.value)) {
     document
@@ -235,6 +242,7 @@ function validarCampo(expresion, input, campo) {
     campos[campo] = false;
   }
 }
+
 function rellenarSelects() {
   if (!campos.ejecucion) {
     // limmpieza de las opciones anteriores
@@ -310,6 +318,7 @@ function rellenarSelects() {
     campos.ejecucion = true;
   }
 }
+
 function generateAlert(resultado, mensaje = null) {
   // Validacion precencia para evitar duplicados
   if (document.getElementById("customAlert")) return;
@@ -395,6 +404,7 @@ function generateAlert(resultado, mensaje = null) {
     }
   });
 }
+
 function cargarFormulario() {
   let datosFormulario = new FormData(form);
   let objetoClasificado = Object.keys(categorias).reduce((acc, categoria) => {
@@ -447,6 +457,7 @@ function cargarFormulario() {
   console.log("Datos Clasificados:", objetoClasificado);
   contador++;
 }
+
 function comprobarEstadoCarga(estado) {
   if (estado < valorForm.value) {
     reseteoFormulario();
@@ -455,6 +466,7 @@ function comprobarEstadoCarga(estado) {
       botonSmt.style.display = "block";
 }
 }
+
 function validadorFinal(estado1, estado2, contenido) {
   if (estado1.value === estado2.value) {
     fetch("/php/insertarDatos.php", {
@@ -474,6 +486,7 @@ function validadorFinal(estado1, estado2, contenido) {
     document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
   }
 }
+
 function reseteoFormulario() {
   form.reset();
 

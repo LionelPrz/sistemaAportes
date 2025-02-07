@@ -9,8 +9,7 @@
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap: 1rem;
-    padding: .8rem;
-    margin: .8rem;
+    padding: 1rem;
     box-shadow: 0 10px 20px rgba(68, 68, 68, 0.4);
 }
 .last-row-container{

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/generar.css">
     <link rel="stylesheet" href="/css/common-components.css">
+    <link rel="stylesheet" href="/css/generar.css">
     <title>Generar tablas</title>
 </head>
 <body>
@@ -29,26 +29,34 @@
                         </div>
                         <span></span>
                     </div>
-            <section class="section-1 card">
-                <button id="generate-start-btn" class="generate-btn" type="button">Iniciar Generacion</button>
-                <!-- Contenedor de los years -->
-                    <div id="contenedorFicheroYear" class="contenedor-fichero-year hidden">
-                        <h3 class="years-text">Seleccione el Año</h3>
-                            <div id="contenedorYears" class="contenido-years"></div>
-                    </div>
-                <!-- Contenedor de los meses -->
-                <div id="contenedorFicheroMes" class="contenedor-fichero-mes hidden">
-                    <h3 class="mes-text">Seleccione el Mes</h3>
-                        <div id="contenedorMes" class="contenido-mes"></div>
+                    <section class="section-1">
+                        <button id="generate-start-btn" class="generate-btn" type="button">Iniciar Generación</button>
+                        <!-- Contenedor de Fichas -->
+                        <div id="contenedorFichas" class="fichas-container hidden">
+                            <div class="ficha activa" id="ficha-year">
+                                <div class="solapa">Años</div>
+                                <h3 class="years-text">Seleccione un Año</h3>
+                                <div id="contenedorYears" class="contenido-years"></div>
+                            </div>
+        
+                            <div class="ficha" id="ficha-mes">
+                                <div class="solapa">Meses</div>
+                                <h3 class="mes-text">Seleccione un Mes</h3>
+                                <div id="contenedorMes" class="contenido-mes"></div>
+                            </div>
+        
+                            <div class="ficha" id="ficha-final">
+                                <div class="solapa">Generar</div>
+                                <h3 class="final-text">Crear Archivo</h3>
+                                <div class="contenedor-final">
+                                    <button id="generate-end-btn" class="generate-btn" type="button">Generar Archivo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-                <button id="generate-end-btn" class="generate-btn hidden" type="button">Generar Archivo</button>
-                <!-- <div class="error-panel-footer">
-                    <button class="terminal-button" id="retryBtn">
-                        <span class="icon">Generar</span>
-                    </button>
-                </div> -->
-            </section>
-        </main>
+            </div>
+        </main>        
         <aside class="card">
             <div class="aside-container">
                 <div class="terminal-header">
